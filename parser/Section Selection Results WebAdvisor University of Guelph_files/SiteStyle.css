@@ -1,0 +1,570 @@
+/*@import url(debug.css);*/
+/*
+body {
+	margin: 0;
+	padding: 0;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+div#webPage {
+	width: 1000px;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: #eee;
+}
+*/
+
+/* Header Styles */
+/*
+#pageHeader {
+	background-color: #eee;
+	border-bottom: 1px solid #eee;
+}
+
+#headerBanner {
+	background-color: #990000;
+	height: 85px;
+	background-image: url(images/header.jpg);
+	background-repeat: no-repeat;
+}
+
+#acctToolbar {
+	padding-top: 62px;
+	height: 21px;
+	border-bottom: 2px solid #6e0200;
+}
+
+#acctToolbar #acctWidget {
+	border-bottom: 2px solid #6e0200;
+	border-right: 2px solid #6e0200;
+	height: 20px;
+	float: right;
+}
+
+#acctToolbar ul.toolbar {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	font-size: 10.25pt;
+	border-top: 1px solid #df0009;
+}
+
+#acctToolbar ul.toolbar li {
+	float: right;
+	border-left: 1px solid #df0009;
+	border-right: 2px solid #6e0200;
+	color: #ffe000;	
+	font-variant: small-caps;
+	font-size: 10.25pt;
+	font-weight: bold;
+	font-family: Arial, Helvetica;
+	white-space: nowrap;
+	text-align: center;
+}
+
+#acctToolbar ul.toolbar li a {
+	display: block;
+	color: #ffe000;
+	text-decoration: none;
+	padding: 2px 10px;
+}
+*/
+/* End Header Styles */
+
+/* Body Styles */
+/*
+table.welcome {
+}
+
+table.welcome td.message {
+	padding: 5px;
+	font-size: 11pt;
+}
+
+table.welcome td.message p,
+table.welcome td.message ul {
+	margin-top: 8px;
+	margin-bottom: 8px;
+	font-size: 11pt;
+}
+
+table.welcome td.pic {
+	width: 168px;
+	padding: 5px 0px 5px 5px;
+}
+*/
+/* End Body Styles */
+
+/* Footer Styles */
+/*
+#pageFooter {
+	clear: both;
+	font-size: 9pt;
+	background-color: #eee;
+	border-top: 1px dashed #9f9595;
+	padding: 5px 20px;
+	margin-top: 5px;
+}
+
+#pageFooter div {
+	display: none;
+}
+*/
+/* End Footer Styles */
+
+/* WebAdvisor Screen Styles */
+/*
+#bodyForm {
+	font-size: 10pt;
+	background-color: #fcfcfc;
+	background-image: url(images/content-back.jpg);
+	width: 830px;
+	margin-left: auto;
+	margin-right: auto;
+	border-left: 1px solid #d5d5d5;
+	border-right: 1px solid #d5d5d5;
+	border-bottom: 1px solid #d5d5d5;
+	margin-top: 5px;
+}
+
+#screenTitle {
+	color: #474545;
+	font-weight: bold;
+	text-align: center;
+	font-family: Arial;
+	font-variant: small-caps;
+	background-image: url(images/menu-item.jpg);
+	background-position: 0 -2px;
+	background-repeat: repeat-x;
+	background-color: #d5d5d5;
+	font-size: 13pt;
+	height: 21px;
+}
+*/
+div.screen {
+	/*border: 1px solid red;*/
+}
+
+div.screen form {
+	margin: 0;
+}
+
+.mainTable,
+.mainPanel {
+	width: 100%;
+}
+
+div.screen hr {
+	color: #d5d5d5;
+	height: 1px;
+	border: none;
+	border-top: 1px dashed #aaa;
+	font-size: 10pt;
+}
+
+div.screen table {
+	border-collapse: collapse;
+}
+
+div.envisionWindow th {
+	color: #000;
+    font-family: arial, helvetica, sans-serif;
+    font-size: 10pt;
+	border: 1px solid #d5d5d5;
+	text-align: center;
+	padding: 2px;
+	background-color: #efefef;
+}
+
+div.envisionWindow td {
+	background-color: transparent;
+    border: 1px solid #d5d5d5;
+    color: black;
+    font-family: arial, helvetica, verdana, sans-serif, 'times new roman';
+    font-size: 10pt;
+	padding: 2px;
+}
+
+.hidden,
+.windowIdx {
+	display: none;
+}
+
+div.screen th.groupTitle {
+	visibility: hidden;
+	font-size: 0;
+	padding: 0;
+	border: none;
+}
+
+div.screen div.submit {
+	text-align: center;
+	padding: 5px 0px 1px 0px;
+	color: #ffcc00;
+}
+
+div.screen div.submit input,
+div.screen div.submit input.buttonPress,
+div.errorask input {
+	/*background-color: #990100;*/
+	background-image: url("img/globalbg.jpg");
+	background-position: 0 -60px;
+	border-top: 2px solid #da0000;
+	border-left: 2px solid #da0000;
+	border-right: 2px solid #700205;
+	border-bottom: 2px solid #700205;
+	color: #fdc708;
+	font-weight: bold;
+	font-size: 9pt;
+	width: 120px;
+	padding: 0px;
+	text-transform: uppercase;
+}
+
+#content div.custom div.errorText {
+	color: #000;
+    font-family: arial, helvetica, sans-serif;
+    font-size: 10pt;
+	text-align: left;
+	width: 500px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 30px;
+}
+
+/* End WebAdvisor Screen Styles */
+/*
+div#bodyWelcome {
+	position: absolute;
+	top: 63px;
+	color: #ffe000;	
+	font-variant: small-caps;
+	font-size: 10.25pt;
+	font-weight: bold;
+	font-family: Arial, Helvetica;
+	white-space: nowrap;
+	padding: 2px 10px;
+}
+
+div#bodyConstituency {
+	display: none;
+}
+*/
+
+
+div.screen tr td.oddrow {
+	background-color: #fff;
+}
+
+div.screen tr td.evenrow {
+	background-color: #f7f7f7;
+}
+
+div.screen tr.winter td {
+	background-color: #e7e7ff;
+}
+
+div.screen tr.summer td {
+	background-color: #e7ffe8;
+}
+
+div.screen tr.fall td {
+	background-color: #ffffe7;
+}
+
+div.screen tr.closed td {
+	background-color: #f7aaaa;
+}
+
+div.errorask {
+	border: 1px dashed #9f9595;
+	margin-top: 25px;
+	padding: 5px;
+	text-align: center;
+}
+
+div.errorask form {
+	display: inline;
+	padding: 0px 5px 0px 0px;
+}
+
+div.errorask img {
+	vertical-align: middle;
+	margin-right: 10px;
+}
+
+div.errorask a:hover span.errortext {
+}
+
+div.errorask span.errortext {
+	vertical-align: middle;
+	font-size: 10pt;
+}
+
+div.errorask #chooseq {
+	width: 350px;
+}
+
+div.gridlinks {
+	text-align: right;
+	height: 42px;
+}
+
+div.gridlinks a.class {
+	display: block;
+	float: left;
+	margin: 5px 10px;
+}
+
+div.gridlinks a.exam {
+	display: block;
+	float: right;
+	margin: 5px 10px;
+}
+
+div.meet {
+	padding: 4px 2px;
+	width: 210px;
+}
+
+div.meet div {
+	line-height: 1.2em;
+}
+
+div.WESTS12B *,
+div.WESTS16B * {
+	line-height: 1.1em;
+	font-size: 9pt;
+}
+
+div.WESTS12B div.meet,
+div.WESTS16B div.meet {
+	width: 190px;
+}
+
+iframe.caldesc {
+	width: 500px;
+	height: 250px;
+	margin: 8px 0px 10px 25px;
+}
+
+div.information {
+	border: 1px solid #004f18;
+	padding: 10px;
+	margin: 10px 50px;
+	color: #004f18;
+	font-size: 12pt;
+}
+
+div.screen form input {
+	background-color: transparent;
+}
+
+div.screen form select {
+	background-color: transparent;
+}
+
+div.screen form select option {
+	background-color: #fff;
+}
+
+#gotransit {
+	margin: 15px;
+	border: 1px solid black;
+	height: 250px;
+	width: 800px;
+}
+
+
+div.screen th.SEC_CEUS,
+div.screen td.SEC_CEUS {
+	display: none;
+}
+
+div.UTAUTH01 #USER_NAME,
+div.UTAUTH01 #CURR_PWD,
+div.UT-LGRQ #USER_NAME,
+div.UT-LGRQ #CURR_PWD {
+	width: 125px;
+}
+
+div.UTAUTH01 #LABELID_USER_NAME,
+div.UTAUTH01 #LABELID_CURR_PWD,
+div.UT-LGRQ #LABELID_USER_NAME,
+div.UT-LGRQ #LABELID_CURR_PWD {
+	text-align: right;
+}
+
+div.WESTS04B th.WSS_COURSE_SECTIONS,
+div.WESTS04B td.WSS_COURSE_SECTIONS,
+div.WESTS04B th.LIST_VAR4,
+div.WESTS04B td.LIST_VAR4 {
+	display: none;
+}
+
+div.WESTS04C th.WSS_COURSE_SECTIONS,
+div.WESTS04C td.WSS_COURSE_SECTIONS,
+div.WESTS04C th.LIST_VAR3,
+div.WESTS04C td.LIST_VAR3,
+div.WESTS04C th.WSS_COURSE_SECTIONS_2,
+div.WESTS04C td.WSS_COURSE_SECTIONS_2,
+div.WESTS04C th.LIST_VAR16,
+div.WESTS04C td.LIST_VAR16,
+div.WESTS04C th.LIST_VAR17,
+div.WESTS04C td.LIST_VAR17 {
+	display: none;
+}
+
+div.WESTS015 #LABELID_Grp_DATE_VAR1,
+div.WESTS015 #DATE_VAR1,
+div.WESTS015 #DATE_VAR2 {
+	display: none;
+}
+
+div.WESTI901 th.LIST_VAR4,
+div.WESTI901 td.LIST_VAR4,
+div.WESTI901 th.LIST_VAR16,
+div.WESTI901 td.LIST_VAR16,
+div.WESTI901 th.LIST_VAR17,
+div.WESTI901 td.LIST_VAR17,
+div.WESTI901 th.JS_LIST_VAR7,
+div.WESTI901 td.JS_LIST_VAR7,
+div.WESTI901 th.CSVIEW2_CEUS,
+div.WESTI901 td.CSVIEW2_CEUS {
+	display: none;
+}
+
+div.WESTS12A #LABELID_DATE_VAR1,
+div.WESTS12A #DATE_VAR1,
+div.WESTS12A #LABELID_DATE_VAR2,
+div.WESTS12A #DATE_VAR2 {
+	display: none;
+}
+
+div.WESTS04A #LABELID_DATE_VAR1,
+div.WESTS04A #DATE_VAR1,
+div.WESTS04A #LABELID_DATE_VAR2,
+div.WESTS04A #DATE_VAR2 {
+	display: none;
+}
+
+div.WESTS16A #LABELID_DATE_VAR1,
+div.WESTS16A #DATE_VAR1,
+div.WESTS16A #LABELID_DATE_VAR2,
+div.WESTS16A #DATE_VAR2 {
+	display: none;
+}
+
+div.WESTS01B th.VAR_STC_CEUS,
+div.WESTS01B td.VAR_STC_CEUS {
+	display: none;
+}
+
+div.WESTS15B th.LIST_VAR10,
+div.WESTS15B td.LIST_VAR10 {
+	display: none;
+}
+
+div.WESTS15B th.LIST_VAR11,
+div.WESTS15B td.LIST_VAR11 {
+	display: none;
+}
+
+
+/* Turn off the standard horizontal rules for the surveys because the panels to not allow them to be where we need them */
+/*
+div.XWSS090B hr,
+div.XWSS090C hr {
+	//display: none;
+}
+*/
+/*
+div.XWSS090B table.mainTable > tbody > tr:first-child td hr {
+	display: block;
+	margin-bottom: 10px;
+	border: 1px solid white;
+}
+div.XWSS090C table.mainTable > tbody > tr:nth-child(2) td hr {
+	display: block;
+	border: 1px solid white;
+}
+*/
+/* Style the manually inserted horizontal rules for the surveys */
+div.XWSS090B hr.manual,
+div.XWSS090C hr.manual {
+	margin: 10px 10px;
+	display: block;
+}
+
+div.screen span.spacer,
+div.screen span.spacer {
+	display: block;
+	margin-bottom: 10px;
+	border: 1px solid white;
+}
+
+div.XWSS090B form,
+div.XWSS090C form {
+	margin: 0 28px;
+}
+
+#content div.XWSS090B td div h3,
+#content div.XWSS090C td div h3 {
+	margin: 0 0;
+}
+
+div.custom pre {
+	margin-left: 50px;
+	margin-right: 50px;
+}
+/*
+#content div.feedburnerFeedBlock ul {
+	margin-left: 50px;
+	margin-right: 50px;
+}
+
+#content div.feedburnerFeedBlock li {
+	display: block;
+	border: 1px solid #d5d5d5;
+	margin-bottom: 10px;
+	list-style-type: none;
+}
+
+#content div.feedburnerFeedBlock li span.headline {
+	display: block;
+
+	background-color: #efefef;
+}
+
+#content div.feedburnerFeedBlock li span.headline a {
+	display: block;
+	font-size: 12pt;
+	font-weight: bold;
+	color: black;
+	padding: 3px 5px 0 5px;
+}
+
+#content div.feedburnerFeedBlock li p.date {
+	text-align: left;
+	font-style: italic;
+	font-size: 8pt;
+	margin: 0;
+	margin-bottom: 10px;
+	padding: 0px 5px;
+	background-color: #efefef;
+	border-bottom: 1px solid #d5d5d5;
+}
+
+#content div.feedburnerFeedBlock li p {
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+#content div.feedburnerFeedBlock div#creditfooter {
+	display: none;
+}
+*/
+#content div.screen td p {
+	margin-top: 0;
+	margin-bottom: 0;
+}

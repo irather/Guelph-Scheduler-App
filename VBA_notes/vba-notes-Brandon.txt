@@ -1,0 +1,5 @@
+- Sub is for functions that have no return while function is for functions that do
+- Ubound is used to get the length of an array 
+- We could use global variables to store values that are needed beyond one function
+- I could compare the strings in the cells and see if its the right length and if it ends in AM or PM to verify if its a time
+- For the days I could increment an array that represents the week and set it to 1 if the corresponding string is equal to the day.
