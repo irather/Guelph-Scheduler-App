@@ -1,0 +1,28 @@
+﻿Sprint 3 Planning Session Notes 
+2022-09-26
+
+
+Two parts to this assignment, one create the UI to receive user inputs, the other create functions to output the info back to user
+
+
+Issue-2 user choice for good schedule UI
+- create UI for the excel sheet in which the user chooses their own subjective opinion on a "good" scheduale
+- includes a button to recieve the suggested courses after choice
+- should have default options set already (early morning and no days off)
+
+Issue-3 VBA function for user preferred time choice UI
+- let the user choose what timings they would like for schedule with set times
+	- early morning (8-12)
+	- afternoon (12-5)
+	- evening (5-9)
+
+issue-4 create VBA function to get user off-day(s) UI
+- let user choose what days they would like off for their schedule
+	- Mondays to Friday
+
+issue-7 Function for populating suggested schedule with courses
+- get the inputted information from user to calculate which courses work best
+- return list of functions to a sheet named "suggested schedule courses"
+
+Testing, commenting, documentation, retro planning all necessary
+

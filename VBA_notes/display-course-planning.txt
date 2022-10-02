@@ -1,0 +1,4 @@
+﻿* This is a larger task then we anticipated
+* We should create some base functions first and then split up the task of adding the sem, lab, lec etc
+* The base functions should be able to grab the start and end time along with what day the course occurs on from the courses sheet in the excel file.
+* Then the sem lab lec, function uses that information to display that course in the scheduler sheet
