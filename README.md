@@ -12,7 +12,7 @@ run the uninstallation script with $ ./uninstall.sh
 
 # Locally Developing With Flask #
 This app works with an end user talking to the url, Nginx lives on the Socs VM where it redirects traffic to Flask. Below is brief diagram of how things work.
-
+![Screen_Shot_2022-10-22_at_6.30.03_PM](/uploads/3d7080ce709d0ad64021f396037d4bf0/Screen_Shot_2022-10-22_at_6.30.03_PM.png)
 
 
 # After Installation #
