@@ -37,3 +37,6 @@ Stop the server with 'sudo nginx -s quit'.
 
 # Our Site #
 Our site can be accessed at: http://cis3760f22-04.socs.uoguelph.ca
+
+# Sprint 4 Prototype #
+- TODO
