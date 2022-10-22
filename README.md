@@ -16,11 +16,12 @@ This app works with an end user talking to the url, Nginx lives on the Socs VM w
 
  - When developing locally, the main functionality of the app relies on Flask which runs via python. These instructions work best on a *nix system (e.g. WSL for windows, macOS).
  1. Make sure Python is installed
- 2. If using virtualenv, install it via `pip3 install virtualenv`. Create a virtulenv and activate it via `virtualenv env`. Then activate it via `source env/bin/activate`
+ 2. If using virtualenv, install it via `pip3 install virtualenv`. Create a virtulenv and activate it via `virtualenv env`. Then activate it via `source env/bin/activate`.
  3. Install Flask via `pip3 install flask`.
  4. Make your code changes.
  5. Run `python3 app.py` to deploy the Flask app locally. (If you get a ModuleNotFound Error, make sure you installed flask into the right python version).
  6. Your app is now locally running on http://localhost:PORT, where PORT is specified in app.py. You can access it via cURL or your web browser.
+ 7. If using virtualenv, you can exit it by simply entering `deactivate` into the terminal.
 
 # After Installation #
 To start the server run the command 'sudo nginx'.  
@@ -36,3 +37,4 @@ Stop the server with 'sudo nginx -s quit'.
 
 # Our Site #
 Our site can be accessed at: http://cis3760f22-04.socs.uoguelph.ca
+
