@@ -6,6 +6,11 @@ function App() {
       <h1>
         Scheduler
       </h1>
+
+      <div>
+        <h2>Schedule</h2>
+      </div>
+
     </div>
   );
 }
