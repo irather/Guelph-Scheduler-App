@@ -10,6 +10,11 @@ Ibrahim Rather
 run the installation script with $ ./install.sh  
 run the uninstallation script with $ ./uninstall.sh
 
+# Locally Developing With Flask #
+This app works with an end user talking to the url, Nginx lives on the Socs VM where it redirects traffic to Flask. Below is brief diagram of how things work.
+
+
+
 # After Installation #
 To start the server run the command 'sudo nginx'.  
 If the server is already running you can reload it with 'sudo nginx -s reload'.  
