@@ -1,4 +1,5 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
+import "bootstrap/dist/css/bootstrap.min.css";
 import './App.css';
 
 function App() {
@@ -13,16 +14,10 @@ function App() {
   }, []);
 
   return (
-    <div>
-      <h1>
-        Scheduler
-      </h1>
-
-      <div>
-        <h2>Schedule</h2>
-      </div>
+    <div className="home-page">
+      <h1>Scheduler</h1>
+      <h2>Schedule</h2>
       <p>The bean of the day is {profileData}.</p>
-
     </div>
   );
 }
