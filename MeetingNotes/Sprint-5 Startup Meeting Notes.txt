@@ -1,0 +1,21 @@
+- Flask is already installed (did that Sprint-4)
+
+- Split into 2/3 teams
+
+- Team 1 (NGINX)
+	- Chris
+	- Brandon
+
+- Team 2 (Flask paths)
+	- Himmat
+	- Affan
+
+- Team 3 (React)
+	- Ibrahim 
+	- Mussab
+
+- Deliverables
+	- Update install script
+	- Wiki page? Need to ask Greg
+
+- Need to ask Greg what course data we are grabbing
