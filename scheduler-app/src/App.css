@@ -1,0 +1,36 @@
+.navbar {
+  background-color: #DBC39A;
+}
+
+.home-page {
+  background-color: #CEAD74;
+  min-height: 100vh;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.home-page h1 {
+  font-size: 40px;
+  font-weight: 700;
+  color: #000000;
+  margin-left: 30px;
+}
+
+.home-page h2 {
+  font-size: 40px;
+  font-weight: 700;
+  color: #000000;
+  margin-left: 30px;
+}
+
+.home-page p {
+  font-size: 20px;
+  font-weight: 400;
+  color: #000000;
+  margin-left: 30px;
+}
+
+.home-page .btn {
+  background-color: #C7A162;
+  margin-left: 30px;
+}
