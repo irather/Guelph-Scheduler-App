@@ -1,0 +1,41 @@
+Can we delete the extra branches on Gitlab?
+	- Most of them other than Sprint-3 and Sprint-4
+	- No objections. Other branches were deleted
+
+
+
+
+What VM are we using?
+	- SOCS VM. This might not be available
+	- test socs first. if that
+
+What frontend language are we using (JS/TS)?
+	- JS
+
+
+What frontend framework (React/Vue)?
+	- React
+
+
+What CSS template are we using (Bootstrap)?
+	- Bootstrap
+
+
+What server API are we using? (jQuery/Node.js/Flask)?
+	- Flask is recommended
+	- We are using Flask
+
+
+
+Frontend
+	- Ibrahim
+	- Affan
+	- Brandon
+
+Backend
+	- Mussab
+	- Chris
+	- Himmat
+
+VM
+	- Himmat
