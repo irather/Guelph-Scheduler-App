@@ -8,7 +8,7 @@ function App() {
 
   //this is how we'll call functions from the flask backend
   useEffect(() => {
-    fetch('/profile').then(res => res.json()).then(data => {
+    fetch('/api/profile').then(res => res.json()).then(data => {
       setProfileData(data.name);
     });
   }, []);
