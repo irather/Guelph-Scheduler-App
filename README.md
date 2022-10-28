@@ -10,6 +10,7 @@ Ibrahim Rather
 run the installation script with $ ./install.sh  
     During the installation the config file 'default' is moved to:
     'etc/nginx/sites-available/'.  
+    node_modules are also created in 'scheduler-app/node_modules'
     You do NOT need to move any files yourself because the installation script does it for you.  
     This script will also automatically start the nginx server with the basic webpage with no  
     need to reload nginx.  
