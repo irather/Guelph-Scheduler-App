@@ -6,12 +6,6 @@
   "allowedHosts": [
     "127.0.0.1"
   ],
-  "dependencies": {
-    "bootstrap": "^5.2.2",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-scripts": "4.0.3"
-  },
   "scripts": {
     "start": "react-scripts start",
     "start-flask": "cd flask && flask run --no-debugger",
@@ -36,5 +30,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "dependencies": {
+    "bootstrap": "^5.2.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "^5.0.1"
   }
 }
