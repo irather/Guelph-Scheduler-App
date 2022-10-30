@@ -18,8 +18,8 @@ echo uninstalled npm
 echo
 
 sudo apt-get remove python3-pip -y
-sudo pip uninstall flask
-sudo pip uninstall python-dotenv
+sudo pip uninstall flask -y
+sudo pip uninstall python-dotenv -y
 
 echo
 echo Uninstalled flask & python-dotenv
