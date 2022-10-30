@@ -19,6 +19,18 @@ run the uninstallation script with $ ./uninstall.sh
     This will quit nginx and uninstall it.   
 
 # After Installation #
+𝐻𝑜𝓌 𝓉𝑜 𝓇𝑒𝓈𝓉𝒶𝓇𝓉 𝓉𝒽𝑒 𝓈𝑒𝓇𝓋𝑒𝓇 𝒶𝒻𝓉𝑒𝓇 𝒸𝒽𝒶𝓃𝑔𝑒𝓈
+
+𝒾𝒻 𝓎𝑜𝓊 𝓂𝒶𝒹𝑒 𝒸𝒽𝒶𝓃𝑔𝑒𝓈 𝓉𝑜 𝓉𝒽𝑒 𝒻𝓁𝒶𝓈𝓀 𝓅𝑜𝓇𝓉𝒾𝑜𝓃 (𝒾𝑒 𝒶𝓅𝓅.𝓅𝓎)
+Save your changes
+Type: “sudo systemctl daemon-reload” to end the daemon/process that running the flask program
+Type “sudo systemctl start scheduler-app” to let a process run the flask portion
+
+𝒾𝒻 𝓎𝑜𝓊 𝓂𝒶𝒹𝑒 𝒸𝒽𝒶𝓃𝑔𝑒𝓈 𝓉𝑜 𝓉𝒽𝑒 𝓇𝑒𝒶𝒸𝓉 𝓅𝑜𝓇𝓉𝒾𝑜𝓃 (𝒾𝑒 𝒶𝓅𝓅.𝒿𝓈)
+Cd to home/socs/CIS3760-team-302/scheduler-app and run “npm run build”
+afterwards Nginx should always be watching the react portion and you should already see the changes on the server but if not
+Run “sudo nginx -s reload”
+
 To start the server run the command 'sudo nginx'.  
 If the server is already running you can reload it with 'sudo nginx -s reload'.  
 Stop the server with 'sudo nginx -s quit'.  
