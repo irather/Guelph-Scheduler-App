@@ -25,7 +25,7 @@ def response_1():
 
 @app.route('api/getCourseList')
 def getCourseList():
-    response_body = ["ACCT*1220", "CIS*3760"]
+    response_body = ["ACCT*1220*0101", "CIS*3760*0101"]
     return response_body
 
 @app.route('api/course/<course>/section/<section>')
