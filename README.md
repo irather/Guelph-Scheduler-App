@@ -62,3 +62,9 @@ This app works with an end user talking to the url, Nginx lives on the Socs VM w
  6. Your app is now locally running on http://localhost:PORT, where PORT is specified in app.py. You can access it via cURL or your web browser.
  7. If using virtualenv, you can exit it by simply entering `deactivate` into the terminal.  
 
+ To get the server running
+ 1. Run the install script
+ 2. cd to scheduler_app and run $npm start
+ 3. In a new terminal cd to the flask folder inside scheduler_app
+ 4. Run the command $npm run start-flask 
+
