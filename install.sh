@@ -19,6 +19,7 @@ sudo npm install react
 sudo npm install react-scripts
 sudo npm install react-dom
 sudo npm install bootstrap
+sudo npm install axios
 cd ../
 
 echo

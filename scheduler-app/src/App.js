@@ -4,9 +4,10 @@ import './App.css';
 import axios from 'axios';
 
 function App() {
-  const [currentTime, setCurrentTime] = useState(0)
   const [profileData, setProfileData] = useState("nothing")
   const [response, setResponse] = useState("Response_1")
+  const [course, setCourse] = useState("course list empty")
+  const [courseDetails, setCourseDetails] = useState("no course detail")
 
   //this is how we'll call functions from the flask backend
   useEffect(() => {
@@ -21,10 +22,23 @@ function App() {
     });
   }, []);
 
+  useEffect(() => {
+    fetch('/api/getCourseList').then(res => res.json()).then(data => {
+      setCourse(data.list);
+    });
+  }, []);
+
+  useEffect(() => {
+    fetch('/api/course/<course>/section/<section>').then(res => res.json()).then(data => {
+      setCourseDetails("");
+    });
+  }, []);
+
   const handleClick = async () => {
-    const response = await axios.get('/api/response_1')
+    const response = await axios.get('/api/course/<course>/section/<section>')
     console.log(JSON.stringify(response));
-    setResponse(response.data.body);
+    setCourse(JSON.stringify(response.data.course_name_section));
+    setCourseDetails(JSON.stringify(response.data.meetings));
   }
 
   return (
@@ -48,6 +62,9 @@ function App() {
         <h2>Schedule</h2>
         <p>The bean of the day is {profileData}.</p>
         <p>Welcome to the {response}.</p>
+        <p>{course}</p>
+        <p>{courseDetails}</p>
+
 
         <button onClick={handleClick} type="button" className="btn btn-lg">Change</button>
       </div>
