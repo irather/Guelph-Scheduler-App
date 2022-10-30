@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import './App.css';
+import axios from 'axios';
 
 function App() {
   const [currentTime, setCurrentTime] = useState(0)
@@ -20,8 +21,10 @@ function App() {
     });
   }, []);
 
-  function handleClick() {
-    setResponse("Test")
+  const handleClick = async () => {
+    const response = await axios.get('/api/response_1')
+    console.log(JSON.stringify(response));
+    setResponse(response.data.body);
   }
 
   return (
@@ -46,7 +49,7 @@ function App() {
         <p>The bean of the day is {profileData}.</p>
         <p>Welcome to the {response}.</p>
 
-        <button onClick={handleClick} type="button" className="btn btn-lg">Click Me!</button>
+        <button onClick={handleClick} type="button" className="btn btn-lg">Change</button>
       </div>
 
     </div>
