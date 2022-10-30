@@ -1,4 +1,3 @@
-from urllib import response
 from flask import Flask, render_template
 
 
@@ -25,7 +24,9 @@ def response_1():
 
 @app.route('/api/getCourseList')
 def getCourseList():
-    response_body = ["ACCT*1220*0101", "CIS*3760*0101"]
+    response_body = { 
+        "list": ["ACCT*1220*0101", "CIS*3760*0101"]
+    }
     return response_body
 
 @app.route('/api/course/<course>/section/<section>')
@@ -54,6 +55,6 @@ def courses(course, section):
 def get_current_time():
         return {"BEEAN":"BEAN FOR THE BEAN GOD"}
 
-#if __name__ == "__main__":
-#    app.run(debug=True)
+if __name__ == "__main__":
+   app.run(debug=True)
 
