@@ -1,17 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import './App.css';
+import axios from 'axios';
 
 function App() {
   const [currentTime, setCurrentTime] = useState(0)
   const [profileData, setProfileData] = useState("nothing")
+  const [response, setResponse] = useState("Response_1")
 
   //this is how we'll call functions from the flask backend
   useEffect(() => {
     fetch('/api/profile').then(res => res.json()).then(data => {
-      setProfileData(data.name);
+      setProfileData(data.about);
     });
   }, []);
+
+  useEffect(() => {
+    fetch('/api/response_1').then(res => res.json()).then(data => {
+      setResponse(data.header);
+    });
+  }, []);
+
+  const handleClick = async () => {
+    const response = await axios.get('/api/response_1')
+    console.log(JSON.stringify(response));
+    setResponse(response.data.body);
+  }
 
   return (
     <div>
@@ -33,10 +47,9 @@ function App() {
       <div className="home-page">
         <h2>Schedule</h2>
         <p>The bean of the day is {profileData}.</p>
+        <p>Welcome to the {response}.</p>
 
-        <button type="button" className="btn btn-lg">Click Me!</button>
-        <button type="button" className="btn btn-lg">Click Me!</button>
-        <button type="button" className="btn btn-lg">Click Me!</button>
+        <button onClick={handleClick} type="button" className="btn btn-lg">Change</button>
       </div>
 
     </div>
