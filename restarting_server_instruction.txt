@@ -1,0 +1,16 @@
+﻿Link:http://cis3760f22-04.socs.uoguelph.ca/
+
+How to restart the server after making changes
+
+if you made changes to the flask portion (app.py)
+* Save your changes
+* Type: “sudo systemctl daemon-reload” to end the daemon/process that running the flask program
+* Type “sudo systemctl start scheduler-app” to let a process run the flask portion
+
+if you made changes to the react portion (app.js)
+* Cd to home/socs/CIS3760-team-302/scheduler-app and run “npm run build”
+* afterwards Nginx should always be watching the react portion and you should already see the changes on the server but if not
+* Run “sudo nginx -s reload”
+
+
+To close the server just run “sudo nginx -s stop"
