@@ -12,7 +12,7 @@ function App() {
   //this is how we'll call functions from the flask backend
   useEffect(() => {
     fetch('/api/profile').then(res => res.json()).then(data => {
-      setProfileData(data.about);
+      setProfileData(data.name);
     });
   }, []);
 
@@ -36,7 +36,6 @@ function App() {
 
   const handleClick = async () => {
     const response = await axios.get('/api/course/<course>/section/<section>')
-    console.log(JSON.stringify(response));
     setCourse(JSON.stringify(response.data.course_name_section));
     setCourseDetails(JSON.stringify(response.data.meetings));
   }
@@ -62,9 +61,8 @@ function App() {
         <h2>Schedule</h2>
         <p>The bean of the day is {profileData}.</p>
         <p>Welcome to the {response}.</p>
-        <p>{course}</p>
-        <p>{courseDetails}</p>
-
+        <p>Here is a list of courses: {course}</p>
+        <p>Here are the course details: {courseDetails}</p>
 
         <button onClick={handleClick} type="button" className="btn btn-lg">Change</button>
       </div>
