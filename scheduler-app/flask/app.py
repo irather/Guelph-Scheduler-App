@@ -23,12 +23,12 @@ def response_1():
 
     return response_body
 
-@app.route('api/getCourseList')
+@app.route('/api/getCourseList')
 def getCourseList():
     response_body = ["ACCT*1220*0101", "CIS*3760*0101"]
     return response_body
 
-@app.route('api/course/<course>/section/<section>')
+@app.route('/api/course/<course>/section/<section>')
 def courses(course, section):
     # this should obviously be populated with real data later on
     # TODO: maybe later find out a better way to store scheduling data instead of 
