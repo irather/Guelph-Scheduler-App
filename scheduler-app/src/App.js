@@ -5,13 +5,24 @@ import './App.css';
 function App() {
   const [currentTime, setCurrentTime] = useState(0)
   const [profileData, setProfileData] = useState("nothing")
+  const [response, setResponse] = useState("Response_1")
 
   //this is how we'll call functions from the flask backend
   useEffect(() => {
     fetch('/api/profile').then(res => res.json()).then(data => {
-      setProfileData(data.name);
+      setProfileData(data.about);
     });
   }, []);
+
+  useEffect(() => {
+    fetch('/api/response_1').then(res => res.json()).then(data => {
+      setResponse(data.header);
+    });
+  }, []);
+
+  function handleClick() {
+    setResponse("Test")
+  }
 
   return (
     <div>
@@ -33,10 +44,9 @@ function App() {
       <div className="home-page">
         <h2>Schedule</h2>
         <p>The bean of the day is {profileData}.</p>
+        <p>Welcome to the {response}.</p>
 
-        <button type="button" className="btn btn-lg">Click Me!</button>
-        <button type="button" className="btn btn-lg">Click Me!</button>
-        <button type="button" className="btn btn-lg">Click Me!</button>
+        <button onClick={handleClick} type="button" className="btn btn-lg">Click Me!</button>
       </div>
 
     </div>
