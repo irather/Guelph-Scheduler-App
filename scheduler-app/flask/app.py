@@ -12,7 +12,6 @@ def my_profile():
 
     return response_body
 
-
 @app.route('/api/response_1')
 def response_1():
     response_body = {
@@ -44,8 +43,6 @@ def courses(course, section):
         }
     }
     return response_body
-
-
 
 #@app.route('/')
 #def index():
