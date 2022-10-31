@@ -9,31 +9,35 @@ function App() {
   const [course, setCourse] = useState("course list empty")
   const [courseDetails, setCourseDetails] = useState("no course detail")
 
-  //this is how we'll call functions from the flask backend
+  // Example endpoint call 
   useEffect(() => {
     fetch('/api/profile').then(res => res.json()).then(data => {
       setProfileData(data.name);
     });
   }, []);
 
+  // Example endpoint call 
   useEffect(() => {
     fetch('/api/response_1').then(res => res.json()).then(data => {
       setResponse(data.header);
     });
   }, []);
 
+  // Endpoint call to grab course list
   useEffect(() => {
     fetch('/api/getCourseList').then(res => res.json()).then(data => {
       setCourse(data.list);
     });
   }, []);
 
+  // Endpoint call to grab course details
   useEffect(() => {
     fetch('/api/course/<course>/section/<section>').then(res => res.json()).then(data => {
       setCourseDetails("");
     });
   }, []);
 
+  // Click function to grab specific meetings for specific class
   const handleClick = async () => {
     const response = await axios.get('/api/course/<course>/section/<section>')
     setCourse(JSON.stringify(response.data.course_name_section));
