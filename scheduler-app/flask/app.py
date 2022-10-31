@@ -3,6 +3,7 @@ from flask import Flask, render_template
 
 app = Flask(__name__,static_folder='../build',static_url_path='/')
 
+# Example endpoint
 @app.route('/api/profile')
 def my_profile():
     response_body = {
@@ -12,6 +13,7 @@ def my_profile():
 
     return response_body
 
+# Example endpoint
 @app.route('/api/response_1')
 def response_1():
     response_body = {
@@ -21,6 +23,7 @@ def response_1():
 
     return response_body
 
+# Dummy endpoint to grab list of courses
 @app.route('/api/getCourseList')
 def getCourseList():
     response_body = { 
@@ -28,6 +31,7 @@ def getCourseList():
     }
     return response_body
 
+# Dummy endpoint to return course name and it's meetings
 @app.route('/api/course/<course>/section/<section>')
 def courses(course, section):
     # this should obviously be populated with real data later on
