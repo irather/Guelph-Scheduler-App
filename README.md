@@ -49,6 +49,9 @@ Stop the server with 'sudo nginx -s quit'.
 # Our Site #
 Our site can be accessed at: http://cis3760f22-04.socs.uoguelph.ca
 
+# Our Wiki #
+Our wiki can be found here: https://gitlab.socs.uoguelph.ca/cis3760-team-302/cis3760-team-302/-/wikis/Group-302-Webpage
+
 # For Developers #
 This app works with an end user talking to the url, Nginx lives on the Socs VM where it redirects traffic to Flask. Below is brief diagram of how things work.
 ![Screen_Shot_2022-10-22_at_6.30.03_PM](/uploads/3d7080ce709d0ad64021f396037d4bf0/Screen_Shot_2022-10-22_at_6.30.03_PM.png)
