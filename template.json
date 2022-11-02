@@ -1,0 +1,25 @@
+{
+
+“term”:”Fall 2022”,
+
+“status”:”Open”,
+
+“name”:”ACCT*1220*0101 (6573) Intro Financial Accounting”,
+
+“location”:”Guelph”,
+
+“meeting_info”:{”meeting1”:{”type”:”Lec”, “start_time”:”08:30”,”start_type”:”AM”,”end_time”:”10:20”,”end_type”:”AM”,”hall”:”ROZH”,”room_number”:”102”},
+
+“meeting2”:{”type”:”Sem”, “start_time”:”08:30”,”start_type”:”AM”,”end_time”:”9:20”,”end_type”:”AM”,”hall”:”MCKN”,”room_number”:”227”},
+
+“meeting3”:{”type”:”Exam”, “start_time”:”08:30”,”start_type”:”AM”,”end_time”:”10:30”,”end_type”:”AM”,”hall”:”Room”,”room_number”:”TBA”}
+
+},
+
+“faculty”:”P. Lassou”,
+
+“credits”:”0.5”,
+
+“academic_level”:”Undergraduate”
+
+}
