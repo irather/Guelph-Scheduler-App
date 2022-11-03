@@ -34,3 +34,27 @@
   background-color: #C7A162;
   margin-left: 30px;
 }
+
+/* Style the form - display items horizontally */
+.form-inline {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+}
+
+/* Add some margins for each label */
+.form-inline label {
+  margin: 5px 10px 5px 0;
+}
+
+/* Style the input fields */
+.form-inline input {
+  vertical-align: middle;
+  margin: 5px 10px;
+  padding: 10px;
+}
+
+/* Style the submit button */
+.form-inline button {
+  padding: 10px 20px;
+}
