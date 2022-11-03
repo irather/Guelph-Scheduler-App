@@ -8,6 +8,7 @@ function App() {
   const [response, setResponse] = useState("Response_1")
   const [course, setCourse] = useState("course list empty")
   const [courseDetails, setCourseDetails] = useState("no course detail")
+  const [courseName, findCourseName] = useState("");
 
   // Example endpoint call 
   useEffect(() => {
@@ -44,6 +45,13 @@ function App() {
     setCourseDetails(JSON.stringify(response.data.meetings));
   }
 
+  //function to send course name to the backend might not async can be changed to be so
+  const sendCourse = async(event) => {
+    event.preventDefault();
+    const response = await axios.post('/api/GetCouresName', {name: courseName})
+    console.log(response);
+  }
+
   return (
     <div>
       <nav className="navbar navbar-expand-lg">
@@ -67,10 +75,15 @@ function App() {
         <p>Welcome to the {response}.</p>
         <p>Here is a list of courses: {course}</p>
         <p>Here are the course details: {courseDetails}</p>
-
+        <form class="form-inline" onSubmit={sendCourse}>
+          <label class = "form-inline label">
+          <p>Course Name:</p>
+          <input type="text" name="couresName"placeholder="ex. CIS*3090" value={courseName} onChange={(e) => findCourseName(e.target.value)}/>
+          </label>
+          <input type="submit" />
+        </form>
         <button onClick={handleClick} type="button" className="btn btn-lg">Change</button>
       </div>
-
     </div>
   );
 }

@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, jsonify, request
 
 
 app = Flask(__name__,static_folder='../build',static_url_path='/')
@@ -51,6 +51,16 @@ def courses(course, section):
 #@app.route('/')
 #def index():
 #        return render_template("index.html")
+
+
+#function that obtains the course name the name can be changed to a more fitting name
+@app.route('/api/GetCouresName',methods=['POST']) 
+def GetCouresName():
+    course = request.get_json()
+    courseName = course['name']
+    print("drumroll please...")
+    print(courseName)
+    return courseName,201
 
 @app.route('/api/test')
 def get_current_time():
