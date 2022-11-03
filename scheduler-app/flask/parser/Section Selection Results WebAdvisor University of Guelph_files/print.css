@@ -1,0 +1,25 @@
+@media print {
+	#header,
+	#feature,
+	#sidebar,
+	#misc,
+	#content div.information {
+		display: none;
+	}
+	
+	div.custom pre {
+		margin-left: 0px;
+		margin-right: 0px;
+	}
+	
+	#content div.feedburnerFeedBlock ul {
+		margin-left: 0;
+		margin-right: 0;
+		padding-left: 0;
+	}
+	
+	#printlogo {
+		display: block;
+		margin: 10px 10px 20px 10px;
+	}
+}
