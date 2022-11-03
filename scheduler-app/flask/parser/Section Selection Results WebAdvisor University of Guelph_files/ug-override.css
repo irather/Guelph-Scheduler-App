@@ -1,0 +1,555 @@
+/*
+	This overrides any of the default U of G styles
+	Additionally, custom styles are included in this file, maybe those should be split out?
+*/
+
+/* Override Styles - Start */
+
+/* These were removed from the new Guelph template.css, but we still use them. */
+#feature{background:#45403a url("img/featurebg.jpg");background-repeat:repeat-x;height:220px;padding:0 10px;}
+#feature #rotator{background:#fff;height:220px;}
+#feature #rotator img{border:0;display:none;height:220px;left:0;position:absolute;top:0;width:860px;}
+#tools{display:block;float:right;padding:0 0 20px;width:270px;}
+#tools #podcast,#tools #weather,#tools #nowonline{color:#fff;background:#69c;display:block;line-height:1.2;margin:20px 30px;width:200px;}
+#tools #podcast h2{background:url("img/ipod_cast.png");background-position:0 center;background-repeat:no-repeat;margin:0 0 5px;}
+#tools #podcast h2 a{text-decoration:none;}
+#tools #podcast #player{margin-top:5px;}
+#tools #weather h2{background:url("img/weather.png");background-position:0 center;background-repeat:no-repeat;margin:0 0 5px;}
+#tools #weather ul{margin:0;}
+#tools #weather ul a{color:#B4CBE4;text-decoration:none;}
+#tools #weather ul a span{color:#fff;text-decoration:underline;}
+#tools #weather ul a:hover {background:#69c;}
+#tools #weather #creditfooter{display:none;} 
+#tools #nowonline h2{background:url("img/information.png");background-position:0 center;background-repeat:no-repeat;margin:0 0 5px;}
+#tools #nowonline p{padding:0 0 0 20px;}
+#tools img{display:block;height:50px;margin:30px;width:200px;}
+#tools ul{list-style:none;margin:0 30px 30px;padding:0;}
+#tools ul li{border:1px solid #69c;}
+#tools ul li a{background:#69c;color:#fff;display:block;padding:2px 20px;}
+#tools ul li a:hover{background:#369;text-decoration:none;}
+#tools a#webadvisor{background-image:url("img/clock.png");background-position:175px center;background-repeat:no-repeat;}
+#tools a#webmail{background-image:url("img/email.png");background-position:175px center;background-repeat:no-repeat;}
+#tools a#courselink{background-image:url("img/book.png");background-position:175px center;background-repeat:no-repeat;}
+#tools a#distanceeducation{background-image:url("img/computer.png");background-position:175px center;background-repeat:no-repeat;}
+#tools a#myportico{background-image:url("img/door.png");background-position:175px center;background-repeat:no-repeat;}
+#tools a,#address p strong{color:#fff;}
+#tools h2{background:#69c url("img/cog.png");background-position:0 center;background-repeat:no-repeat;color:#fff;margin:0 30px;padding:0 0 0 20px;}
+
+/* 2017 Branding */
+#global #logo{
+	background:url("img/universityofguelph.png");
+	color:#fff;
+	display:block;
+	float:left;
+	height:150px;
+	width:150px;
+} /* Top of Logo */
+
+#local .container{
+  background: none;
+} /* Bottom of Logo */
+
+#global form {
+  background-size: 220px auto;
+  width: 220px !important;
+}
+
+#global #searchtext {
+  width: 180px;
+}
+
+/* Departmental branding */
+#header #global h1 {
+	display:block;
+	top: 22px;
+  left: 170px;
+}
+/* End 2017 Branding */
+
+#header #global h1 a {
+	color: #fff;
+	text-decoration: none;
+}
+
+#header #global h1 a:hover {
+	color: #ffcc33;
+	text-decoration: none;
+}
+
+#header #global h1 span {
+	display: block;
+}
+
+#header #global h1 span.office {
+	font-size: 9pt;
+	line-height: 9pt;
+	letter-spacing: 0.02em;
+	padding-left: 2px;
+}
+
+#header #global h1 span.department {
+	letter-spacing: 0.01em;
+	font-size: 22pt;
+	line-height: 26pt;
+}
+
+/* Fix weird orange graphic overhang bug */
+#local ul{overflow: hidden;}
+
+/* Visually Remove white line from body background image */
+body#homepage #main .container,
+#main {
+	background-position: 0px -1px !important;
+}
+
+/*
+ * Sidebar fixes
+ * Add styling for subnav class in addition to default id
+ */
+#sidebar #subnav,
+#sidebar .subnav {
+	padding: 0;
+}
+#sidebar #subnav h3, #sidebar #subnav h2,
+#sidebar .subnav h3, #sidebar .subnav h2 {
+	background: #333;
+	color: #fff;
+	display: block;
+	font-size: 16px;
+	margin: 0;
+	padding: 0 40px;
+	text-transform: uppercase;
+}
+#sidebar #subnav ul,
+#sidebar .subnav ul {
+	list-style: none;
+	margin: 0 0 30px;
+	padding:0;
+}
+#sidebar #subnav ul li,
+#sidebar .subnav ul li {
+	border: 1px solid #ccc;
+	border-width: 0 0 1px;
+}
+#sidebar #subnav ul li a,
+#sidebar .subnav ul li a {
+	background: #fff;
+	color: #555;
+	display: block;
+	padding: 2px 40px;
+	text-decoration: none;
+}
+#sidebar #subnav ul li a:hover,
+#sidebar .subnav ul li a:hover {
+	background: #555;
+	color: #fff;
+	text-decoration: none;
+}
+#sidebar .subnav ul li a:focus,
+#sidebar .subnav ul li a:focus {
+	background: #555;
+	color: #fff;
+	text-decoration: none;
+}
+#sidebar #subnav h3,
+#sidebar .subnav h3 {
+	padding: 2px 20px;
+	font-size: 14px;
+}
+#sidebar #subnav ul li a,
+#sidebar .subnav ul li a {
+	padding-left: 20px;
+	padding-right: 20px;
+}
+/* Potential solution for hiding the images in the subnav menu */
+#sidebar #subnav ul li span,
+#sidebar .subnav ul li span {
+	display: none;
+}
+
+#tools h2#announce {
+	background: none;
+	margin-top: 30px;
+	margin-bottom: 10px;
+	padding: 0;
+}
+
+#tools ul li {
+	list-style-type: square;
+	color: #fff;
+	padding: 0 0 10px 0;
+}
+
+#tools ul li a {
+	padding: 0;
+}
+
+#tools img {
+	display: inline;
+	height: auto;
+	margin: auto;
+	margin-left: 40px;
+	margin-right: 40px;
+	width: auto;
+}
+
+/* Orange bar fixes */
+#local ul {
+}
+
+#local ul li {
+	width: 110px;
+	margin-top: 2px;
+}
+
+#local ul li a {
+	margin-left: 5px;
+	margin-right: 5px;
+	width: 90px;
+	padding: 5px 5px;
+}
+
+/* Fix giant title wrapping */
+#main #content h1 {
+	font-size: 28px;
+}
+
+/* vCard styling */
+
+#content div.contacts {
+	margin-left: 15px;
+	margin-right: 15px;
+}
+
+#content div.contacts h2 {
+	clear: both;
+	border-bottom: 1px solid #555;
+	margin-left: 5px;
+	margin-right: 5px;
+	padding-top: 15px;
+	margin-bottom: 5px;
+}
+
+#content div.vcard {
+	float: left;
+	width: 258px;
+	height: 100px;
+	overflow: auto;
+	margin-left: 4px !important;
+	margin-right: 4px !important;
+}
+
+#content div.vcard2 {
+	float: none;
+	margin-left: 50px !important;
+	margin-right: 50px !important;
+}
+
+#sidebar .vcard {
+	background: #f3f2ee !important;
+	border: 2px solid #e8e5de !important;
+	padding: 5px !important;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+}
+
+#sidebar div.vcard {
+	width: 190px;
+	height: 100px;
+	overflow: auto;
+	margin-left: auto !important;
+	margin-right: auto !important;
+	margin-bottom: 10px;
+}
+
+#content div.vcard span.fn,
+#content div.vcard div.fn,
+#sidebar div.vcard div.fn {
+	font-size: 11pt;
+	font-weight: bold;
+}
+
+#content div.vcard div.title,
+#sidebar div.vcard div.title {
+	line-height: 1em;
+	padding: 2px 0;
+}
+
+/* Override Styles - End */
+
+/* Custom Styles - Start */
+
+#content table {
+	border-collapse: collapse;
+}
+
+#content table th {
+	vertical-align: bottom;
+	padding: 2px 5px;
+}
+
+#content table td {
+	vertical-align: top;
+	padding: 2px 5px;
+}
+
+#askgryph {
+  height: 30px;
+  background-color: #f7f7f7;
+  width: 760px;
+  margin-top: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  z-index: 100;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+#askgryph form {
+  margin: 0;
+  text-align: center;
+}
+
+#askgryph form ul.ui-autocomplete {
+  z-index: 100 !important;
+  text-align: left !important;
+  width: 600px !important;
+  list-style: none !important;
+  margin: 3px 0 !important;
+  background-color: #fff !important;
+}
+
+#askgryph form ul.ui-autocomplete li {
+  display: block !important;
+}
+
+#askgryph form ul.ui-autocomplete li a {
+  margin: 3px !important;
+  border: 1px solid !important;
+  padding: 0 3px !important;
+  display: block !important;
+}
+
+#askgryph #lblquestion {
+  height: 20px;
+  padding: 5px;
+  font-size: 12pt;
+  font-weight: bold;
+  color: #000000;
+  font-family: Arial;
+  line-height: 30px;
+  display: inline;
+}
+
+#askgryph #question {
+  border: 1px solid #555;
+  width: 380px;
+  margin-left: 5px;
+  font-family: Arial;
+  font-size: 11pt;
+  font-weight: bold;
+  padding: 2px;
+  line-height: 1.2;
+  background-color: #FFF000;
+}
+
+#askgryph #AskButton {
+  border: 1px solid #555;
+  background-color: #eee;
+  font-family: Arial;
+  font-size: 9pt;
+  height: 22px;
+  padding: 0px 5px;
+  color: #555;
+  background-image: url('images/menu-item.jpg');
+  background-repeat: repeat-x;
+}
+
+#feature h1 {
+	font-size: 60px;
+	height: 90px;
+	color: #fff;
+	font-weight: bold;
+	padding-left: 10px;
+	top: 130px;
+	left: 0px;
+	position: absolute;
+	z-index: 10;
+	background-color: #000;       /* the background color for the opacity */
+	filter:alpha(opacity=60);
+	-moz-opacity:0.6;
+	opacity: 0.6;
+   	width: 850px;
+}
+
+#feature h1 span {
+	color: #fff;
+	filter:alpha(opacity=100);
+	-moz-opacity:1.0;
+	opacity: 1.0;
+}
+
+#feature img {
+	top: 0px;
+	left: 0px;
+	position: absolute;
+}
+
+#feature-1 h1 {
+	font-size: 60px;
+	height: 90px;
+	color: #fff;
+	font-weight: bold;
+	padding-left: 10px;
+	top: 130px;
+	left: 0px;
+	position: absolute;
+	z-index: 10;
+	background-color: #000;       /* the background color for the opacity */
+	filter:alpha(opacity=60);
+	-moz-opacity:0.6;
+	opacity: 0.6;
+   	width: 850px;
+}
+
+#feature-1 h1 span {
+	color: #fff;
+	filter:alpha(opacity=100);
+	-moz-opacity:1.0;
+	opacity: 1.0;
+}
+
+#feature-1 img {
+	top: 0px;
+	left: 0px;
+	position: absolute;
+}
+
+
+/* Get rid of image borders */
+a img {
+	border: 0;
+}
+
+/* Make footer stick together if page content is dynamically resized */
+
+#misc {
+	position: relative;
+}
+
+#misc .container {
+	position: relative;
+}
+
+/* Fix margins on lists */
+
+#content ul,
+#content ol {
+	margin: 0 50px 20px 70px;
+}
+
+/* Table styles */
+
+
+#content table.borders {
+	border-collapse: collapse;
+	font-size: 8pt;
+	margin-top: 0;
+	margin-bottom: 25px;
+}
+
+#content table.borders th {
+	border: 1px solid #ccc;
+	background-color: #ddd;
+	text-align: left;
+}
+
+#content table.borders td {
+	border: 1px solid #ccc;
+}
+
+#content table.borders tr {
+	background-color: #f7f7f7;
+}
+
+/* Form Styles */
+
+#content form {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+#content form fieldset {
+        border: 1px solid #990000;
+        margin-top: 5px;
+        padding: 10px;
+}
+
+#content form legend {
+        color: #990000;
+        font-weight: bold;
+        font-size: 1.1em;
+}
+
+#content form label {
+        font-size: 10pt;
+}
+
+#content form div.field {
+        margin-top: 5px;
+        margin-bottom: 5px;
+}
+
+#content form div.field label {
+	display: block;
+}
+
+#content form select option {
+        padding: 0px 3px;
+}
+
+/* Advert banners */
+
+#sidebar div.advert {
+	margin-left: 40px;
+	margin-right: 40px;
+	padding: 0;
+}
+
+#sidebar div.advert a {
+	display: block;
+	margin-bottom: 13px;
+}
+
+#sidebar div.advert a img {
+	display: block;
+}
+
+/* AODA Statement */
+
+#aodafooter {
+	padding: 20px 0 0 0;
+	color: #ccc;
+}
+
+#aodafooter a {
+	color: #ccc;
+}
+
+/* Hide descriptive link or title text */
+#content a span.hidden,
+#content h1 span.hidden,
+#content h2 span.hidden,
+#content h3 span.hidden,
+#content h4 span.hidden,
+#content h5 span.hidden,
+#content h6 span.hidden {
+	position: absolute;
+	left: -10000px;
+	top: auto;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+}
+
+/* Custom Styles - End */
