@@ -1,0 +1,47 @@
+/* CSS Document */
+
+.pdf{
+width:20px;
+padding:0 20px 0 0;
+background: url(img/pdf.png) no-repeat right;
+}
+.zip{
+width:20px;
+padding:0 23px 0 0;
+background: url(img/zip.png) no-repeat right;
+}
+.doc{
+width:16px;
+padding:0 16px 0 0;
+background: url(img/doc.png) no-repeat right;
+}
+.txt, .rtf{
+width:16px;
+padding:0 16px 0 0;
+background: url(img/txt.png) no-repeat right;
+}
+.ppt{
+width:16px;
+padding:0 16px 0 0;
+background: url(img/ppt.png) no-repeat right;
+}
+.xls{
+width:16px;
+padding:0 16px 0 0;
+background: url(img/xls.png) no-repeat right;
+}
+.emailp{
+width:13px;
+padding:0 15px 0 0;
+background: url(img/email.png) no-repeat right;
+}
+.wpd{
+width:16px;
+padding:0 16px 0 0;
+background: url(img/wpd.gif) no-repeat right;
+}
+.wmv{
+width:14px;
+padding:2px 16px 2px 0;
+background: url(img/wmv.gif) no-repeat right;
+}
