@@ -1,4 +1,5 @@
 from flask import Flask, render_template, jsonify, request
+from query import Parser
 
 
 app = Flask(__name__,static_folder='../build',static_url_path='/')
@@ -48,8 +49,8 @@ def courses(course, section):
     }
     return response_body
 
-#@app.route('/')
-#def index():
+# @app.route('/')
+# def index():
 #        return render_template("index.html")
 
 
@@ -58,8 +59,11 @@ def courses(course, section):
 def GetCouresName():
     course = request.get_json()
     courseName = course['name']
-    print("drumroll please...")
+    
+    parser = Parser()
+    courseName = parser.findCourse(courseName)
     print(courseName)
+
     return courseName,201
 
 @app.route('/api/test')
