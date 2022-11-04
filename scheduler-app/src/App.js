@@ -3,6 +3,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import './App.css';
 import axios from 'axios';
 
+import Calendar from './components/Calendar';
+
 function App() {
   const [profileData, setProfileData] = useState("nothing")
   const [response, setResponse] = useState("Response_1")
@@ -46,9 +48,9 @@ function App() {
   }
 
   //function to send course name to the backend might not async can be changed to be so
-  const sendCourse = async(event) => {
+  const sendCourse = async (event) => {
     event.preventDefault();
-    const response = await axios.post('/api/GetCouresName', {name: courseName})
+    const response = await axios.post('/api/GetCouresName', { name: courseName })
     console.log(response);
   }
 
@@ -75,14 +77,17 @@ function App() {
         <p>Welcome to the {response}.</p>
         <p>Here is a list of courses: {course}</p>
         <p>Here are the course details: {courseDetails}</p>
+
         <form class="form-inline" onSubmit={sendCourse}>
-          <label class = "form-inline label">
-          <p>Course Name:</p>
-          <input type="text" name="couresName"placeholder="ex. CIS*3090" value={courseName} onChange={(e) => findCourseName(e.target.value)}/>
+          <label class="form-inline label">
+            <p>Course Name:</p>
+            <input type="text" name="couresName" placeholder="ex. CIS*3090" value={courseName} onChange={(e) => findCourseName(e.target.value)} />
           </label>
           <input type="submit" />
         </form>
         <button onClick={handleClick} type="button" className="btn btn-lg">Change</button>
+
+        <Calendar />
       </div>
     </div>
   );
