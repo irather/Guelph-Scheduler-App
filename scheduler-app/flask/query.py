@@ -8,7 +8,7 @@ class Parser:
         data = json.load(file)
 
         for i in data['all']:
-            if i['name'] == courseName:
+            if courseName in i['name']:
                 return(i)
         else:
             print("not found")

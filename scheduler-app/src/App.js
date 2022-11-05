@@ -9,6 +9,8 @@ function App() {
   const [course, setCourse] = useState("course list empty")
   const [courseDetails, setCourseDetails] = useState("no course detail")
   const [courseName, findCourseName] = useState("");
+  const [returnedCourses,getReturnedCourses] = useState({});
+  const [currentCourses,addCourses] = useState([]);
 
   // Example endpoint call 
   useEffect(() => {
@@ -46,10 +48,22 @@ function App() {
   }
 
   //function to send course name to the backend might not async can be changed to be so
-  const sendCourse = async(event) => {
+  const addSearchedCourses = async(event) => {
     event.preventDefault();
-    const response = await axios.post('/api/GetCouresName', {name: courseName})
-    console.log(response);
+    if(currentCourses.length < 5) {
+      const response = await axios.post('/api/searchCourse', {name: courseName});
+
+      if(response.data == "") {
+        alert("Course not found");
+      } else {
+        getReturnedCourses(response.data);
+        addCourses(currentCourses => currentCourses.concat(returnedCourses));
+        console.log(returnedCourses);
+        console.log(response.data);
+      }
+    } else {
+      alert("beep boop more than 5 coureses added ya can't add anymore");
+    }
   }
 
   return (
@@ -75,7 +89,8 @@ function App() {
         <p>Welcome to the {response}.</p>
         <p>Here is a list of courses: {course}</p>
         <p>Here are the course details: {courseDetails}</p>
-        <form class="form-inline" onSubmit={sendCourse}>
+        <p>returnedCourses is: {returnedCourses.name}</p>
+        <form class="form-inline" onSubmit={addSearchedCourses}>
           <label class = "form-inline label">
           <p>Course Name:</p>
           <input type="text" name="couresName"placeholder="ex. CIS*3090" value={courseName} onChange={(e) => findCourseName(e.target.value)}/>
