@@ -55,16 +55,16 @@ def courses(course, section):
 
 
 #function that obtains the course name the name can be changed to a more fitting name
-@app.route('/api/GetCouresName',methods=['POST']) 
-def GetCouresName():
+@app.route('/api/searchCourse',methods=['POST']) 
+def searchCourse():
     course = request.get_json()
     courseName = course['name']
     
     parser = Parser()
-    courseName = parser.findCourse(courseName)
-    print(courseName)
+    searchedCourses = parser.findCourse(courseName)
+    print(searchedCourses)
 
-    return courseName,201
+    return searchedCourses,201
 
 @app.route('/api/test')
 def get_current_time():
