@@ -243,6 +243,19 @@ function App() {
     console.log(currentSchedule);
   }
 
+  const populateList = async(e) => {
+    const response = await axios.post('/api/search10Courses', {name: courseName});
+    document.getElementById("searchDropdown").innerHTML = ""
+
+    if (courseName != "" && response.data[0] != null){
+      for (let i = 0; i < response.data.length; i++){
+        document.getElementById("searchDropdown").innerHTML += "<p>" + response.data[i].name + "<p>"
+      }
+    }
+
+  }
+
+
   return (
     <div>
       <nav className="navbar navbar-expand-lg">
@@ -267,7 +280,11 @@ function App() {
         <form class="form-inline" onSubmit={addSearchedCourses}>
           <label class = "form-inline label">
           <p>Course Name:</p>
-          <input type="text" name="couresName"placeholder="ex. boop*3090" value={courseName} onChange={(e) => findCourseName(e.target.value)}/>
+          <div>
+            <input type="text" name="couresName"placeholder="ex. boop*3090" value={courseName} onChange={(e) => findCourseName(e.target.value)} onKeyUp={(e) => populateList(e)}/>
+            <div id="searchDropdown" class="dropdown-content">
+            </div>
+          </div>
           </label>
           <input type="submit" />
         </form>

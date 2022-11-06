@@ -66,6 +66,30 @@ def searchCourse():
 
     return searchedCourses,201
 
+#function that gets a list of the first 10 courses that has the given text
+@app.route('/api/search10Courses',methods=['POST']) 
+def search10Courses():
+    course = request.get_json()
+    courseName = course['name']
+    
+    parser = Parser()
+    searchedCourses = parser.find10Courses(courseName)
+    print(searchedCourses)
+
+    return searchedCourses,201
+
+#function that gets a list of the courses that has the given text
+@app.route('/api/searchAllCourses',methods=['POST']) 
+def searchAllCourses():
+    course = request.get_json()
+    courseName = course['name']
+    
+    parser = Parser()
+    searchedCourses = parser.findAllCourses(courseName)
+
+    return searchedCourses,201
+
+
 @app.route('/api/test')
 def get_current_time():
         return {"BEEAN":"BEAN FOR THE BEAN GOD"}
