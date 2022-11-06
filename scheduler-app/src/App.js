@@ -2,35 +2,24 @@ import React, { useState, useEffect } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import './App.css';
 import axios from 'axios';
-import Timetable from 'react-timetable-events';
+import { ViewState, EditingState} from '@devexpress/dx-react-scheduler';
+import {
+  Scheduler,
+  WeekView,
+  Appointments,
+} from '@devexpress/dx-react-scheduler-material-ui';
 
-//if we time for colour, red for exam blue for lec, green for lab and purple for sems
-/** this is how the event looks like typically
- *     {
-    id: 2,
-    name: "Custom Event 2",
-    type: "custom", //this can be used to change colour but I'm not sure how yet
-    startTime: new Date("2018-02-22T12:30:00"),
-    endTime: new Date("2018-02-22T18:30:00"), 
-  }
- */
-let currentSchedule = {
-  monday: [],
-  tuesday: [],
-  wednesday: [],
-  thursday: [],
-  friday: [],
-};
+const currentDate = '2022-11-06';
+let meetings = [];
+let currentSchedule = [];
 
 function App() {
-  const [profileData, setProfileData] = useState("nothing")
-  const [response, setResponse] = useState("Response_1")
-  const [course, setCourse] = useState("course list empty")
-  const [courseDetails, setCourseDetails] = useState("no course detail")
   const [courseName, findCourseName] = useState("");
   const [returnedCourses,getReturnedCourses] = useState({});
   const [currentCourses,addCourses] = useState([]);
+  const [schedulerData,addSchedule] = useState([]);
 
+  /*
   // Example endpoint call 
   useEffect(() => {
     fetch('/api/profile').then(res => res.json()).then(data => {
@@ -43,12 +32,11 @@ function App() {
     const response = await axios.get('/api/course/<course>/section/<section>')
     setCourse(JSON.stringify(response.data.course_name_section));
     setCourseDetails(JSON.stringify(response.data.meetings));
-  }
+  }*/
   
 
   //function to send course name to the backend might not async can be changed to be so
   const addSearchedCourses = async(event) => {
-    let meetings = [];
     event.preventDefault();
     if(currentCourses.length < 5) {
       const response = await axios.post('/api/searchCourse', {name: courseName});
@@ -61,8 +49,11 @@ function App() {
         console.log(response.data);
 
         meetings = createEventObjs(response.data);
-        setSchedule(meetings);
-        //console.log(meetings);
+        for(let i = 0;i < meetings.length;i++) {
+          addSchedule(schedulerData => schedulerData.concat({ startDate: meetings[i].startDate, endDate: meetings[i].endDate, title: meetings[i].title}))
+        }
+        console.log("CURRENT SCHED IS");
+        console.log(currentSchedule);
       }
     } else {
       alert("beep boop more than 5 coureses added ya can't add anymore");
@@ -96,16 +87,34 @@ function App() {
   }
 
   //sets the schedule time
-  const setScheduleTime = (tempMeetingInfo, tempScheuduleObj) =>{
-    let time = "2018-02-22T"; //really doesn't matter but needed to set the date pa
-    let tempFullTime = "";
+  const setScheduleTime = (tempMeetingInfo, tempScheuduleObj,day) =>{
+    //"2018-10-28" is sunday and for some reason we need to follow it 
+    let time = "2022-11-"; //really doesn't matter but needed to set the date pay
+    let tempStartTime = "";
+    let tempEndTime = "";
 
-    tempFullTime = time.concat(convertTime(tempMeetingInfo.start_time,tempMeetingInfo.start_type));
-    tempScheuduleObj.startTime = new Date(tempFullTime);
-    tempFullTime = time.concat(convertTime(tempMeetingInfo.end_time,tempMeetingInfo.end_type));
-    tempScheuduleObj.endTime = new Date(tempFullTime);
-    tempScheuduleObj.type = "custom";
+    if(day === "Mon") {
+      tempStartTime = time.concat("07T" + convertTime(tempMeetingInfo.start_time,tempMeetingInfo.start_type));
+      tempEndTime = time.concat("07T" + convertTime(tempMeetingInfo.end_time,tempMeetingInfo.end_type));
+    } else if(day === "Tues") {
+      tempStartTime = time.concat("08T" + convertTime(tempMeetingInfo.start_time,tempMeetingInfo.start_type));
+      tempEndTime = time.concat("08T" + convertTime(tempMeetingInfo.end_time,tempMeetingInfo.end_type));
+    } else if(day === "Wed") {
+      tempStartTime = time.concat("09T" + convertTime(tempMeetingInfo.start_time,tempMeetingInfo.start_type));
+      tempEndTime = time.concat("09T" + convertTime(tempMeetingInfo.end_time,tempMeetingInfo.end_type));
+    } else if(day === "Thur") {
+      tempStartTime = time.concat("10T" + convertTime(tempMeetingInfo.start_time,tempMeetingInfo.start_type));
+      tempEndTime = time.concat("10T" + convertTime(tempMeetingInfo.end_time,tempMeetingInfo.end_type));
+    } else if(day === "Fri") {
+      tempStartTime = time.concat("11T" + convertTime(tempMeetingInfo.start_time,tempMeetingInfo.start_type));
+      tempEndTime = time.concat("11T" + convertTime(tempMeetingInfo.end_time,tempMeetingInfo.end_type));
+    }
 
+    console.log("TEMP START TIME IS " + tempStartTime);
+    console.log("TEMP START TIME IS " + tempEndTime);
+
+    tempScheuduleObj.startDate = new Date(tempStartTime);
+    tempScheuduleObj.endDate = new Date(tempEndTime);
   }
 
   const createEventObjs = (course) => {
@@ -123,18 +132,18 @@ function App() {
         for(let i = 0;i < days.length;i++) {
           tempMeetingInfo = course.meeting_info.LEC;
           tempScheuduleObj = {};
-          tempScheuduleObj.name = tempName.concat(" LEC");
-          tempScheuduleObj.id = tempName.concat(" LEC-" + i);
-          setScheduleTime(tempMeetingInfo,tempScheuduleObj);
-          tempScheuduleObj.day = days[i].trim();
+          tempScheuduleObj.title = tempName.concat(" LEC");
+          //tempScheuduleObj.id = tempName.concat(" LEC-" + i);
+          setScheduleTime(tempMeetingInfo,tempScheuduleObj,days[i].trim());
+          //tempScheuduleObj.day = days[i].trim();
           meeting.push(tempScheuduleObj);
         }
       } else {
         tempMeetingInfo = course.meeting_info.LEC;
-        tempScheuduleObj.name = tempName.concat(" LEC");
-        tempScheuduleObj.id = tempName.concat(" LEC");
-        setScheduleTime(tempMeetingInfo,tempScheuduleObj);
-        tempScheuduleObj.day = days.trim();
+        tempScheuduleObj.title = tempName.concat(" LEC");
+        //tempScheuduleObj.id = tempName.concat(" LEC");
+        setScheduleTime(tempMeetingInfo,tempScheuduleObj,days);
+        //tempScheuduleObj.day = days.trim();
         meeting.push(tempScheuduleObj);
       }
     }
@@ -147,20 +156,20 @@ function App() {
         for(let i = 0;i < days.length;i++) {
           tempMeetingInfo = course.meeting_info.EXAM;
           tempScheuduleObj = {};
-          tempScheuduleObj.name = tempName.concat(" EXAM");
-          tempScheuduleObj.id = tempName.concat(" EXAM-" + i);
-          setScheduleTime(tempMeetingInfo,tempScheuduleObj);
-          tempScheuduleObj.type = "error";
-          tempScheuduleObj.day = days[i].trim();
+          tempScheuduleObj.title = tempName.concat(" EXAM");
+          //tempScheuduleObj.id = tempName.concat(" EXAM-" + i);
+          setScheduleTime(tempMeetingInfo,tempScheuduleObj,days[i].trim());
+          //tempScheuduleObj.type = "error";
+          //tempScheuduleObj.day = days[i].trim();
           meeting.push(tempScheuduleObj);
         }
       } else {
         tempMeetingInfo = course.meeting_info.EXAM;
-        tempScheuduleObj.name = tempName.concat(" EXAM");
-        tempScheuduleObj.id = tempName.concat(" EXAM");
-        setScheduleTime(tempMeetingInfo,tempScheuduleObj);
-        tempScheuduleObj.type = "error";
-        tempScheuduleObj.day = days.trim();
+        tempScheuduleObj.title = tempName.concat(" EXAM");
+        //tempScheuduleObj.id = tempName.concat(" EXAM");
+        setScheduleTime(tempMeetingInfo,tempScheuduleObj,days);
+        //tempScheuduleObj.type = "error";
+        //tempScheuduleObj.day = days.trim();
         meeting.push(tempScheuduleObj);
       }
     }
@@ -173,20 +182,20 @@ function App() {
         for(let i = 0;i < days.length;i++) {
           tempMeetingInfo = course.meeting_info.SEM;
           tempScheuduleObj = {};
-          tempScheuduleObj.name = tempName.concat(" SEM");
-          tempScheuduleObj.id = tempName.concat(" SEM-" + i);
-          setScheduleTime(tempMeetingInfo,tempScheuduleObj);
-          tempScheuduleObj.day = days[i].trim();
+          tempScheuduleObj.title = tempName.concat(" SEM");
+          //tempScheuduleObj.id = tempName.concat(" SEM-" + i);
+          setScheduleTime(tempMeetingInfo,tempScheuduleObj,days[i].trim());
+          //tempScheuduleObj.day = days[i].trim();
           meeting.push(tempScheuduleObj);
         }
       } else {
         tempMeetingInfo = course.meeting_info.SEM;
         tempScheuduleObj = {};
-        tempScheuduleObj.name = tempName.concat(" SEM");
-        tempScheuduleObj.id = tempName.concat(" SEM");
-        setScheduleTime(tempMeetingInfo,tempScheuduleObj);
+        tempScheuduleObj.title = tempName.concat(" SEM");
+        //tempScheuduleObj.id = tempName.concat(" SEM");
+        setScheduleTime(tempMeetingInfo,tempScheuduleObj,days);
 
-        tempScheuduleObj.day = days.trim();
+        //tempScheuduleObj.day = days.trim();
         meeting.push(tempScheuduleObj);
       }
     }
@@ -199,20 +208,20 @@ function App() {
         for(let i = 0;i < days.length;i++) {
           tempMeetingInfo = course.meeting_info.LAB;
           tempScheuduleObj = {};
-          tempScheuduleObj.name = tempName.concat(" LAB");
-          tempScheuduleObj.id = tempName.concat(" LAB-" + i);
-          setScheduleTime(tempMeetingInfo,tempScheuduleObj);
-          tempScheuduleObj.day = days[i].trim();
+          tempScheuduleObj.title = tempName.concat(" LAB");
+          //tempScheuduleObj.id = tempName.concat(" LAB-" + i);
+          setScheduleTime(tempMeetingInfo,tempScheuduleObj,days[i].trim());
+          //tempScheuduleObj.day = days[i].trim();
           meeting.push(tempScheuduleObj);
         }
       } else {
         tempMeetingInfo = course.meeting_info.LAB;
         tempScheuduleObj = {};
-        tempScheuduleObj.name = tempName.concat(" LAB");
-        tempScheuduleObj.id = tempName.concat(" LAB");
-        setScheduleTime(tempMeetingInfo,tempScheuduleObj);
+        tempScheuduleObj.title = tempName.concat(" LAB");
+        //tempScheuduleObj.id = tempName.concat(" LAB");
+        setScheduleTime(tempMeetingInfo,tempScheuduleObj,days);
 
-        tempScheuduleObj.day = days.trim();
+        //tempScheuduleObj.day = days.trim();
         meeting.push(tempScheuduleObj);
       }
     }
@@ -220,6 +229,7 @@ function App() {
     console.log(meeting);
     return(meeting);
   }
+
 
   const setSchedule = (meetings) => {
     for(let i = 0;i < meetings.length;i++) {
@@ -263,15 +273,25 @@ function App() {
         <form class="form-inline" onSubmit={addSearchedCourses}>
           <label class = "form-inline label">
           <p>Course Name:</p>
-          <input type="text" name="couresName"placeholder="ex. CIS*3090" value={courseName} onChange={(e) => findCourseName(e.target.value)}/>
+          <input type="text" name="couresName"placeholder="ex. boop*3090" value={courseName} onChange={(e) => findCourseName(e.target.value)}/>
           </label>
           <input type="submit" />
         </form>
-        <button onClick={handleClick} type="button" className="btn btn-lg">Change</button>
-        <Timetable 
-          events={currentSchedule}
-          style={{ height: '800px'}}
-        />
+        <Scheduler
+          data={schedulerData}
+        >
+          <ViewState
+            currentDate={currentDate}
+          />
+          <EditingState
+            onCommitChanges={currentSchedule}
+          />
+          <WeekView
+            startDayHour={7}
+            endDayHour={24}
+          />
+          <Appointments />
+        </Scheduler>
       </div>
     </div>
   );
