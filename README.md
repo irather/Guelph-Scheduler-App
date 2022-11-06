@@ -71,3 +71,9 @@ This app works with an end user talking to the url, Nginx lives on the Socs VM w
  3. In a new terminal cd to the flask folder inside scheduler_app
  4. Run the command $npm run start-flask 
 
+# Developer Debugging #
+On windows the install script may not work. In that case you may need to install things manually. You do not need nginx or gunicorn
+
+if you encounter the error: "options.allowedHosts[0] should be a non-empty string," try downgrading 'react-scripts' to 4.0.3 and 'npm install'
+
+on windows you may need to run flask with 'python -m flask run' in the flask directory
