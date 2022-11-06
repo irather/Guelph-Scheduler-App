@@ -43,7 +43,8 @@ function App() {
 
       if(response.data == "") {
         alert("Course not found");
-      } else {
+      } 
+      else {
         getReturnedCourses(response.data);
         addCourses(currentCourses => currentCourses.concat(returnedCourses));
         console.log(response.data);
@@ -52,11 +53,12 @@ function App() {
         for(let i = 0;i < meetings.length;i++) {
           addSchedule(schedulerData => schedulerData.concat({ startDate: meetings[i].startDate, endDate: meetings[i].endDate, title: meetings[i].title}))
         }
-        console.log("CURRENT SCHED IS");
+        console.log("CURRENT SCHEDULE IS");
         console.log(currentSchedule);
       }
-    } else {
-      alert("beep boop more than 5 coureses added ya can't add anymore");
+    } 
+    else {
+      alert("There are 5 courses already. You cannot add any more courses.");
     }
   }
 
@@ -66,11 +68,11 @@ function App() {
     let tempTime = "";
     let hour = parseInt(currentTime.split(":")[0]);
 
-    //console.log("hour is: " + hour)
     //should be okay for now as long as things don't go pass 10pm
     if(dayOrNight === "PM" && hour < 12) {
       hour += 12;
-    } else {
+    } 
+    else {
       if(hour < 10) {
         tempTime = "0";
       }
@@ -81,31 +83,33 @@ function App() {
     tempTime = tempTime.concat(currentTime.split(":")[1]);
     tempTime = tempTime.concat(":00");
 
-    //console.log("NEW TIME IS " + tempTime);
-
     return tempTime;
   }
 
   //sets the schedule time
   const setScheduleTime = (tempMeetingInfo, tempScheuduleObj,day) =>{
     //"2018-10-28" is sunday and for some reason we need to follow it 
-    let time = "2022-11-"; //really doesn't matter but needed to set the date pay
+    let time = "2022-11-"; //really doesn't matter but needed to set the date day
     let tempStartTime = "";
     let tempEndTime = "";
 
     if(day === "Mon") {
       tempStartTime = time.concat("07T" + convertTime(tempMeetingInfo.start_time,tempMeetingInfo.start_type));
       tempEndTime = time.concat("07T" + convertTime(tempMeetingInfo.end_time,tempMeetingInfo.end_type));
-    } else if(day === "Tues") {
+    } 
+    else if(day === "Tues") {
       tempStartTime = time.concat("08T" + convertTime(tempMeetingInfo.start_time,tempMeetingInfo.start_type));
       tempEndTime = time.concat("08T" + convertTime(tempMeetingInfo.end_time,tempMeetingInfo.end_type));
-    } else if(day === "Wed") {
+    } 
+    else if(day === "Wed") {
       tempStartTime = time.concat("09T" + convertTime(tempMeetingInfo.start_time,tempMeetingInfo.start_type));
       tempEndTime = time.concat("09T" + convertTime(tempMeetingInfo.end_time,tempMeetingInfo.end_type));
-    } else if(day === "Thur") {
+    } 
+    else if(day === "Thur") {
       tempStartTime = time.concat("10T" + convertTime(tempMeetingInfo.start_time,tempMeetingInfo.start_type));
       tempEndTime = time.concat("10T" + convertTime(tempMeetingInfo.end_time,tempMeetingInfo.end_type));
-    } else if(day === "Fri") {
+    } 
+    else if(day === "Fri") {
       tempStartTime = time.concat("11T" + convertTime(tempMeetingInfo.start_time,tempMeetingInfo.start_type));
       tempEndTime = time.concat("11T" + convertTime(tempMeetingInfo.end_time,tempMeetingInfo.end_type));
     }
@@ -124,7 +128,7 @@ function App() {
     let tempScheuduleObj = {};
     let tempName = course.name.split(" ")[0];
 
-    //adding lecturn times
+    //adding lecture times
     tempScheuduleObj = {};
     if(course.meeting_info.LEC && Object.keys(course.meeting_info.LEC).length != 0) {
       days = course.meeting_info.LEC.days.trim().split(","); 
@@ -133,17 +137,14 @@ function App() {
           tempMeetingInfo = course.meeting_info.LEC;
           tempScheuduleObj = {};
           tempScheuduleObj.title = tempName.concat(" LEC");
-          //tempScheuduleObj.id = tempName.concat(" LEC-" + i);
           setScheduleTime(tempMeetingInfo,tempScheuduleObj,days[i].trim());
-          //tempScheuduleObj.day = days[i].trim();
           meeting.push(tempScheuduleObj);
         }
-      } else {
+      } 
+      else {
         tempMeetingInfo = course.meeting_info.LEC;
         tempScheuduleObj.title = tempName.concat(" LEC");
-        //tempScheuduleObj.id = tempName.concat(" LEC");
         setScheduleTime(tempMeetingInfo,tempScheuduleObj,days);
-        //tempScheuduleObj.day = days.trim();
         meeting.push(tempScheuduleObj);
       }
     }
@@ -157,19 +158,14 @@ function App() {
           tempMeetingInfo = course.meeting_info.EXAM;
           tempScheuduleObj = {};
           tempScheuduleObj.title = tempName.concat(" EXAM");
-          //tempScheuduleObj.id = tempName.concat(" EXAM-" + i);
           setScheduleTime(tempMeetingInfo,tempScheuduleObj,days[i].trim());
-          //tempScheuduleObj.type = "error";
-          //tempScheuduleObj.day = days[i].trim();
           meeting.push(tempScheuduleObj);
         }
-      } else {
+      } 
+      else {
         tempMeetingInfo = course.meeting_info.EXAM;
         tempScheuduleObj.title = tempName.concat(" EXAM");
-        //tempScheuduleObj.id = tempName.concat(" EXAM");
         setScheduleTime(tempMeetingInfo,tempScheuduleObj,days);
-        //tempScheuduleObj.type = "error";
-        //tempScheuduleObj.day = days.trim();
         meeting.push(tempScheuduleObj);
       }
     }
@@ -178,24 +174,21 @@ function App() {
     tempScheuduleObj = {};
     if(course.meeting_info.SEM && Object.keys(course.meeting_info.SEM).length != 0) {
       days = course.meeting_info.SEM.days.trim().split(","); 
+
       if(Array.isArray(days)) {
         for(let i = 0;i < days.length;i++) {
           tempMeetingInfo = course.meeting_info.SEM;
           tempScheuduleObj = {};
           tempScheuduleObj.title = tempName.concat(" SEM");
-          //tempScheuduleObj.id = tempName.concat(" SEM-" + i);
           setScheduleTime(tempMeetingInfo,tempScheuduleObj,days[i].trim());
-          //tempScheuduleObj.day = days[i].trim();
           meeting.push(tempScheuduleObj);
         }
-      } else {
+      } 
+      else {
         tempMeetingInfo = course.meeting_info.SEM;
         tempScheuduleObj = {};
         tempScheuduleObj.title = tempName.concat(" SEM");
-        //tempScheuduleObj.id = tempName.concat(" SEM");
         setScheduleTime(tempMeetingInfo,tempScheuduleObj,days);
-
-        //tempScheuduleObj.day = days.trim();
         meeting.push(tempScheuduleObj);
       }
     }
@@ -204,24 +197,21 @@ function App() {
     tempScheuduleObj = {};
     if(course.meeting_info.LAB && Object.keys(course.meeting_info.LAB).length != 0) {
       days = course.meeting_info.LAB.days.trim().split(","); 
+
       if(Array.isArray(days)) {
         for(let i = 0;i < days.length;i++) {
           tempMeetingInfo = course.meeting_info.LAB;
           tempScheuduleObj = {};
           tempScheuduleObj.title = tempName.concat(" LAB");
-          //tempScheuduleObj.id = tempName.concat(" LAB-" + i);
           setScheduleTime(tempMeetingInfo,tempScheuduleObj,days[i].trim());
-          //tempScheuduleObj.day = days[i].trim();
           meeting.push(tempScheuduleObj);
         }
-      } else {
+      } 
+      else {
         tempMeetingInfo = course.meeting_info.LAB;
         tempScheuduleObj = {};
         tempScheuduleObj.title = tempName.concat(" LAB");
-        //tempScheuduleObj.id = tempName.concat(" LAB");
         setScheduleTime(tempMeetingInfo,tempScheuduleObj,days);
-
-        //tempScheuduleObj.day = days.trim();
         meeting.push(tempScheuduleObj);
       }
     }
@@ -235,13 +225,17 @@ function App() {
     for(let i = 0;i < meetings.length;i++) {
       if(meetings[i].day == "Mon") {
         currentSchedule.monday.push(meetings[i]);
-      } else if(meetings[i].day == "Tues") {
+      }
+      else if(meetings[i].day == "Tues") {
         currentSchedule.tuesday.push(meetings[i]);
-      } else if(meetings[i].day == "Wed") {
+      } 
+      else if(meetings[i].day == "Wed") {
         currentSchedule.wednesday.push(meetings[i]);
-      } else if(meetings[i].day == "Thur") {
+      } 
+      else if(meetings[i].day == "Thur") {
         currentSchedule.thursday.push(meetings[i]);
-      } else if(meetings[i].day == "Fri") {
+      } 
+      else if(meetings[i].day == "Fri") {
         currentSchedule.friday.push(meetings[i]);
       }
     }
