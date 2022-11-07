@@ -246,8 +246,10 @@ function App() {
   const populateList = async(e) => {
     const response = await axios.post('/api/search10Courses', {name: courseName});
     document.getElementById("searchDropdown").innerHTML = ""
+    document.getElementById("searchDropdown").style.display = "none"
 
     if (courseName != "" && response.data[0] != null){
+      document.getElementById("searchDropdown").style.display = "block"
       for (let i = 0; i < response.data.length; i++){
         document.getElementById("searchDropdown").innerHTML += "<p>" + response.data[i].name + "<p>"
       }
@@ -281,7 +283,7 @@ function App() {
           <label class = "form-inline label">
           <p>Course Name:</p>
           <div>
-            <input type="text" name="couresName"placeholder="ex. boop*3090" value={courseName} onChange={(e) => findCourseName(e.target.value)} onKeyUp={(e) => populateList(e)}/>
+            <input type="text" name="couresName"placeholder="ex. CIS*1300" value={courseName} onChange={(e) => findCourseName(e.target.value)} onKeyUp={(e) => populateList(e)}/>
             <div id="searchDropdown" class="dropdown-content">
             </div>
           </div>
