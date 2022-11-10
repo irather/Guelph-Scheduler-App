@@ -23,8 +23,6 @@ build-react:
   stage: build
   script:
     - echo "runnping NPM install hopefully"
-    - cd scheduler-app
-    - npm install
 
 isort:   # This job also runs in the test stage.
   stage: lint    # It can run at the same time as unit-test-job (in parallel).
