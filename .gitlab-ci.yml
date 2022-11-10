@@ -19,6 +19,13 @@ stages:          # List of stages for jobs, and their order of execution
   - test
   - deploy
 
+build-react:
+  stage: build
+  script:
+    - echo "runnping NPM install hopefully"
+    - cd scheduler-app
+    - npm install
+
 isort:   # This job also runs in the test stage.
   stage: lint    # It can run at the same time as unit-test-job (in parallel).
   image: python:3.9-slim-buster
