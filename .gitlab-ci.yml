@@ -33,6 +33,9 @@ unit-test-job:   # This job runs in the test stage.
 
 isort-flask:   # This job also runs in the test stage.
   stage: test    # It can run at the same time as unit-test-job (in parallel).
+  image: python:3.9-slim-buster
+  before_script:
+    - pip install isort
   script:
     - echo "Running ISORT"
     - isort scheduler-app/flask/app.py -c -v
