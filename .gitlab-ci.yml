@@ -32,8 +32,17 @@ pylint:   # This job also runs in the test stage.
   stage: lint    # It can run at the same time as unit-test-job (in parallel).
   image: python:3.9-slim-buster
   before_script:
-    - pip install pip install pylint
+    - pip install pylint
   script:
     - echo "Running pylint"
     - pylint scheduler-app/flask/app.py
+
+flake8:   # This job also runs in the test stage.
+  stage: lint    # It can run at the same time as unit-test-job (in parallel).
+  image: python:3.9-slim-buster
+  before_script:
+    - pip install flake8
+  script:
+    - echo "Running Flake8"
+    - flake8  scheduler-app/flask/app.py
 
