@@ -22,10 +22,9 @@ stages:          # List of stages for jobs, and their order of execution
 build-react:
   image: node:14
   stage: build
-  before_script:
-    - npm install scheduler-app/
   script:
     - echo "runnping NPM install hopefully"
+    - npm install scheduler-app/
 
 isort:   # This job also runs in the test stage.
   stage: lint    # It can run at the same time as unit-test-job (in parallel).
@@ -53,4 +52,11 @@ flake8:   # This job also runs in the test stage.
   script:
     - echo "Running Flake8"
     - flake8  scheduler-app/flask/app.py
+
+eslint:
+  stage: lint
+  image: node:14
+  script:
+    - npm i eslint
+    - node_modules/eslint/bin/eslint.js /scheduler-app/src/
 
