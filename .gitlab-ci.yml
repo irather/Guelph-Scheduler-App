@@ -25,6 +25,8 @@ build-react:
   script:
     - echo "runnping NPM install hopefully"
     - npm install scheduler-app/
+    - npm i eslint
+    - npx eslint ./scheduler-app/src/App.js
 
 isort:   # This job also runs in the test stage.
   stage: lint    # It can run at the same time as unit-test-job (in parallel).
@@ -53,10 +55,5 @@ flake8:   # This job also runs in the test stage.
     - echo "Running Flake8"
     - flake8  scheduler-app/flask/app.py
 
-eslint:
-  stage: lint
-  image: node:14
-  script:
-    - npm i eslint
-    - npx eslint ./scheduler-app/src/App.js
+
 
