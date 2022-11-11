@@ -58,5 +58,5 @@ eslint:
   image: node:14
   script:
     - npm i eslint
-    - node_modules/eslint/bin/eslint.js /scheduler-app/src/
+    - node_modules/eslint/bin/eslint.js ./scheduler-app/src/
 
