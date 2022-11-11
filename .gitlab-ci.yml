@@ -26,7 +26,7 @@ build-eslint-react:
     - echo "runnping NPM install hopefully"
     - npm install scheduler-app/
     - npm install eslint scheduler-app/
-    - scheduler-app/node_modules/eslint/bin/eslint.js ./scheduler-app/src/
+    - ./scheduler-app/node_modules/eslint/bin/eslint.js ./scheduler-app/src/
 
 isort:   # This job also runs in the test stage.
   stage: lint    # It can run at the same time as unit-test-job (in parallel).
