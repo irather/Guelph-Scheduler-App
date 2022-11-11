@@ -19,7 +19,7 @@ stages:          # List of stages for jobs, and their order of execution
   - test
   - deploy
 
-build-react:
+build-eslint:
   image: node:14
   stage: build
   script:
