@@ -9,6 +9,9 @@ import {
   Appointments,
 } from '@devexpress/dx-react-scheduler-material-ui';
 
+const convertTimeFile = require("./convertTime")
+const convertTime = convertTimeFile.convertTime
+
 const currentDate = '2022-11-06';
 let meetings = [];
 let currentSchedule = [];
@@ -64,27 +67,27 @@ function App() {
 
 
   //changes the given time to 24 hour time
-  const convertTime = (currentTime, dayOrNight) => {
-    let tempTime = "";
-    let hour = parseInt(currentTime.split(":")[0]);
+  // function convertTime (currentTime, dayOrNight) {
+  //   let tempTime = "";
+  //   let hour = parseInt(currentTime.split(":")[0]);
 
-    //should be okay for now as long as things don't go pass 10pm
-    if(dayOrNight === "PM" && hour < 12) {
-      hour += 12;
-    } 
-    else {
-      if(hour < 10) {
-        tempTime = "0";
-      }
-    }
+  //   //should be okay for now as long as things don't go pass 10pm
+  //   if(dayOrNight === "PM" && hour < 12) {
+  //     hour += 12;
+  //   } 
+  //   else {
+  //     if(hour < 10) {
+  //       tempTime = "0";
+  //     }
+  //   }
 
-    tempTime = tempTime.concat(hour.toString());
-    tempTime = tempTime.concat(":");
-    tempTime = tempTime.concat(currentTime.split(":")[1]);
-    tempTime = tempTime.concat(":00");
+  //   tempTime = tempTime.concat(hour.toString());
+  //   tempTime = tempTime.concat(":");
+  //   tempTime = tempTime.concat(currentTime.split(":")[1]);
+  //   tempTime = tempTime.concat(":00");
 
-    return tempTime;
-  }
+  //   return tempTime;
+  // }
 
   //sets the schedule time
   const setScheduleTime = (tempMeetingInfo, tempScheuduleObj,day) =>{
