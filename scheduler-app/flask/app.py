@@ -1,3 +1,8 @@
+"""
+    app.py
+        - Flask app for course scheduler
+    Authors: CIS3760 F22 Team 302
+"""
 from flask import Flask, render_template, jsonify, request
 from query import Parser
 
@@ -27,7 +32,7 @@ def response_1():
 # Dummy endpoint to grab list of courses
 @app.route('/api/getCourseList')
 def getCourseList():
-    response_body = { 
+    response_body = {
         "list": ["ACCT*1220*0101", "CIS*3760*0101"]
     }
     return response_body
@@ -35,9 +40,6 @@ def getCourseList():
 # Dummy endpoint to return course name and it's meetings
 @app.route('/api/course/<course>/section/<section>')
 def courses(course, section):
-    # this should obviously be populated with real data later on
-    # TODO: maybe later find out a better way to store scheduling data instead of 
-    #       a raw string and grabbing substrings
     response_body = {
         "course_name_section": "ACCT*1220*0101",
         "meetings": {
@@ -55,11 +57,11 @@ def courses(course, section):
 
 
 #function that obtains the course name the name can be changed to a more fitting name
-@app.route('/api/searchCourse',methods=['POST']) 
+@app.route('/api/searchCourse',methods=['POST'])
 def searchCourse():
     course = request.get_json()
     courseName = course['name']
-    
+
     parser = Parser()
     searchedCourses = parser.findCourse(courseName)
     print(searchedCourses)
@@ -67,11 +69,11 @@ def searchCourse():
     return searchedCourses,201
 
 #function that gets a list of the first 10 courses that has the given text
-@app.route('/api/search10Courses',methods=['POST']) 
+@app.route('/api/search10Courses',methods=['POST'])
 def search10Courses():
     course = request.get_json()
     courseName = course['name']
-    
+
     parser = Parser()
     searchedCourses = parser.find10Courses(courseName)
     print(searchedCourses)
@@ -79,11 +81,11 @@ def search10Courses():
     return searchedCourses,201
 
 #function that gets a list of the courses that has the given text
-@app.route('/api/searchAllCourses',methods=['POST']) 
+@app.route('/api/searchAllCourses',methods=['POST'])
 def searchAllCourses():
     course = request.get_json()
     courseName = course['name']
-    
+
     parser = Parser()
     searchedCourses = parser.findAllCourses(courseName)
 
@@ -92,8 +94,7 @@ def searchAllCourses():
 
 @app.route('/api/test')
 def get_current_time():
-        return {"BEEAN":"BEAN FOR THE BEAN GOD"}
+    return {"BEEAN":"BEAN FOR THE BEAN GOD"}
 
 if __name__ == "__main__":
-   app.run(debug=True)
-
+    app.run(debug=True)
