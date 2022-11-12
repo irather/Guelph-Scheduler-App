@@ -3,15 +3,17 @@
         - Flask app for course scheduler
     Authors: CIS3760 F22 Team 302
 """
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, request
 from query import Parser
 
 
 app = Flask(__name__,static_folder='../build',static_url_path='/')
 
-# Example endpoint
 @app.route('/api/profile')
 def my_profile():
+    """
+    Example endpoint
+    """
     response_body = {
         "name": "Brandon",
         "about" :"God I hope this works"
@@ -19,9 +21,11 @@ def my_profile():
 
     return response_body
 
-# Example endpoint
 @app.route('/api/response_1')
 def response_1():
+    """
+    Example endpoint 2
+    """
     response_body = {
         "header": "Scheduler",
         "body" :"This week's schedule"
@@ -29,17 +33,21 @@ def response_1():
 
     return response_body
 
-# Dummy endpoint to grab list of courses
 @app.route('/api/getCourseList')
 def getCourseList():
+    """
+    Example endpoint for course list
+    """
     response_body = {
         "list": ["ACCT*1220*0101", "CIS*3760*0101"]
     }
     return response_body
 
-# Dummy endpoint to return course name and it's meetings
 @app.route('/api/course/<course>/section/<section>')
 def courses(course, section):
+    """
+    Example endpoint for course details
+    """
     response_body = {
         "course_name_section": "ACCT*1220*0101",
         "meetings": {
@@ -51,14 +59,11 @@ def courses(course, section):
     }
     return response_body
 
-# @app.route('/')
-# def index():
-#        return render_template("index.html")
-
-
-#function that obtains the course name the name can be changed to a more fitting name
 @app.route('/api/searchCourse',methods=['POST'])
 def searchCourse():
+    """
+    - function that obtains the course name the name can be changed to a more fitting name
+    """
     course = request.get_json()
     courseName = course['name']
 
@@ -68,9 +73,11 @@ def searchCourse():
 
     return searchedCourses,201
 
-#function that gets a list of the first 10 courses that has the given text
 @app.route('/api/search10Courses',methods=['POST'])
 def search10Courses():
+    """
+    - function that gets a list of the first 10 courses that has the given text
+    """
     course = request.get_json()
     courseName = course['name']
 
@@ -80,9 +87,11 @@ def search10Courses():
 
     return searchedCourses,201
 
-#function that gets a list of the courses that has the given text
 @app.route('/api/searchAllCourses',methods=['POST'])
 def searchAllCourses():
+    """
+    - function that gets a list of the courses that has the given text
+    """
     course = request.get_json()
     courseName = course['name']
 
@@ -94,6 +103,9 @@ def searchAllCourses():
 
 @app.route('/api/test')
 def get_current_time():
+    """
+    Test endpoint
+    """
     return {"BEEAN":"BEAN FOR THE BEAN GOD"}
 
 if __name__ == "__main__":
