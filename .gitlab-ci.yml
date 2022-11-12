@@ -44,7 +44,7 @@ pylint:   # This job also runs in the test stage.
     - pip install pylint
   script:
     - echo "Running pylint"
-    - pylint scheduler-app/flask/app.py
+    - pylint scheduler-app/flask/app.py --disable=E0401 # ignore import errors because gitlab runner doesn't need flask
 
 flake8:   # This job also runs in the test stage.
   stage: lint    # It can run at the same time as unit-test-job (in parallel).
