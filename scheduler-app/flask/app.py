@@ -34,7 +34,7 @@ def response_1():
     return response_body
 
 @app.route('/api/getCourseList')
-def getCourseList():
+def get_course_list():
     """
     Example endpoint for course list
     """
@@ -43,62 +43,62 @@ def getCourseList():
     }
     return response_body
 
-@app.route('/api/course/<course>/section/<section>')
-def courses(course, section):
-    """
-    Example endpoint for course details
-    """
-    response_body = {
-        "course_name_section": "ACCT*1220*0101",
-        "meetings": {
-            "SEM": "Mon 04:30PM - 05:20PM MCKN, Room 225",
-            "LEC": "Fri 08:30AM - 10:20AM, Room 104",
-            "LAB": "",
-            "EXAM": "Tues 08:30AM - 10:30AM (2022/12/06) Room TBA"
-        }
-    }
-    return response_body
+# @app.route('/api/course/<course>/section/<section>')
+# def courses(course, section):
+#     """
+#     Example endpoint for course details
+#     """
+#     response_body = {
+#         "course_name_section": "ACCT*1220*0101",
+#         "meetings": {
+#             "SEM": "Mon 04:30PM - 05:20PM MCKN, Room 225",
+#             "LEC": "Fri 08:30AM - 10:20AM, Room 104",
+#             "LAB": "",
+#             "EXAM": "Tues 08:30AM - 10:30AM (2022/12/06) Room TBA"
+#         }
+#     }
+#     return response_body
 
 @app.route('/api/searchCourse',methods=['POST'])
-def searchCourse():
+def search_course():
     """
     - function that obtains the course name the name can be changed to a more fitting name
     """
     course = request.get_json()
-    courseName = course['name']
+    course_name = course['name']
 
     parser = Parser()
-    searchedCourses = parser.findCourse(courseName)
-    print(searchedCourses)
+    searched_courses = parser.findCourse(course_name)
+    print(searched_courses)
 
-    return searchedCourses,201
+    return searched_courses,201
 
 @app.route('/api/search10Courses',methods=['POST'])
-def search10Courses():
+def search_10_courses():
     """
     - function that gets a list of the first 10 courses that has the given text
     """
     course = request.get_json()
-    courseName = course['name']
+    course_name = course['name']
 
     parser = Parser()
-    searchedCourses = parser.find10Courses(courseName)
-    print(searchedCourses)
+    searched_courses = parser.find10Courses(course_name)
+    print(searched_courses)
 
-    return searchedCourses,201
+    return searched_courses,201
 
 @app.route('/api/searchAllCourses',methods=['POST'])
-def searchAllCourses():
+def search_all_courses():
     """
     - function that gets a list of the courses that has the given text
     """
     course = request.get_json()
-    courseName = course['name']
+    course_name = course['name']
 
     parser = Parser()
-    searchedCourses = parser.findAllCourses(courseName)
+    searched_courses = parser.findAllCourses(course_name)
 
-    return searchedCourses,201
+    return searched_courses,201
 
 
 @app.route('/api/test')
