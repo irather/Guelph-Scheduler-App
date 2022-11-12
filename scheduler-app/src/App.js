@@ -54,7 +54,7 @@ function App() {
           addSchedule(schedulerData => schedulerData.concat({ startDate: meetings[i].startDate, endDate: meetings[i].endDate, title: meetings[i].title}))
         }
         console.log("CURRENT SCHEDULE IS");
-        console.log(currentSchedule);
+        console.log(schedulerData);
       }
     } 
     else {
@@ -149,6 +149,8 @@ function App() {
       }
     }
 
+    throwAlert(schedulerData, tempScheuduleObj);
+
     //exam time
     tempScheuduleObj = {};
     if(course.meeting_info.EXAM && Object.keys(course.meeting_info.EXAM).length != 0) {
@@ -169,6 +171,8 @@ function App() {
         meeting.push(tempScheuduleObj);
       }
     }
+
+    throwAlert(schedulerData, tempScheuduleObj);
 
     //semester time
     tempScheuduleObj = {};
@@ -193,6 +197,8 @@ function App() {
       }
     }
 
+    throwAlert(schedulerData, tempScheuduleObj);
+
     //LAB time
     tempScheuduleObj = {};
     if(course.meeting_info.LAB && Object.keys(course.meeting_info.LAB).length != 0) {
@@ -216,10 +222,31 @@ function App() {
       }
     }
 
+    throwAlert(schedulerData, tempScheuduleObj);
+
     console.log(meeting);
     return(meeting);
   }
 
+  function throwAlert(schedulerData, courseAdded) {
+
+    for(let i = 0; i<schedulerData.length; i++) {
+
+      let checkCourse = schedulerData[i];
+
+      if(courseAdded.startDate >= checkCourse.startDate && courseAdded.startDate <= checkCourse.endDate) {
+        alert("Conflict between " + courseAdded.title + " & " + checkCourse.title);
+      } 
+      else if(courseAdded.endDate >= checkCourse.startDate && courseAdded.endDate <= checkCourse.endDate) {
+        alert("Conflict between " + courseAdded.title + " & " + checkCourse.title);
+      } 
+      else if (courseAdded.startDate < checkCourse.startDate && courseAdded.endDate > checkCourse.endDate) {
+        alert("Conflict between " + courseAdded.title + " & " + checkCourse.title);
+      }
+
+    }
+
+  }
 
   const setSchedule = (meetings) => {
     for(let i = 0;i < meetings.length;i++) {
