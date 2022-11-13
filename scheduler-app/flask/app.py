@@ -3,11 +3,8 @@
         - Flask app for course scheduler
     Authors: CIS3760 F22 Team 302
 """
-import Flask
 from flask import Flask, request
-import Parser
 from query import Parser
-
 
 app = Flask(__name__, static_folder='../build', static_url_path='/')
 
