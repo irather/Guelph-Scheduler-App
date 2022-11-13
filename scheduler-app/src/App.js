@@ -9,6 +9,10 @@ import {
   Appointments,
 } from '@devexpress/dx-react-scheduler-material-ui';
 
+const functions = require("./functions")
+const convertTime = functions.convertTime
+const throwAlert = functions.throwAlert
+
 const currentDate = '2022-11-06';
 let meetings = [];
 let currentSchedule = [];
@@ -62,32 +66,8 @@ function App() {
     }
   }
 
-
-  //changes the given time to 24 hour time
-  const convertTime = (currentTime, dayOrNight) => {
-    let tempTime = "";
-    let hour = parseInt(currentTime.split(":")[0]);
-
-    //should be okay for now as long as things don't go pass 10pm
-    if(dayOrNight === "PM" && hour < 12) {
-      hour += 12;
-    } 
-    else {
-      if(hour < 10) {
-        tempTime = "0";
-      }
-    }
-
-    tempTime = tempTime.concat(hour.toString());
-    tempTime = tempTime.concat(":");
-    tempTime = tempTime.concat(currentTime.split(":")[1]);
-    tempTime = tempTime.concat(":00");
-
-    return tempTime;
-  }
-
   //sets the schedule time
-  const setScheduleTime = (tempMeetingInfo, tempScheuduleObj,day) =>{
+  const setScheduleTime = (tempMeetingInfo, tempScheuduleObj, day) =>{
     //"2018-10-28" is sunday and for some reason we need to follow it 
     let time = "2022-11-"; //really doesn't matter but needed to set the date day
     let tempStartTime = "";
@@ -121,6 +101,10 @@ function App() {
     tempScheuduleObj.endDate = new Date(tempEndTime);
   }
 
+
+
+
+// ---------- THIS FUNCTION SHOULD DEFINATELY BE BROKEN DOWN ----------
   const createEventObjs = (course) => {
     let meeting = [];
     let tempMeetingInfo = {};
@@ -228,25 +212,7 @@ function App() {
     return(meeting);
   }
 
-  function throwAlert(schedulerData, courseAdded) {
-
-    for(let i = 0; i<schedulerData.length; i++) {
-
-      let checkCourse = schedulerData[i];
-
-      if(courseAdded.startDate >= checkCourse.startDate && courseAdded.startDate <= checkCourse.endDate) {
-        alert("Conflict between " + courseAdded.title + " & " + checkCourse.title);
-      } 
-      else if(courseAdded.endDate >= checkCourse.startDate && courseAdded.endDate <= checkCourse.endDate) {
-        alert("Conflict between " + courseAdded.title + " & " + checkCourse.title);
-      } 
-      else if (courseAdded.startDate < checkCourse.startDate && courseAdded.endDate > checkCourse.endDate) {
-        alert("Conflict between " + courseAdded.title + " & " + checkCourse.title);
-      }
-
-    }
-
-  }
+  
 
   const setSchedule = (meetings) => {
     for(let i = 0;i < meetings.length;i++) {

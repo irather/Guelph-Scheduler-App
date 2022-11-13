@@ -71,6 +71,15 @@ This app works with an end user talking to the url, Nginx lives on the Socs VM w
  3. In a new terminal cd to the flask folder inside scheduler_app
  4. Run the command $npm run start-flask 
 
+# For Developers: Unit Testing #
+run unit tests with 'npm test'
+
+Currently tests can only be done on functions in 'functions.js', so any functions that 'App.js' uses that you want to create a test for must be
+in 'functions.js'.
+When writing functions in 'functions.js', make sure to to add it to the module.exports at the bottom so that the unit testing file can use the function.
+Add the function to module.exports like so: 'module.exports.FUNCTION_NAME = FUNCTION_NAME;'.
+Just follow what is already in 'functions.js' and you should be fine.
+
 # Developer Debugging #
 On windows the install script may not work. In that case you may need to install things manually. You do not need nginx or gunicorn
 
