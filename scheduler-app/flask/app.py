@@ -66,7 +66,8 @@ def get_course_list():
 @app.route('/api/searchCourse', methods=['POST'])
 def search_course():
     """
-    - function that obtains the course name the name can be changed to a more fitting name
+    - function that obtains the course name the name 
+      can be changed to a more fitting name
     """
     course = request.get_json()
     course_name = course['name']
@@ -104,7 +105,7 @@ def search_all_courses():
     parser = Parser()
     searched_courses = parser.findAllCourses(course_name)
 
-    return searched_courses,201
+    return searched_courses, 201
 
 
 @app.route('/api/test')
@@ -112,9 +113,8 @@ def get_current_time():
     """
     Test endpoint
     """
-    return {"BEEAN":"BEAN FOR THE BEAN GOD"}
+    return {"BEEAN": "BEAN FOR THE BEAN GOD"}
 
 
 if __name__ == "__main__":
     app.run(debug=True)
-
