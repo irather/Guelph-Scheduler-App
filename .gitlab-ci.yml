@@ -24,9 +24,10 @@ build-eslint:
   stage: build
   script:
     - echo "runnping NPM install hopefully"
-    - npm install scheduler-app/
+    - cd ./scheduler-app
+    - npm install
     - npm i eslint
-    - npx eslint ./scheduler-app/src/App.js
+    - npx eslint ./src/App.js
 
 isort:   # This job also runs in the test stage.
   stage: lint    # It can run at the same time as unit-test-job (in parallel).
@@ -60,7 +61,8 @@ jest:
   dependencies:
     - build-eslint
   script:
-    - npm test scheduler-app/
+    - cd ./scheduler-app
+    - npm test
 
 
 
