@@ -212,30 +212,6 @@ function App() {
     return(meeting);
   }
 
-  
-
-  const setSchedule = (meetings) => {
-    for(let i = 0;i < meetings.length;i++) {
-      if(meetings[i].day == "Mon") {
-        currentSchedule.monday.push(meetings[i]);
-      }
-      else if(meetings[i].day == "Tues") {
-        currentSchedule.tuesday.push(meetings[i]);
-      } 
-      else if(meetings[i].day == "Wed") {
-        currentSchedule.wednesday.push(meetings[i]);
-      } 
-      else if(meetings[i].day == "Thur") {
-        currentSchedule.thursday.push(meetings[i]);
-      } 
-      else if(meetings[i].day == "Fri") {
-        currentSchedule.friday.push(meetings[i]);
-      }
-    }
-
-    console.log(currentSchedule);
-  }
-
   const populateList = async(e) => {
     const response = await axios.post('/api/search10Courses', {name: courseName});
     document.getElementById("searchDropdown").innerHTML = ""
