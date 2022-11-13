@@ -217,7 +217,7 @@ function App() {
     document.getElementById("searchDropdown").innerHTML = ""
     document.getElementById("searchDropdown").style.display = "none"
 
-    if (courseName != "" && response.data[0] !== null) {
+    if (courseName !== "" && response.data[0] !== null) {
       document.getElementById("searchDropdown").style.display = "block"
       for (let i = 0; i < response.data.length; i++) {
         document.getElementById("searchDropdown").innerHTML += "<p>" + response.data[i].name + "<p>"

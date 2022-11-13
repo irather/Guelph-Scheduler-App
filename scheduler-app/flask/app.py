@@ -67,7 +67,7 @@ def get_course_list():
 def search_course():
     """
     - function that obtains the course name the name 
-      can be changed to a more fitting name
+    can be changed to a more fitting name
     """
     course = request.get_json()
     course_name = course['name']
