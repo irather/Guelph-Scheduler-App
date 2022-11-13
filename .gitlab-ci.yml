@@ -57,12 +57,12 @@ flake8:   # This job also runs in the test stage.
     - flake8  scheduler-app/flask/app.py
 
 jest:
+  image: node:14
   stage: test
-  dependencies:
-    - build-eslint
   script:
     - cd ./scheduler-app
-    - npm test
+    - npm install
+    - npm run test
 
 
 
