@@ -45,6 +45,7 @@ Stop the server with 'sudo nginx -s quit'.
 'index.html' is the basic webpage displayed on our site.  
 'install.sh' will install nginx, copy over configuration files, and start the server.  
 'uninstall.sh' will stop the server and uninstall nginx.  
+'copyDefault.sh' will copy the file 'default' from our repository directory to the correct directory on the VM. 
 
 # Our Site #
 Our site can be accessed at: http://cis3760f22-04.socs.uoguelph.ca
