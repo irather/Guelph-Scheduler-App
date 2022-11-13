@@ -72,7 +72,7 @@ This app works with an end user talking to the url, Nginx lives on the Socs VM w
  4. Run the command $npm run start-flask 
 
 # For Developers: Unit Testing #
-run unit tests with 'npm test'
+run unit tests with 'npm test' in the 'scheduler-app' directory.
 
 Currently tests can only be done on functions in 'functions.js', so any functions that 'App.js' uses that you want to create a test for must be
 in 'functions.js'.
