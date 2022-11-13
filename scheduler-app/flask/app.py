@@ -7,7 +7,8 @@ from flask import Flask, request
 from query import Parser
 
 
-app = Flask(__name__,static_folder='../build',static_url_path='/')
+app = Flask(__name__, static_folder='../build', static_url_path='/')
+
 
 @app.route('/api/profile')
 def my_profile():
@@ -16,10 +17,11 @@ def my_profile():
     """
     response_body = {
         "name": "Brandon",
-        "about" :"God I hope this works"
+        "about": "God I hope this works"
     }
 
     return response_body
+
 
 @app.route('/api/response_1')
 def response_1():
@@ -28,10 +30,11 @@ def response_1():
     """
     response_body = {
         "header": "Scheduler",
-        "body" :"This week's schedule"
+        "body": "This week's schedule"
     }
 
     return response_body
+
 
 @app.route('/api/getCourseList')
 def get_course_list():
@@ -59,7 +62,8 @@ def get_course_list():
 #     }
 #     return response_body
 
-@app.route('/api/searchCourse',methods=['POST'])
+
+@app.route('/api/searchCourse', methods=['POST'])
 def search_course():
     """
     - function that obtains the course name the name can be changed to a more fitting name
@@ -71,9 +75,10 @@ def search_course():
     searched_courses = parser.findCourse(course_name)
     print(searched_courses)
 
-    return searched_courses,201
+    return searched_courses, 201
 
-@app.route('/api/search10Courses',methods=['POST'])
+
+@app.route('/api/search10Courses', methods=['POST'])
 def search_10_courses():
     """
     - function that gets a list of the first 10 courses that has the given text
@@ -85,9 +90,10 @@ def search_10_courses():
     searched_courses = parser.find10Courses(course_name)
     print(searched_courses)
 
-    return searched_courses,201
+    return searched_courses, 201
 
-@app.route('/api/searchAllCourses',methods=['POST'])
+
+@app.route('/api/searchAllCourses', methods=['POST'])
 def search_all_courses():
     """
     - function that gets a list of the courses that has the given text
@@ -108,5 +114,7 @@ def get_current_time():
     """
     return {"BEEAN":"BEAN FOR THE BEAN GOD"}
 
+
 if __name__ == "__main__":
     app.run(debug=True)
+
