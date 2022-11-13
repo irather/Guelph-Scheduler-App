@@ -66,8 +66,7 @@ def get_course_list():
 @app.route('/api/searchCourse', methods=['POST'])
 def search_course():
     """
-    - function that obtains the course name the name 
-    can be changed to a more fitting name
+    - function that searches for course
     """
     course = request.get_json()
     course_name = course['name']
