@@ -3,7 +3,9 @@
         - Flask app for course scheduler
     Authors: CIS3760 F22 Team 302
 """
+import Flask
 from flask import Flask, request
+import Parser
 from query import Parser
 
 
