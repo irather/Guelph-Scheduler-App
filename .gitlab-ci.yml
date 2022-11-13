@@ -55,5 +55,12 @@ flake8:   # This job also runs in the test stage.
     - echo "Running Flake8"
     - flake8  scheduler-app/flask/app.py
 
+jest:
+  stage: test
+  dependencies:
+    - build-eslint
+  script:
+    - npm test scheduler-app/
+
 
 
