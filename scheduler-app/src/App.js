@@ -2,12 +2,7 @@ import React, { useState } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import './App.css';
 import axios from 'axios';
-import { ViewState, EditingState } from '@devexpress/dx-react-scheduler';
-import {
-  Scheduler,
-  WeekView,
-  Appointments,
-} from '@devexpress/dx-react-scheduler-material-ui';
+import Calendar from './components/Calendar';
 
 const functions = require("./functions")
 const convertTime = functions.convertTime
@@ -259,7 +254,7 @@ function App() {
           </label>
           <input type="submit" />
         </form>
-        <Scheduler
+        {/*<Scheduler
           data={schedulerData}
         >
           <ViewState
@@ -273,7 +268,8 @@ function App() {
             endDayHour={24}
           />
           <Appointments />
-        </Scheduler>
+  </Scheduler>*/}
+        <Calendar data={schedulerData} date={currentDate} schedule={currentSchedule} />
       </div>
     </div>
   );
