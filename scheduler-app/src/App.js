@@ -49,7 +49,7 @@ function App() {
 
         const meetings = createEventObjs(response.data);
         for (let i = 0; i < meetings.length; i++) {
-          addSchedule(schedulerData => schedulerData.concat({ startDate: meetings[i].startDate, endDate: meetings[i].endDate, title: meetings[i].title }))
+          addSchedule(schedulerData => schedulerData.concat({ startDate: meetings[i].startDate, endDate: meetings[i].endDate, title: meetings[i].title,  backgroundColor: meetings[i].backgroundColor}))
         }
         console.log("CURRENT SCHEDULE IS");
         console.log(schedulerData);
@@ -116,6 +116,7 @@ function App() {
           tempScheuduleObj = {};
           tempScheuduleObj.title = tempName.concat(" LEC");
           setScheduleTime(tempMeetingInfo, tempScheuduleObj, days[i].trim());
+          tempScheuduleObj.backgroundColor = "#C6E2FF";
           meeting.push(tempScheuduleObj);
         }
       }
@@ -123,6 +124,7 @@ function App() {
         tempMeetingInfo = course.meeting_info.LEC;
         tempScheuduleObj.title = tempName.concat(" LEC");
         setScheduleTime(tempMeetingInfo, tempScheuduleObj, days);
+        tempScheuduleObj.backgroundColor = "#C6E2FF";
         meeting.push(tempScheuduleObj);
       }
     }
@@ -139,6 +141,7 @@ function App() {
           tempScheuduleObj = {};
           tempScheuduleObj.title = tempName.concat(" EXAM");
           setScheduleTime(tempMeetingInfo, tempScheuduleObj, days[i].trim());
+          tempScheuduleObj.backgroundColor = "#008080";
           meeting.push(tempScheuduleObj);
         }
       }
@@ -146,6 +149,7 @@ function App() {
         tempMeetingInfo = course.meeting_info.EXAM;
         tempScheuduleObj.title = tempName.concat(" EXAM");
         setScheduleTime(tempMeetingInfo, tempScheuduleObj, days);
+        tempScheuduleObj.backgroundColor = "#008080";
         meeting.push(tempScheuduleObj);
       }
     }
@@ -163,6 +167,7 @@ function App() {
           tempScheuduleObj = {};
           tempScheuduleObj.title = tempName.concat(" SEM");
           setScheduleTime(tempMeetingInfo, tempScheuduleObj, days[i].trim());
+          tempScheuduleObj.backgroundColor = "#FF7373";
           meeting.push(tempScheuduleObj);
         }
       }
@@ -171,6 +176,7 @@ function App() {
         tempScheuduleObj = {};
         tempScheuduleObj.title = tempName.concat(" SEM");
         setScheduleTime(tempMeetingInfo, tempScheuduleObj, days);
+        tempScheuduleObj.backgroundColor = "#FF7373";
         meeting.push(tempScheuduleObj);
       }
     }
@@ -188,6 +194,7 @@ function App() {
           tempScheuduleObj = {};
           tempScheuduleObj.title = tempName.concat(" LAB");
           setScheduleTime(tempMeetingInfo, tempScheuduleObj, days[i].trim());
+          tempScheuduleObj.backgroundColor = "#B0E0E6";
           meeting.push(tempScheuduleObj);
         }
       }
@@ -196,6 +203,7 @@ function App() {
         tempScheuduleObj = {};
         tempScheuduleObj.title = tempName.concat(" LAB");
         setScheduleTime(tempMeetingInfo, tempScheuduleObj, days);
+        tempScheuduleObj.backgroundColor = "#B0E0E6";
         meeting.push(tempScheuduleObj);
       }
     }
@@ -226,42 +234,42 @@ function App() {
     }
   }
 
+  const removeCourses = async () => {
+    console.log("I HAVE BEEN CLICKED :CCCC");
+    addSchedule([]);
+    addCourses([]);
+    console.log(schedulerData);
+  }
+
 
   return (
     <div>
-      <nav className="navbar navbar-expand-lg">
-        <div className="container-fluid">
-          <a className="navbar-brand" href="/">Scheduler</a>
-          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div className="navbar-nav">
-              <a className="nav-link active" aria-current="page" href="/">Home</a>
-              <a className="nav-link" href="/">Example Link</a>
-            </div>
-          </div>
-        </div>
-      </nav>
-
       <div className="home-page">
-        <h2>Schedule</h2>
-        <p>Current course amount is: {currentCourses.length}</p>
-        <p>Course selected is: {returnedCourses.name}</p>
-        <form className="form-inline" onSubmit={addSearchedCourses}>
-          <label className="form-inline label">
-            <p>Course Name:</p>
-            <div>
-              <input type="text" name="couresName" placeholder="ex. CIS*1300" value={courseName} 
-                onChange={(e) => findCourseName(e.target.value)} onKeyUp={(e) => populateList(e)} 
-                onFocus={(e) => dropdownVisibility("block")} onBlur={(e) => dropdownVisibility("none")}
-              />
-              <div id="searchDropdown" className="dropdown-content">
+        <header>Schedule</header>
+
+        <aside className="aside info">
+          <p>Courses in schedule:{currentCourses.length}</p>
+          <p>Course Selected: {returnedCourses.name}</p>
+        </aside>
+
+        <aside className="aside search">
+          <form className="form-inline" onSubmit={addSearchedCourses}>
+            <label className="form-inline label">
+              <p>Course Name:</p>
+              <div>
+                <input className="searchBar" type="text" name="couresName" placeholder="ex. CIS*1300" value={courseName} 
+                  onChange={(e) => findCourseName(e.target.value)} onKeyUp={(e) => populateList(e)} 
+                  onFocus={(e) => dropdownVisibility("block")} onBlur={(e) => dropdownVisibility("none")}
+                />
+                <div id="searchDropdown" className="dropdown-content">
+                </div>
               </div>
-            </div>
-          </label>
-          <input type="submit" />
-        </form>
+            </label>
+            <button type="submit" class="button">Find</button>
+          </form>
+          <button type="button" class="button" onClick={removeCourses}>Clear</button>
+        </aside>
+
         {/*<Scheduler
           data={schedulerData}
         >
@@ -278,6 +286,9 @@ function App() {
           <Appointments />
   </Scheduler>*/}
         <Calendar data={schedulerData} date={currentDate} schedule={currentSchedule} />
+        <div class="footer">
+          <p>Made with pain, sweat, tear and the screams of damned</p>
+        </div>
       </div>
     </div>
   );
