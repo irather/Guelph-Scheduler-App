@@ -9,7 +9,6 @@ const convertTime = functions.convertTime
 const throwAlert = functions.throwAlert
 
 const currentDate = '2022-11-06';
-let meetings = [];
 let currentSchedule = [];
 
 function App() {
@@ -48,7 +47,7 @@ function App() {
         addCourses(currentCourses => currentCourses.concat(returnedCourses));
         console.log(response.data);
 
-        meetings = createEventObjs(response.data);
+        const meetings = createEventObjs(response.data);
         for (let i = 0; i < meetings.length; i++) {
           addSchedule(schedulerData => schedulerData.concat({ startDate: meetings[i].startDate, endDate: meetings[i].endDate, title: meetings[i].title }))
         }
@@ -221,6 +220,12 @@ function App() {
 
   }
 
+  function dropdownVisibility(visibility) {
+    if (courseName !== "") {
+      document.getElementById("searchDropdown").style.display = visibility
+    }
+  }
+
 
   return (
     <div>
@@ -243,12 +248,15 @@ function App() {
         <h2>Schedule</h2>
         <p>Current course amount is: {currentCourses.length}</p>
         <p>Course selected is: {returnedCourses.name}</p>
-        <form class="form-inline" onSubmit={addSearchedCourses}>
-          <label class="form-inline label">
+        <form className="form-inline" onSubmit={addSearchedCourses}>
+          <label className="form-inline label">
             <p>Course Name:</p>
             <div>
-              <input type="text" name="couresName" placeholder="ex. CIS*1300" value={courseName} onChange={(e) => findCourseName(e.target.value)} onKeyUp={(e) => populateList(e)} />
-              <div id="searchDropdown" class="dropdown-content">
+              <input type="text" name="couresName" placeholder="ex. CIS*1300" value={courseName} 
+                onChange={(e) => findCourseName(e.target.value)} onKeyUp={(e) => populateList(e)} 
+                onFocus={(e) => dropdownVisibility("block")} onBlur={(e) => dropdownVisibility("none")}
+              />
+              <div id="searchDropdown" className="dropdown-content">
               </div>
             </div>
           </label>
