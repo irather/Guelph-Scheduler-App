@@ -220,24 +220,36 @@ function App() {
     findCourseName(course)
   }
 
-  async function populateList(){
-    const response = await axios.post('/api/search10Courses', { name: courseName });
-    // document.getElementById("searchDropdown").innerHTML = ""
+  async function populateList(amount = "10"){
+    const response = await axios.post("/api/search" + amount + "Courses", { name: courseName });
+    
+    //clear and hide dropdown
     while (document.getElementById("searchDropdown").firstChild) {
       document.getElementById("searchDropdown").removeChild(document.getElementById("searchDropdown").lastChild);
     }
     document.getElementById("searchDropdown").style.display = "none"
 
+    //add the courses that match the courseName
     if (courseName !== "" && response.data[0] !== null) {
       document.getElementById("searchDropdown").style.display = "block"
+
       for (let i = 0; i < response.data.length; i++) {
-        //document.getElementById("searchDropdown").innerHTML += "<div id=drop" + String(i) + ">" + response.data[i].name + "</div>"
         const newDiv = document.createElement("div")
         newDiv.innerText = response.data[i].name
         newDiv.onclick = () => {
           dropDownElementClicked (response.data[i].name)
         }
         document.getElementById("searchDropdown").appendChild(newDiv)
+      }
+      //add button for listing all searched courses
+      if(amount !== "All") {
+        const newA = document.createElement("a")
+        newA.innerText = "Show all matching courses"
+        newA.onclick = () => {
+          populateList(amount = "All")
+        }
+        newA.style.color = 'blue'
+        document.getElementById("searchDropdown").appendChild(newA)
       }
     }
 
@@ -275,7 +287,7 @@ function App() {
               <div tabIndex={"100"}
                   onFocus={(e) => dropdownVisibility("block")} onBlur={(e) => dropdownVisibility("none")}>
                 <input id="searchBar" className="searchBar" type="text" name="couresName" placeholder="ex. CIS*1300" value={courseName} 
-                  onChange={(e) => findCourseName(e.target.value)} onKeyUp={populateList}
+                  onChange={(e) => findCourseName(e.target.value)} onKeyUp={(e) => {populateList()}}
                 />
                 <div id="searchDropdown" className="dropdown-content">
                 </div>
@@ -285,22 +297,6 @@ function App() {
           </form>
           <button type="button" class="button" onClick={removeCourses}>Clear</button>
         </aside>
-
-        {/*<Scheduler
-          data={schedulerData}
-        >
-          <ViewState
-            currentDate={currentDate}
-          />
-          <EditingState
-            onCommitChanges={currentSchedule}
-          />
-          <WeekView
-            startDayHour={7}
-            endDayHour={24}
-          />
-          <Appointments />
-  </Scheduler>*/}
         <Calendar data={schedulerData} date={currentDate} schedule={currentSchedule} />
         <div class="footer">
           <p>Made with pain, sweat, tear and the screams of damned</p>
