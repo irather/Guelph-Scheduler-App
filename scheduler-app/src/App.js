@@ -54,6 +54,7 @@ function App() {
         console.log("CURRENT SCHEDULE IS");
         console.log(schedulerData);
       }
+      findCourseName("")
     }
     else {
       alert("There are 5 courses already. You cannot add any more courses.");
@@ -214,15 +215,29 @@ function App() {
     return (meeting);
   }
 
-  const populateList = async (e) => {
+  async function dropDownElementClicked (course) {
+    document.getElementById("searchBar").value = course
+    findCourseName(course)
+  }
+
+  async function populateList(){
     const response = await axios.post('/api/search10Courses', { name: courseName });
-    document.getElementById("searchDropdown").innerHTML = ""
+    // document.getElementById("searchDropdown").innerHTML = ""
+    while (document.getElementById("searchDropdown").firstChild) {
+      document.getElementById("searchDropdown").removeChild(document.getElementById("searchDropdown").lastChild);
+    }
     document.getElementById("searchDropdown").style.display = "none"
 
     if (courseName !== "" && response.data[0] !== null) {
       document.getElementById("searchDropdown").style.display = "block"
       for (let i = 0; i < response.data.length; i++) {
-        document.getElementById("searchDropdown").innerHTML += "<p>" + response.data[i].name + "<p>"
+        //document.getElementById("searchDropdown").innerHTML += "<div id=drop" + String(i) + ">" + response.data[i].name + "</div>"
+        const newDiv = document.createElement("div")
+        newDiv.innerText = response.data[i].name
+        newDiv.onclick = () => {
+          dropDownElementClicked (response.data[i].name)
+        }
+        document.getElementById("searchDropdown").appendChild(newDiv)
       }
     }
 
@@ -254,12 +269,13 @@ function App() {
 
         <aside className="aside search">
           <form className="form-inline" onSubmit={addSearchedCourses}>
-            <label className="form-inline label">
+            <label className="form-inline label"
+              >
               <p>Course Name:</p>
-              <div>
-                <input className="searchBar" type="text" name="couresName" placeholder="ex. CIS*1300" value={courseName} 
-                  onChange={(e) => findCourseName(e.target.value)} onKeyUp={(e) => populateList(e)} 
-                  onFocus={(e) => dropdownVisibility("block")} onBlur={(e) => dropdownVisibility("none")}
+              <div tabIndex={"100"}
+                  onFocus={(e) => dropdownVisibility("block")} onBlur={(e) => dropdownVisibility("none")}>
+                <input id="searchBar" className="searchBar" type="text" name="couresName" placeholder="ex. CIS*1300" value={courseName} 
+                  onChange={(e) => findCourseName(e.target.value)} onKeyUp={populateList}
                 />
                 <div id="searchDropdown" className="dropdown-content">
                 </div>
