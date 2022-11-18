@@ -125,6 +125,41 @@
   top: 1px;
 }
 
+.Cell-dayOfWeek {
+  font-family: Inconsolata, monospace !important;
+  font-size: 1.25rem !important;
+  color: #000000 !important;
+}
+
+.Label-text {
+  font-family: Inconsolata, monospace !important;
+  font-size: 0.95rem !important;
+  color: #000000 !important;
+}
+
+.css-18tcpub-MuiTableCell-root.Cell-cell {
+  border-right: 1px solid rgb(0, 0, 0) !important;
+}
+
+.css-18tcpub-MuiTableCell-root {
+  border-bottom: 1px solid rgb(0, 0, 0) !important;
+}
+
+.Container-container{
+  padding-left: 12.5rem;
+  padding-right: 12.5rem;
+  padding-bottom: 6.25rem;
+}
+
+.css-18tcpub-MuiTableCell-root {
+  background-color: white !important;
+}
+
+.DayScaleEmptyCell-emptyCell {
+  border: none;
+}
+
+
 @media all and (min-width: 800px) {
   .aside { flex: 1 0 0; }
   .info { order: 1; } 
