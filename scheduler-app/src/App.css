@@ -61,6 +61,8 @@
 }
 
 .dropdown-content {
+  height: 400px;
+  margin-left: 16px;
   display: none;
   position: absolute;
   background-color: #f6f6f6;
@@ -68,6 +70,7 @@
   border: 1px solid #ddd;
   z-index: 9;
   color: black;
+  overflow: scroll;
 }
 
 .footer {
