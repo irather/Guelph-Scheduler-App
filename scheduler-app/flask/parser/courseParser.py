@@ -1,7 +1,11 @@
 # parser code goes here
 
-import collections, json, sys, csv
+import collections
+import csv
+import json
+import sys
 from html.parser import HTMLParser
+
 
 class GuelphCourseParser(HTMLParser):
     """
@@ -140,12 +144,12 @@ def parseToCSV(filename):
             row.insert(2, row[2][:row[2].index("(") - 1])
             courseWriter.writerow(row)
 
-def parseToJsonTimeFriendly(filename):
+def parseToJsonTimeFriendly(outfile, infile, existing=[]):
     prsr = GuelphCourseParser()
-    with open("./Section Selection Results WebAdvisor University of Guelph.html") as f:
+    with open(infile) as f:
         prsr.feed(f.read())
 
-    all = []
+    all = existing
     for row in zip(
             prsr.terms, prsr.statuses, prsr.names, prsr.locations, prsr.faculty, 
             prsr.avail, prsr.credits, prsr.academic, prsr.meets
@@ -187,7 +191,7 @@ def parseToJsonTimeFriendly(filename):
             new["meeting_info"][type]["end_type"] = getEndTimeType(meet)
             new["meeting_info"][type]["location"] = getLoc(meet)
         all.append(new)
-    json.dump({"all": all}, open(filename, "w"), indent=4)
+    json.dump({"all": all}, open(outfile, "w"), indent=4)
 
 def parseToJsonFile(filename):
     """
@@ -231,4 +235,7 @@ def parseToJsonFile(filename):
     json.dump(res, open(filename, "w"), indent=4)
 
 # Run the parser
-parseToJsonTimeFriendly("parsed.json")
+parseToJsonTimeFriendly("parsed.json", "raw/f22.html")
+fp = open("parsed.json", "r")
+f22 = json.load(fp)
+parseToJsonTimeFriendly("parsed.json", "raw/w23.html", f22["all"])
