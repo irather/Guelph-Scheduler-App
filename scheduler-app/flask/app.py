@@ -69,9 +69,10 @@ def search_course():
     """
     course = request.get_json()
     course_name = course['name']
+    sem = "Fall 2022" if course["sem"] == "F22" else "Winter 2023"
 
     parser = Parser()
-    searched_courses = parser.findCourse(course_name)
+    searched_courses = parser.findCourse(course_name, sem)
     print(searched_courses)
 
     return searched_courses, 201
@@ -84,9 +85,10 @@ def search_10_courses():
     """
     course = request.get_json()
     course_name = course['name']
+    sem = "Fall 2022" if course["sem"] == "F22" else "Winter 2023"
 
     parser = Parser()
-    searched_courses = parser.find10Courses(course_name)
+    searched_courses = parser.find10Courses(course_name, sem)
     print(searched_courses)
 
     return searched_courses, 201
@@ -99,9 +101,10 @@ def search_all_courses():
     """
     course = request.get_json()
     course_name = course['name']
+    sem = "Fall 2022" if course["sem"] == "F22" else "Winter 2023"
 
     parser = Parser()
-    searched_courses = parser.findAllCourses(course_name)
+    searched_courses = parser.findAllCourses(course_name, sem)
 
     return searched_courses, 201
 

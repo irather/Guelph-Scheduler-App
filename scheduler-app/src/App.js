@@ -16,7 +16,7 @@ function App() {
   const [returnedCourses, getReturnedCourses] = useState({});
   const [currentCourses, addCourses] = useState([]);
   const [schedulerData, addSchedule] = useState([]);
-  const [semester, findSemester] = useState({value: 'F22'});
+  const [semester, findSemester] = useState("");
 
   async function semesterButtonClicked (semester) {
     findSemester(semester);
