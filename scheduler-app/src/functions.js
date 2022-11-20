@@ -23,29 +23,37 @@ function convertTime (currentTime, dayOrNight) {
 
 
 // gives an alert and returns true if there is a conflict
-function throwAlert(schedulerData, courseAdded) {
+function throwAlert(schedulerData, courseAdded, strict = false) {
 
   for(let i = 0; i<schedulerData.length; i++) {
 
     let checkCourse = schedulerData[i];
 
     if(courseAdded.startDate >= checkCourse.startDate && courseAdded.startDate <= checkCourse.endDate) {
-      alert("Conflict between " + courseAdded.title + " & " + checkCourse.title);
+      if(!strict){
+        alert("Conflict between " + courseAdded.title + " & " + checkCourse.title);
+      }
       console.log("Conflict between " + courseAdded.title + " & " + checkCourse.title);
       return (true);
     } 
     else if(courseAdded.endDate >= checkCourse.startDate && courseAdded.endDate <= checkCourse.endDate) {
-      alert("Conflict between " + courseAdded.title + " & " + checkCourse.title);
+      if(!strict){
+        alert("Conflict between " + courseAdded.title + " & " + checkCourse.title);
+      }
       console.log("Conflict between " + courseAdded.title + " & " + checkCourse.title);
       return (true);
     } 
     else if (courseAdded.startDate < checkCourse.startDate && courseAdded.endDate > checkCourse.endDate) {
-      alert("Conflict between " + courseAdded.title + " & " + checkCourse.title);
+      if(!strict){
+        alert("Conflict between " + courseAdded.title + " & " + checkCourse.title);
+      }
       console.log("Conflict between " + courseAdded.title + " & " + checkCourse.title);
       return (true);
     }
     else if (checkCourse.startDate < courseAdded.startDate && checkCourse.endDate > courseAdded.endDate) {
-      alert("Conflict between " + courseAdded.title + " & " + checkCourse.title);
+      if(!strict){
+        alert("Conflict between " + courseAdded.title + " & " + checkCourse.title);
+      }
       console.log("Conflict between " + courseAdded.title + " & " + checkCourse.title);
       return (true);
     }

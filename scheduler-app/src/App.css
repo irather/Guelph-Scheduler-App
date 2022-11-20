@@ -1,15 +1,29 @@
+@import url("https://fonts.googleapis.com/css?family=Inconsolata:400,700");
+
 .navbar {
   background-color: #DBC39A;
 }
 
 .home-page {
-  background-color: #CEAD74;
+  display: flex;
+  flex-flow: row wrap;
+  text-align: center; 
+  background-color: #cea174;
   min-height: 100vh;
   font-size: calc(10px + 2vmin);
   color: white;
 }
 
-.home-page h1 {
+.home-page > * {
+  padding: 10px;
+  flex: 1 100%;
+}
+
+.Cell-dayOfMonth{
+  display: none;
+}
+
+.home-page header {
   font-size: 40px;
   font-weight: 700;
   color: #000000;
@@ -30,11 +44,6 @@
   margin-left: 30px;
 }
 
-.home-page .btn {
-  background-color: #C7A162;
-  margin-left: 30px;
-}
-
 /* Style the form - display items horizontally */
 .form-inline {
   display: flex;
@@ -42,28 +51,18 @@
   align-items: center;
 }
 
+.searchBar {
+  margin-left: 1rem;
+}
+
 /* Add some margins for each label */
 .form-inline label {
   margin: 5px 10px 5px 0;
 }
 
-/* Style the input fields */
-.form-inline input {
-  vertical-align: middle;
-  margin: 5px 10px;
-  padding: 10px;
-}
-
-/* Style the submit button */
-.form-inline button {
-  padding: 10px 20px;
-}
-
-.styles-module_event__28gBZ {
-  font-size: .5em !important;
-}
-
 .dropdown-content {
+  height: 400px;
+  margin-left: 16px;
   display: none;
   position: absolute;
   background-color: #f6f6f6;
@@ -71,4 +70,120 @@
   border: 1px solid #ddd;
   z-index: 9;
   color: black;
+  overflow: scroll;
+}
+
+.footer {
+  opacity: 0.60;
+}
+
+.search{
+  display: flex;
+
+}
+
+.button {
+  font-family: Inconsolata, monospace;
+  position: relative;
+  background-color: black;
+  border-radius: 4em;
+  font-size: 17px;
+  color: white;
+  padding: 0.8em 1.8em;
+  cursor:pointer;
+  user-select:none;
+  text-align: center;
+  text-decoration: none;
+  margin: 1rem;
+  cursor: pointer;
+  transition-duration: 0.4s;
+  -webkit-transition-duration: 0.4s; /* Safari */
+}
+
+.button:after {
+  content: "";
+  display: block;
+  position: absolute;
+  border-radius: 4em;
+  left: 0;
+  top:0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: all 0.5s;
+  box-shadow: 0 0 10px 40px white;
+}
+
+.button:active:after {
+  box-shadow: 0 0 0 0 white;
+  position: absolute;
+  border-radius: 4em;
+  left: 0;
+  top:0;
+  opacity: 1;
+  transition: 0s;
+}
+
+.button:active {
+  top: 1px;
+}
+
+.Cell-dayOfWeek {
+  font-family: Inconsolata, monospace !important;
+  font-size: 1.25rem !important;
+  color: #000000 !important;
+}
+
+.Label-text {
+  font-family: Inconsolata, monospace !important;
+  font-size: 0.95rem !important;
+  color: #000000 !important;
+}
+
+.css-18tcpub-MuiTableCell-root.Cell-cell {
+  border-right: 1px solid rgb(0, 0, 0) !important;
+}
+
+.css-18tcpub-MuiTableCell-root {
+  border-bottom: 1px solid rgb(0, 0, 0) !important;
+}
+
+.Container-container{
+  padding-left: 12.5rem;
+  padding-right: 12.5rem;
+  padding-bottom: 6.25rem;
+}
+
+.css-18tcpub-MuiTableCell-root {
+  background-color: white !important;
+}
+
+.DayScaleEmptyCell-emptyCell {
+  border: none;
+}
+
+.suggestions {
+  font-size: 14px;
+  text-align: left;
+  color: black;
+  vertical-align: text-top;
+}
+
+.suggestedButtons button {
+  display: block; /* Make the buttons appear below each other */
+}
+
+
+@media all and (min-width: 800px) {
+  .aside { flex: 1 0 0; }
+  .info { order: 1; } 
+  .search  { order: 2; }
+  .Container-container { order: 3; }
+  .footer  { order: 4; }
+}
+
+/*semester choice CSS*/
+.semester-choice {
+  color: black;
+  font-size: 14px;
 }

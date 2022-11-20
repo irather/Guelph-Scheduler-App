@@ -1,0 +1,12 @@
+﻿* We could come up with ideas for sprint 9 (3 weight for everyone)
+* Convert the W23 html to JSON (1)
+* Have a remove all courses button/functionality (2 Brandon)
+* Throw an error/alert user of course conflict could have it displayed (2)
+* Restyling alerts (https://stackoverflow.com/questions/7853130/how-to-change-the-style-of-alert-box)
+*  
+* Try to implement most(if not all) of the functionality from VBA (this can be broken up)
+   * By days of the week
+   * By time
+   * * Work on functionality of dropdown/hover (3)
+* Changing colour based on if its lab/lec/sem etc (3)
+* Making testing stuff ( Puppeteer, Playwright, Selenium)

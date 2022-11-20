@@ -9,7 +9,6 @@ const convertTime = functions.convertTime
 const throwAlert = functions.throwAlert
 
 const currentDate = '2022-11-06';
-let meetings = [];
 let currentSchedule = [];
 
 function App() {
@@ -17,6 +16,11 @@ function App() {
   const [returnedCourses, getReturnedCourses] = useState({});
   const [currentCourses, addCourses] = useState([]);
   const [schedulerData, addSchedule] = useState([]);
+  const [semester, findSemester] = useState({value: 'F22'});
+
+  async function semesterButtonClicked (semester) {
+    findSemester(semester);
+  }
 
   /*
   // Example endpoint call 
@@ -38,7 +42,7 @@ function App() {
   const addSearchedCourses = async (event) => {
     event.preventDefault();
     if (currentCourses.length < 5) {
-      const response = await axios.post('/api/searchCourse', { name: courseName });
+      const response = await axios.post('/api/searchCourse', { name: courseName, sem: semester});
 
       if (response.data === "") {
         alert("Course not found");
@@ -48,13 +52,14 @@ function App() {
         addCourses(currentCourses => currentCourses.concat(returnedCourses));
         console.log(response.data);
 
-        meetings = createEventObjs(response.data);
+        const meetings = createEventObjs(response.data, schedulerData);
         for (let i = 0; i < meetings.length; i++) {
-          addSchedule(schedulerData => schedulerData.concat({ startDate: meetings[i].startDate, endDate: meetings[i].endDate, title: meetings[i].title }))
+          await addSchedule(schedulerData => schedulerData.concat({ startDate: meetings[i].startDate, endDate: meetings[i].endDate, title: meetings[i].title,  backgroundColor: meetings[i].backgroundColor}))
         }
         console.log("CURRENT SCHEDULE IS");
         console.log(schedulerData);
       }
+      findCourseName("")
     }
     else {
       alert("There are 5 courses already. You cannot add any more courses.");
@@ -62,7 +67,7 @@ function App() {
   }
 
   //sets the schedule time
-  const setScheduleTime = (tempMeetingInfo, tempScheuduleObj, day) => {
+  const setScheduleTime = (tempMeetingInfo, tempScheduleObj, day) => {
     //"2018-10-28" is sunday and for some reason we need to follow it 
     let time = "2022-11-"; //really doesn't matter but needed to set the date day
     let tempStartTime = "";
@@ -92,184 +97,247 @@ function App() {
     console.log("TEMP START TIME IS " + tempStartTime);
     console.log("TEMP START TIME IS " + tempEndTime);
 
-    tempScheuduleObj.startDate = new Date(tempStartTime);
-    tempScheuduleObj.endDate = new Date(tempEndTime);
+    tempScheduleObj.startDate = new Date(tempStartTime);
+    tempScheduleObj.endDate = new Date(tempEndTime);
   }
 
 
-
-
-  // ---------- THIS FUNCTION SHOULD DEFINATELY BE BROKEN DOWN ----------
-  const createEventObjs = (course) => {
+  const createEventObjs = (course, data, strict = false, suggested = false) => {
     let meeting = [];
     let tempMeetingInfo = {};
     let days = [];
-    let tempScheuduleObj = {};
+    let tempScheduleObj = {};
     let tempName = course.name.split(" ")[0];
+    let isConflict = false;
+    let suggestTag = "";
 
-    //adding lecture times
-    tempScheuduleObj = {};
-    if (course.meeting_info.LEC && Object.keys(course.meeting_info.LEC).length !== 0) {
-      days = course.meeting_info.LEC.days.trim().split(",");
-      if (Array.isArray(days)) {
-        for (let i = 0; i < days.length; i++) {
+    let colours = {};
+    if (suggested){
+      colours = {
+        LEC: "#FFED96",
+        EXAM: "#56FF6A",
+        SEM: "#FFA366",
+        LAB: "#D4FF68"
+      }
+      suggestTag = " SUGGESTED"
+    }
+    else {
+      colours = {
+        LEC: "#C6E2FF",
+        EXAM: "#008080",
+        SEM: "#FF7373",
+        LAB: "#38D1E2"
+      }
+    }
+
+    let keys = Object.keys(course.meeting_info)
+    
+    for (let i in keys){
+      if (course.meeting_info[keys[i]].days !== undefined) {
+        days = course.meeting_info[keys[i]].days.trim().split(",");
+        if (Array.isArray(days)) {
+          for (let j = 0; j < days.length; j++) {
+            tempMeetingInfo = course.meeting_info[keys[i]];
+            tempScheduleObj = {};
+            tempScheduleObj.title = tempName.concat(" " + keys[i] + suggestTag);
+            setScheduleTime(tempMeetingInfo, tempScheduleObj, days[j].trim());
+            tempScheduleObj.backgroundColor = colours[keys[i]];
+            if(!throwAlert(data, tempScheduleObj, strict) ||!strict) {
+              meeting.push(tempScheduleObj);
+            }
+            else {
+              isConflict = true;
+            }
+          }
+        }
+        else {
           tempMeetingInfo = course.meeting_info.LEC;
-          tempScheuduleObj = {};
-          tempScheuduleObj.title = tempName.concat(" LEC");
-          setScheduleTime(tempMeetingInfo, tempScheuduleObj, days[i].trim());
-          meeting.push(tempScheuduleObj);
+          tempScheduleObj.title = tempName.concat(" " + keys[i] + suggestTag);
+          setScheduleTime(tempMeetingInfo, tempScheduleObj, days);
+          tempScheduleObj.backgroundColor = colours[keys[i]];
+          if(!throwAlert(data, tempScheduleObj, strict) ||!strict) {
+            meeting.push(tempScheduleObj);
+          }
+          else {
+            isConflict = true;
+          }
         }
       }
-      else {
-        tempMeetingInfo = course.meeting_info.LEC;
-        tempScheuduleObj.title = tempName.concat(" LEC");
-        setScheduleTime(tempMeetingInfo, tempScheuduleObj, days);
-        meeting.push(tempScheuduleObj);
-      }
     }
-
-    throwAlert(schedulerData, tempScheuduleObj);
-
-    //exam time
-    tempScheuduleObj = {};
-    if (course.meeting_info.EXAM && Object.keys(course.meeting_info.EXAM).length !== 0) {
-      days = course.meeting_info.LEC.days.trim().split(",");
-      if (Array.isArray(days)) {
-        for (let i = 0; i < days.length; i++) {
-          tempMeetingInfo = course.meeting_info.EXAM;
-          tempScheuduleObj = {};
-          tempScheuduleObj.title = tempName.concat(" EXAM");
-          setScheduleTime(tempMeetingInfo, tempScheuduleObj, days[i].trim());
-          meeting.push(tempScheuduleObj);
-        }
-      }
-      else {
-        tempMeetingInfo = course.meeting_info.EXAM;
-        tempScheuduleObj.title = tempName.concat(" EXAM");
-        setScheduleTime(tempMeetingInfo, tempScheuduleObj, days);
-        meeting.push(tempScheuduleObj);
-      }
+    if (isConflict && strict){
+      meeting = []
     }
-
-    throwAlert(schedulerData, tempScheuduleObj);
-
-    //semester time
-    tempScheuduleObj = {};
-    if (course.meeting_info.SEM && Object.keys(course.meeting_info.SEM).length !== 0) {
-      days = course.meeting_info.SEM.days.trim().split(",");
-
-      if (Array.isArray(days)) {
-        for (let i = 0; i < days.length; i++) {
-          tempMeetingInfo = course.meeting_info.SEM;
-          tempScheuduleObj = {};
-          tempScheuduleObj.title = tempName.concat(" SEM");
-          setScheduleTime(tempMeetingInfo, tempScheuduleObj, days[i].trim());
-          meeting.push(tempScheuduleObj);
-        }
-      }
-      else {
-        tempMeetingInfo = course.meeting_info.SEM;
-        tempScheuduleObj = {};
-        tempScheuduleObj.title = tempName.concat(" SEM");
-        setScheduleTime(tempMeetingInfo, tempScheuduleObj, days);
-        meeting.push(tempScheuduleObj);
-      }
-    }
-
-    throwAlert(schedulerData, tempScheuduleObj);
-
-    //LAB time
-    tempScheuduleObj = {};
-    if (course.meeting_info.LAB && Object.keys(course.meeting_info.LAB).length !== 0) {
-      days = course.meeting_info.LAB.days.trim().split(",");
-
-      if (Array.isArray(days)) {
-        for (let i = 0; i < days.length; i++) {
-          tempMeetingInfo = course.meeting_info.LAB;
-          tempScheuduleObj = {};
-          tempScheuduleObj.title = tempName.concat(" LAB");
-          setScheduleTime(tempMeetingInfo, tempScheuduleObj, days[i].trim());
-          meeting.push(tempScheuduleObj);
-        }
-      }
-      else {
-        tempMeetingInfo = course.meeting_info.LAB;
-        tempScheuduleObj = {};
-        tempScheuduleObj.title = tempName.concat(" LAB");
-        setScheduleTime(tempMeetingInfo, tempScheuduleObj, days);
-        meeting.push(tempScheuduleObj);
-      }
-    }
-
-    throwAlert(schedulerData, tempScheuduleObj);
-
-    console.log(meeting);
     return (meeting);
+    
   }
 
-  const populateList = async (e) => {
-    const response = await axios.post('/api/search10Courses', { name: courseName });
-    document.getElementById("searchDropdown").innerHTML = ""
+  
+
+  async function dropDownElementClicked (course) {
+    document.getElementById("searchBar").value = course
+    findCourseName(course)
+  }
+
+  async function populateList(amount = "10"){
+    const response = await axios.post("/api/search" + amount + "Courses", { name: courseName, sem: semester});
+    
+    //clear and hide dropdown
+    while (document.getElementById("searchDropdown").firstChild) {
+      document.getElementById("searchDropdown").removeChild(document.getElementById("searchDropdown").lastChild);
+    }
     document.getElementById("searchDropdown").style.display = "none"
 
+    //add the courses that match the courseName
     if (courseName !== "" && response.data[0] !== null) {
       document.getElementById("searchDropdown").style.display = "block"
+
       for (let i = 0; i < response.data.length; i++) {
-        document.getElementById("searchDropdown").innerHTML += "<p>" + response.data[i].name + "<p>"
+        const newDiv = document.createElement("div")
+        newDiv.innerText = response.data[i].name
+        newDiv.onclick = () => {
+          dropDownElementClicked (response.data[i].name)
+        }
+        document.getElementById("searchDropdown").appendChild(newDiv)
+      }
+      //add button for listing all searched courses
+      if(amount !== "All") {
+        const newA = document.createElement("a")
+        newA.innerText = "Show all matching courses"
+        newA.onclick = () => {
+          populateList(amount = "All")
+        }
+        newA.style.color = 'blue'
+        document.getElementById("searchDropdown").appendChild(newA)
       }
     }
 
+  }
+
+  function dropdownVisibility(visibility) {
+    if (courseName !== "") {
+      document.getElementById("searchDropdown").style.display = visibility
+    }
+  }
+
+  const removeCourses = async () => {
+    addSchedule([]);
+    addCourses([]);
+  }
+
+  const suggestCourses = async (e) => {
+    const response = await axios.post('/api/searchAllCourses', { name: courseName, sem: semester});
+    let j = 0;
+    let tempScheduleData = []
+    let numCourses = currentCourses.length
+    for (let k in schedulerData) {
+      tempScheduleData.push(schedulerData[k])
+    }
+    //copy over schedulerData to tempScheduleData with a for loop
+    while (numCourses < 5 && j < response.data.length){
+      getReturnedCourses(response.data[j]);
+      addCourses(currentCourses => currentCourses.concat(returnedCourses));
+      // console.log(tempScheduleData)
+      const meetings = createEventObjs(response.data[j], tempScheduleData, true, true);
+      if(meetings.length !== 0){
+        numCourses++;
+      }
+      for (let i = 0; i < meetings.length; i++) {
+        tempScheduleData.push({ startDate: meetings[i].startDate, endDate: meetings[i].endDate, title: meetings[i].title,  backgroundColor: meetings[i].backgroundColor});
+        addSchedule(schedulerData => schedulerData.concat({ startDate: meetings[i].startDate, endDate: meetings[i].endDate, title: meetings[i].title,  backgroundColor: meetings[i].backgroundColor}))
+      }
+      console.log(tempScheduleData)
+      j++;
+    }
+  }
+
+  const clearSuggested = async () => {
+    console.log("clear suggested courses")
   }
 
 
   return (
     <div>
-      <nav className="navbar navbar-expand-lg">
-        <div className="container-fluid">
-          <a className="navbar-brand" href="/">Scheduler</a>
-          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div className="navbar-nav">
-              <a className="nav-link active" aria-current="page" href="/">Home</a>
-              <a className="nav-link" href="/">Example Link</a>
-            </div>
-          </div>
-        </div>
-      </nav>
-
       <div className="home-page">
-        <h2>Schedule</h2>
-        <p>Current course amount is: {currentCourses.length}</p>
-        <p>Course selected is: {returnedCourses.name}</p>
-        <form class="form-inline" onSubmit={addSearchedCourses}>
-          <label class="form-inline label">
-            <p>Course Name:</p>
-            <div>
-              <input type="text" name="couresName" placeholder="ex. CIS*1300" value={courseName} onChange={(e) => findCourseName(e.target.value)} onKeyUp={(e) => populateList(e)} />
-              <div id="searchDropdown" class="dropdown-content">
-              </div>
+        <header>Schedule</header>
+          
+        
+
+        <aside className="aside search">
+          <form className="form-inline" onSubmit={addSearchedCourses}>
+              <fieldset className="suggestions">
+                <aside>
+                  <legend>Choose the day off:</legend>
+                  <input type="checkbox" id="monday" name="monday"></input>
+                  <label htmlFor="monday"> monday</label>
+                  <br></br>
+                  <input type="checkbox" id="tuesday" name="tuesday"></input>
+                  <label htmlFor="tuesday"> tuesday</label>
+                  <br></br>              
+                  <input type="checkbox" id="wednesday" name="wednesday"></input>
+                  <label htmlFor="wednesday"> wednesday</label>
+                  <br></br>              
+                  <input type="checkbox" id="thursday" name="thursday"></input>
+                  <label htmlFor="thursday"> thursday</label>
+                  <br></br>            
+                  <input type="checkbox" id="friday" name="friday"></input>
+                  <label htmlFor="friday"> friday</label>
+                  <br></br>            
+                  <input type="checkbox" id="saturday" name="saturday"></input>
+                  <label htmlFor="saturday"> saturday</label>
+                  <br></br>            
+                  <input type="checkbox" id="sunday" name="sunday"></input>
+                  <label htmlFor="sunday"> sunday</label>
+                </aside>
+                
+            </fieldset>
+            <fieldset className="suggestions">
+              <aside>
+                <legend>Time of Day Preference</legend>
+                <input type="checkbox" id="morning" name="morning"></input>
+                <label htmlFor="morning"> morning</label>
+                <br></br>
+                <input type="checkbox" id="afternoon" name="afternoon"></input>
+                <label htmlFor="afternoon"> afternoon</label>
+                <br></br> 
+                <input type="checkbox" id="evening" name="evening"></input>
+                <label htmlFor="evening"> evening</label>
+                <br></br> 
+              </aside>
+            </fieldset>
+            <div className="suggestedButtons">
+              <button type="button" className="button" onClick={suggestCourses}>Suggest Courses</button>
+              <button type="button" className="button" onClick={clearSuggested}>Clear Suggested Courses</button>
             </div>
-          </label>
-          <input type="submit" />
-        </form>
-        {/*<Scheduler
-          data={schedulerData}
-        >
-          <ViewState
-            currentDate={currentDate}
-          />
-          <EditingState
-            onCommitChanges={currentSchedule}
-          />
-          <WeekView
-            startDayHour={7}
-            endDayHour={24}
-          />
-          <Appointments />
-  </Scheduler>*/}
+            
+            <label className="form-inline label">
+              <div className="semester-choice">
+                <fieldset className="fieldset">
+                <legend>Semester choice:</legend>
+                  <input type="radio" id="html" name="fav_language" value="F22" checked="checked" onClick={(e) => semesterButtonClicked(e.target.value)}></input>
+                      <label for="F22">F22</label>
+                  <input type="radio" id="css" name="fav_language" value="W23" onClick={(e) => semesterButtonClicked(e.target.value)}></input>
+                      <label for="W23">W23</label>
+                </fieldset>
+              </div>
+              <p>Course Name:</p>
+              <div tabIndex={"100"}
+                  onFocus={(e) => dropdownVisibility("block")} onBlur={(e) => dropdownVisibility("none")}>
+                <input id="searchBar" className="searchBar" type="text" name="couresName" placeholder="ex. CIS*1300" value={courseName} 
+                  onChange={(e) => findCourseName(e.target.value)} onKeyUp={(e) => {populateList()}}
+                />
+                <div id="searchDropdown" className="dropdown-content">
+                </div>
+              </div>
+              
+            </label>
+            <button type="submit" className="button">Find</button>
+            <button type="button" className="button" onClick={removeCourses}>Clear</button>
+          </form>
+        </aside>
         <Calendar data={schedulerData} date={currentDate} schedule={currentSchedule} />
+        <div className="footer">
+          <p>Made with pain, sweat, tear and the screams of damned</p>
+        </div>
       </div>
     </div>
   );
