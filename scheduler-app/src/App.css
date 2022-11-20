@@ -162,6 +162,17 @@
   border: none;
 }
 
+.suggestions {
+  font-size: 14px;
+  text-align: left;
+  color: black;
+  vertical-align: text-top;
+}
+
+.suggestedButtons button {
+  display: block; /* Make the buttons appear below each other */
+}
+
 
 @media all and (min-width: 800px) {
   .aside { flex: 1 0 0; }

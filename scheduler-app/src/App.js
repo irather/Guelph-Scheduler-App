@@ -49,7 +49,7 @@ function App() {
 
         const meetings = createEventObjs(response.data);
         for (let i = 0; i < meetings.length; i++) {
-          addSchedule(schedulerData => schedulerData.concat({ startDate: meetings[i].startDate, endDate: meetings[i].endDate, title: meetings[i].title,  backgroundColor: meetings[i].backgroundColor}))
+          await addSchedule(schedulerData => schedulerData.concat({ startDate: meetings[i].startDate, endDate: meetings[i].endDate, title: meetings[i].title,  backgroundColor: meetings[i].backgroundColor}))
         }
         console.log("CURRENT SCHEDULE IS");
         console.log(schedulerData);
@@ -100,7 +100,7 @@ function App() {
 
 
   // ---------- THIS FUNCTION SHOULD DEFINATELY BE BROKEN DOWN ----------
-  const createEventObjs = (course) => {
+  const createEventObjs = (course, strict = false) => {
     let meeting = [];
     let tempMeetingInfo = {};
     let days = [];
@@ -118,7 +118,9 @@ function App() {
           tempScheuduleObj.title = tempName.concat(" LEC");
           setScheduleTime(tempMeetingInfo, tempScheuduleObj, days[i].trim());
           tempScheuduleObj.backgroundColor = "#C6E2FF";
-          meeting.push(tempScheuduleObj);
+          if(!throwAlert(schedulerData, tempScheuduleObj, strict) ||!strict) {
+            meeting.push(tempScheuduleObj);
+          }
         }
       }
       else {
@@ -126,11 +128,13 @@ function App() {
         tempScheuduleObj.title = tempName.concat(" LEC");
         setScheduleTime(tempMeetingInfo, tempScheuduleObj, days);
         tempScheuduleObj.backgroundColor = "#C6E2FF";
-        meeting.push(tempScheuduleObj);
+        if(!throwAlert(schedulerData, tempScheuduleObj, strict) ||!strict) {
+          meeting.push(tempScheuduleObj);
+        }
       }
     }
 
-    throwAlert(schedulerData, tempScheuduleObj);
+    // throwAlert(schedulerData, tempScheuduleObj);
 
     //exam time
     tempScheuduleObj = {};
@@ -143,7 +147,9 @@ function App() {
           tempScheuduleObj.title = tempName.concat(" EXAM");
           setScheduleTime(tempMeetingInfo, tempScheuduleObj, days[i].trim());
           tempScheuduleObj.backgroundColor = "#008080";
-          meeting.push(tempScheuduleObj);
+          if(!throwAlert(schedulerData, tempScheuduleObj, strict) ||!strict) {
+            meeting.push(tempScheuduleObj);
+          }
         }
       }
       else {
@@ -151,11 +157,13 @@ function App() {
         tempScheuduleObj.title = tempName.concat(" EXAM");
         setScheduleTime(tempMeetingInfo, tempScheuduleObj, days);
         tempScheuduleObj.backgroundColor = "#008080";
-        meeting.push(tempScheuduleObj);
+        if(!throwAlert(schedulerData, tempScheuduleObj, strict) ||!strict) {
+          meeting.push(tempScheuduleObj);
+        }
       }
     }
 
-    throwAlert(schedulerData, tempScheuduleObj);
+    // throwAlert(schedulerData, tempScheuduleObj);
 
     //semester time
     tempScheuduleObj = {};
@@ -169,7 +177,9 @@ function App() {
           tempScheuduleObj.title = tempName.concat(" SEM");
           setScheduleTime(tempMeetingInfo, tempScheuduleObj, days[i].trim());
           tempScheuduleObj.backgroundColor = "#FF7373";
-          meeting.push(tempScheuduleObj);
+          if(!throwAlert(schedulerData, tempScheuduleObj, strict) ||!strict) {
+            meeting.push(tempScheuduleObj);
+          }
         }
       }
       else {
@@ -178,11 +188,13 @@ function App() {
         tempScheuduleObj.title = tempName.concat(" SEM");
         setScheduleTime(tempMeetingInfo, tempScheuduleObj, days);
         tempScheuduleObj.backgroundColor = "#FF7373";
-        meeting.push(tempScheuduleObj);
+        if(!throwAlert(schedulerData, tempScheuduleObj, strict) ||!strict) {
+          meeting.push(tempScheuduleObj);
+        }
       }
     }
 
-    throwAlert(schedulerData, tempScheuduleObj);
+    // throwAlert(schedulerData, tempScheuduleObj);
 
     //LAB time
     tempScheuduleObj = {};
@@ -196,7 +208,9 @@ function App() {
           tempScheuduleObj.title = tempName.concat(" LAB");
           setScheduleTime(tempMeetingInfo, tempScheuduleObj, days[i].trim());
           tempScheuduleObj.backgroundColor = "#B0E0E6";
-          meeting.push(tempScheuduleObj);
+          if(!throwAlert(schedulerData, tempScheuduleObj, strict) ||!strict) {
+            meeting.push(tempScheuduleObj);
+          }
         }
       }
       else {
@@ -205,13 +219,13 @@ function App() {
         tempScheuduleObj.title = tempName.concat(" LAB");
         setScheduleTime(tempMeetingInfo, tempScheuduleObj, days);
         tempScheuduleObj.backgroundColor = "#B0E0E6";
-        meeting.push(tempScheuduleObj);
+        if(!throwAlert(schedulerData, tempScheuduleObj, strict) ||!strict) {
+          meeting.push(tempScheuduleObj);
+        }
       }
     }
 
-    throwAlert(schedulerData, tempScheuduleObj);
-
-    console.log(meeting);
+    // throwAlert(schedulerData, tempScheuduleObj);
     return (meeting);
   }
 
@@ -262,10 +276,41 @@ function App() {
   }
 
   const removeCourses = async () => {
-    console.log("I HAVE BEEN CLICKED :CCCC");
     addSchedule([]);
     addCourses([]);
-    console.log(schedulerData);
+  }
+
+  const suggestCourses = async (e) => {
+    // const response = await axios.post("/api/searchAllCourses", { name: courseName });
+    // console.log("suggest courses")
+    // console.log(response)
+    
+    for (let i = currentCourses; i < 5; i++) {
+      
+      const response = await axios.post('/api/searchCourse', { name: courseName });
+
+      if (response.data === "") {
+        alert("Course not found");
+      }
+      else {
+        getReturnedCourses(response.data);
+        addCourses(currentCourses => currentCourses.concat(returnedCourses));
+        console.log(response.data);
+
+        const meetings = createEventObjs(response.data, true);
+        for (let i = 0; i < meetings.length; i++) {
+          await addSchedule(schedulerData => schedulerData.concat({ startDate: meetings[i].startDate, endDate: meetings[i].endDate, title: meetings[i].title,  backgroundColor: meetings[i].backgroundColor}))
+        }
+        console.log("CURRENT SCHEDULE IS");
+        console.log(schedulerData);
+      }
+    }
+    console.log(schedulerData)
+    findCourseName("")
+  }
+
+  const clearSuggested = async () => {
+    console.log("clear suggested courses")
   }
 
 
@@ -273,16 +318,57 @@ function App() {
     <div>
       <div className="home-page">
         <header>Schedule</header>
-
-        <aside className="aside info">
-          <p>Courses in schedule:{currentCourses.length}</p>
-          <p>Course Selected: {returnedCourses.name}</p>
-        </aside>
+          
+        
 
         <aside className="aside search">
           <form className="form-inline" onSubmit={addSearchedCourses}>
-            <label className="form-inline label"
-              >
+              <fieldset className="suggestions">
+                <aside>
+                  <legend>Choose the day off:</legend>
+                  <input type="checkbox" id="monday" name="monday"></input>
+                  <label htmlFor="monday"> monday</label>
+                  <br></br>
+                  <input type="checkbox" id="tuesday" name="tuesday"></input>
+                  <label htmlFor="tuesday"> tuesday</label>
+                  <br></br>              
+                  <input type="checkbox" id="wednesday" name="wednesday"></input>
+                  <label htmlFor="wednesday"> wednesday</label>
+                  <br></br>              
+                  <input type="checkbox" id="thursday" name="thursday"></input>
+                  <label htmlFor="thursday"> thursday</label>
+                  <br></br>            
+                  <input type="checkbox" id="friday" name="friday"></input>
+                  <label htmlFor="friday"> friday</label>
+                  <br></br>            
+                  <input type="checkbox" id="saturday" name="saturday"></input>
+                  <label htmlFor="saturday"> saturday</label>
+                  <br></br>            
+                  <input type="checkbox" id="sunday" name="sunday"></input>
+                  <label htmlFor="sunday"> sunday</label>
+                </aside>
+                
+            </fieldset>
+            <fieldset className="suggestions">
+              <aside>
+                <legend>Time of Day Preference</legend>
+                <input type="checkbox" id="morning" name="morning"></input>
+                <label htmlFor="morning"> morning</label>
+                <br></br>
+                <input type="checkbox" id="afternoon" name="afternoon"></input>
+                <label htmlFor="afternoon"> afternoon</label>
+                <br></br> 
+                <input type="checkbox" id="evening" name="evening"></input>
+                <label htmlFor="evening"> evening</label>
+                <br></br> 
+              </aside>
+            </fieldset>
+            <div className="suggestedButtons">
+              <button type="button" className="button" onClick={suggestCourses}>Suggest Courses</button>
+              <button type="button" className="button" onClick={clearSuggested}>Clear Suggested Courses</button>
+            </div>
+            
+            <label className="form-inline label">
               <p>Course Name:</p>
               <div tabIndex={"100"}
                   onFocus={(e) => dropdownVisibility("block")} onBlur={(e) => dropdownVisibility("none")}>
@@ -292,13 +378,14 @@ function App() {
                 <div id="searchDropdown" className="dropdown-content">
                 </div>
               </div>
+              
             </label>
-            <button type="submit" class="button">Find</button>
+            <button type="submit" className="button">Find</button>
+            <button type="button" className="button" onClick={removeCourses}>Clear</button>
           </form>
-          <button type="button" class="button" onClick={removeCourses}>Clear</button>
         </aside>
         <Calendar data={schedulerData} date={currentDate} schedule={currentSchedule} />
-        <div class="footer">
+        <div className="footer">
           <p>Made with pain, sweat, tear and the screams of damned</p>
         </div>
       </div>

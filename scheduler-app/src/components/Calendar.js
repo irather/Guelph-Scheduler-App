@@ -9,7 +9,7 @@ import {
 
 
 const AppointmentContent = (props) => {
-    const { data, style } = props;
+    const { style } = props;
   
     return (
       <Appointments.AppointmentContent
