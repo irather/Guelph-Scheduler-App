@@ -16,6 +16,11 @@ function App() {
   const [returnedCourses, getReturnedCourses] = useState({});
   const [currentCourses, addCourses] = useState([]);
   const [schedulerData, addSchedule] = useState([]);
+  const [semester, findSemester] = useState({value: 'F22'});
+
+  async function semesterButtonClicked (semester) {
+    findSemester(semester);
+  }
 
   /*
   // Example endpoint call 
@@ -37,7 +42,7 @@ function App() {
   const addSearchedCourses = async (event) => {
     event.preventDefault();
     if (currentCourses.length < 5) {
-      const response = await axios.post('/api/searchCourse', { name: courseName });
+      const response = await axios.post('/api/searchCourse', { name: courseName, sem: semester});
 
       if (response.data === "") {
         alert("Course not found");
@@ -174,7 +179,7 @@ function App() {
   }
 
   async function populateList(amount = "10"){
-    const response = await axios.post("/api/search" + amount + "Courses", { name: courseName });
+    const response = await axios.post("/api/search" + amount + "Courses", { name: courseName, sem: semester});
     
     //clear and hide dropdown
     while (document.getElementById("searchDropdown").firstChild) {
@@ -220,7 +225,7 @@ function App() {
   }
 
   const suggestCourses = async (e) => {
-    const response = await axios.post('/api/searchAllCourses', { name: courseName });
+    const response = await axios.post('/api/searchAllCourses', { name: courseName, sem: semester});
     let j = 0;
     let tempScheduleData = []
     let numCourses = currentCourses.length
@@ -305,6 +310,15 @@ function App() {
             </div>
             
             <label className="form-inline label">
+              <div className="semester-choice">
+                <fieldset className="fieldset">
+                <legend>Semester choice:</legend>
+                  <input type="radio" id="html" name="fav_language" value="F22" checked="checked" onClick={(e) => semesterButtonClicked(e.target.value)}></input>
+                      <label for="F22">F22</label>
+                  <input type="radio" id="css" name="fav_language" value="W23" onClick={(e) => semesterButtonClicked(e.target.value)}></input>
+                      <label for="W23">W23</label>
+                </fieldset>
+              </div>
               <p>Course Name:</p>
               <div tabIndex={"100"}
                   onFocus={(e) => dropdownVisibility("block")} onBlur={(e) => dropdownVisibility("none")}>
