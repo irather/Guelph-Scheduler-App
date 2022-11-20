@@ -62,7 +62,7 @@ function App() {
   }
 
   //sets the schedule time
-  const setScheduleTime = (tempMeetingInfo, tempScheuduleObj, day) => {
+  const setScheduleTime = (tempMeetingInfo, tempScheduleObj, day) => {
     //"2018-10-28" is sunday and for some reason we need to follow it 
     let time = "2022-11-"; //really doesn't matter but needed to set the date day
     let tempStartTime = "";
@@ -92,8 +92,8 @@ function App() {
     console.log("TEMP START TIME IS " + tempStartTime);
     console.log("TEMP START TIME IS " + tempEndTime);
 
-    tempScheuduleObj.startDate = new Date(tempStartTime);
-    tempScheuduleObj.endDate = new Date(tempEndTime);
+    tempScheduleObj.startDate = new Date(tempStartTime);
+    tempScheduleObj.endDate = new Date(tempEndTime);
   }
 
 
@@ -104,128 +104,156 @@ function App() {
     let meeting = [];
     let tempMeetingInfo = {};
     let days = [];
-    let tempScheuduleObj = {};
+    let tempScheduleObj = {};
     let tempName = course.name.split(" ")[0];
+    let isConflict = false;
 
     //adding lecture times
-    tempScheuduleObj = {};
+    tempScheduleObj = {};
     if (course.meeting_info.LEC && Object.keys(course.meeting_info.LEC).length !== 0) {
       days = course.meeting_info.LEC.days.trim().split(",");
       if (Array.isArray(days)) {
         for (let i = 0; i < days.length; i++) {
           tempMeetingInfo = course.meeting_info.LEC;
-          tempScheuduleObj = {};
-          tempScheuduleObj.title = tempName.concat(" LEC");
-          setScheduleTime(tempMeetingInfo, tempScheuduleObj, days[i].trim());
-          tempScheuduleObj.backgroundColor = "#C6E2FF";
-          if(!throwAlert(data, tempScheuduleObj, strict) ||!strict) {
-            meeting.push(tempScheuduleObj);
+          tempScheduleObj = {};
+          tempScheduleObj.title = tempName.concat(" LEC");
+          setScheduleTime(tempMeetingInfo, tempScheduleObj, days[i].trim());
+          tempScheduleObj.backgroundColor = "#C6E2FF";
+          if(!throwAlert(data, tempScheduleObj, strict) ||!strict) {
+            meeting.push(tempScheduleObj);
+          }
+          else {
+            isConflict = true;
           }
         }
       }
       else {
         tempMeetingInfo = course.meeting_info.LEC;
-        tempScheuduleObj.title = tempName.concat(" LEC");
-        setScheduleTime(tempMeetingInfo, tempScheuduleObj, days);
-        tempScheuduleObj.backgroundColor = "#C6E2FF";
-        if(!throwAlert(data, tempScheuduleObj, strict) ||!strict) {
-          meeting.push(tempScheuduleObj);
+        tempScheduleObj.title = tempName.concat(" LEC");
+        setScheduleTime(tempMeetingInfo, tempScheduleObj, days);
+        tempScheduleObj.backgroundColor = "#C6E2FF";
+        if(!throwAlert(data, tempScheduleObj, strict) ||!strict) {
+          meeting.push(tempScheduleObj);
+        }
+        else {
+          isConflict = true;
         }
       }
     }
 
-    // throwAlert(schedulerData, tempScheuduleObj);
+    // throwAlert(schedulerData, tempScheduleObj);
 
     //exam time
-    tempScheuduleObj = {};
+    tempScheduleObj = {};
     if (course.meeting_info.EXAM && Object.keys(course.meeting_info.EXAM).length !== 0) {
       days = course.meeting_info.LEC.days.trim().split(",");
       if (Array.isArray(days)) {
         for (let i = 0; i < days.length; i++) {
           tempMeetingInfo = course.meeting_info.EXAM;
-          tempScheuduleObj = {};
-          tempScheuduleObj.title = tempName.concat(" EXAM");
-          setScheduleTime(tempMeetingInfo, tempScheuduleObj, days[i].trim());
-          tempScheuduleObj.backgroundColor = "#008080";
-          if(!throwAlert(data, tempScheuduleObj, strict) ||!strict) {
-            meeting.push(tempScheuduleObj);
+          tempScheduleObj = {};
+          tempScheduleObj.title = tempName.concat(" EXAM");
+          setScheduleTime(tempMeetingInfo, tempScheduleObj, days[i].trim());
+          tempScheduleObj.backgroundColor = "#008080";
+          if(!throwAlert(data, tempScheduleObj, strict) ||!strict) {
+            meeting.push(tempScheduleObj);
+          }
+          else {
+            isConflict = true;
           }
         }
       }
       else {
         tempMeetingInfo = course.meeting_info.EXAM;
-        tempScheuduleObj.title = tempName.concat(" EXAM");
-        setScheduleTime(tempMeetingInfo, tempScheuduleObj, days);
-        tempScheuduleObj.backgroundColor = "#008080";
-        if(!throwAlert(data, tempScheuduleObj, strict) ||!strict) {
-          meeting.push(tempScheuduleObj);
+        tempScheduleObj.title = tempName.concat(" EXAM");
+        setScheduleTime(tempMeetingInfo, tempScheduleObj, days);
+        tempScheduleObj.backgroundColor = "#008080";
+        if(!throwAlert(data, tempScheduleObj, strict) ||!strict) {
+          meeting.push(tempScheduleObj);
+        }
+        else {
+          isConflict = true;
         }
       }
     }
 
-    // throwAlert(schedulerData, tempScheuduleObj);
+    // throwAlert(schedulerData, tempScheduleObj);
 
     //semester time
-    tempScheuduleObj = {};
+    tempScheduleObj = {};
     if (course.meeting_info.SEM && Object.keys(course.meeting_info.SEM).length !== 0) {
       days = course.meeting_info.SEM.days.trim().split(",");
 
       if (Array.isArray(days)) {
         for (let i = 0; i < days.length; i++) {
           tempMeetingInfo = course.meeting_info.SEM;
-          tempScheuduleObj = {};
-          tempScheuduleObj.title = tempName.concat(" SEM");
-          setScheduleTime(tempMeetingInfo, tempScheuduleObj, days[i].trim());
-          tempScheuduleObj.backgroundColor = "#FF7373";
-          if(!throwAlert(data, tempScheuduleObj, strict) ||!strict) {
-            meeting.push(tempScheuduleObj);
+          tempScheduleObj = {};
+          tempScheduleObj.title = tempName.concat(" SEM");
+          setScheduleTime(tempMeetingInfo, tempScheduleObj, days[i].trim());
+          tempScheduleObj.backgroundColor = "#FF7373";
+          if(!throwAlert(data, tempScheduleObj, strict) ||!strict) {
+            meeting.push(tempScheduleObj);
+          }
+          else {
+            isConflict = true;
           }
         }
       }
       else {
         tempMeetingInfo = course.meeting_info.SEM;
-        tempScheuduleObj = {};
-        tempScheuduleObj.title = tempName.concat(" SEM");
-        setScheduleTime(tempMeetingInfo, tempScheuduleObj, days);
-        tempScheuduleObj.backgroundColor = "#FF7373";
-        if(!throwAlert(data, tempScheuduleObj, strict) ||!strict) {
-          meeting.push(tempScheuduleObj);
+        tempScheduleObj = {};
+        tempScheduleObj.title = tempName.concat(" SEM");
+        setScheduleTime(tempMeetingInfo, tempScheduleObj, days);
+        tempScheduleObj.backgroundColor = "#FF7373";
+        if(!throwAlert(data, tempScheduleObj, strict) ||!strict) {
+          meeting.push(tempScheduleObj);
+        }
+        else {
+          isConflict = true;
         }
       }
     }
 
-    // throwAlert(schedulerData, tempScheuduleObj);
+    // throwAlert(schedulerData, tempScheduleObj);
 
     //LAB time
-    tempScheuduleObj = {};
+    tempScheduleObj = {};
     if (course.meeting_info.LAB && Object.keys(course.meeting_info.LAB).length !== 0) {
       days = course.meeting_info.LAB.days.trim().split(",");
 
       if (Array.isArray(days)) {
         for (let i = 0; i < days.length; i++) {
           tempMeetingInfo = course.meeting_info.LAB;
-          tempScheuduleObj = {};
-          tempScheuduleObj.title = tempName.concat(" LAB");
-          setScheduleTime(tempMeetingInfo, tempScheuduleObj, days[i].trim());
-          tempScheuduleObj.backgroundColor = "#B0E0E6";
-          if(!throwAlert(data, tempScheuduleObj, strict) ||!strict) {
-            meeting.push(tempScheuduleObj);
+          tempScheduleObj = {};
+          tempScheduleObj.title = tempName.concat(" LAB");
+          setScheduleTime(tempMeetingInfo, tempScheduleObj, days[i].trim());
+          tempScheduleObj.backgroundColor = "#B0E0E6";
+          if(!throwAlert(data, tempScheduleObj, strict) ||!strict) {
+            meeting.push(tempScheduleObj);
+          }
+          else {
+            isConflict = true;
           }
         }
       }
       else {
         tempMeetingInfo = course.meeting_info.LAB;
-        tempScheuduleObj = {};
-        tempScheuduleObj.title = tempName.concat(" LAB");
-        setScheduleTime(tempMeetingInfo, tempScheuduleObj, days);
-        tempScheuduleObj.backgroundColor = "#B0E0E6";
-        if(!throwAlert(data, tempScheuduleObj, strict) ||!strict) {
-          meeting.push(tempScheuduleObj);
+        tempScheduleObj = {};
+        tempScheduleObj.title = tempName.concat(" LAB");
+        setScheduleTime(tempMeetingInfo, tempScheduleObj, days);
+        tempScheduleObj.backgroundColor = "#B0E0E6";
+        if(!throwAlert(data, tempScheduleObj, strict) ||!strict) {
+          meeting.push(tempScheduleObj);
+        }
+        else {
+          isConflict = true;
         }
       }
     }
-
-    // throwAlert(schedulerData, tempScheuduleObj);
+    if (isConflict && strict){
+      meeting = []
+    }
+    // throwAlert(schedulerData, tempScheduleObj);
+    console.log("meeting: ", meeting)
     return (meeting);
   }
 
@@ -281,34 +309,29 @@ function App() {
   }
 
   const suggestCourses = async (e) => {
-    // const response = await axios.post("/api/searchAllCourses", { name: courseName });
-    // console.log("suggest courses")
-    // console.log(response)
-    e.preventDefault()
-    let tempSchedulerData = schedulerData
-    for (let i = currentCourses; i < 5; i++) {
-      
-      const response = await axios.post('/api/searchCourse', { name: courseName });
-
-      if (response.data === "") {
-        alert("Course not found");
-      }
-      else {
-        getReturnedCourses(response.data);
-        addCourses(currentCourses => currentCourses.concat(returnedCourses));
-        console.log(response.data);
-
-        const meetings = createEventObjs(response.data, tempSchedulerData, true);
-        for (let i = 0; i < meetings.length; i++) {
-          tempSchedulerData.push({ startDate: meetings[i].startDate, endDate: meetings[i].endDate, title: meetings[i].title,  backgroundColor: meetings[i].backgroundColor})
-          addSchedule(schedulerData => schedulerData.concat({ startDate: meetings[i].startDate, endDate: meetings[i].endDate, title: meetings[i].title,  backgroundColor: meetings[i].backgroundColor}))
-        }
-        console.log("CURRENT SCHEDULE IS");
-        console.log(schedulerData, tempSchedulerData);
-      }
+    const response = await axios.post('/api/searchAllCourses', { name: courseName });
+    let j = 0;
+    let tempScheduleData = []
+    let numCourses = currentCourses.length
+    for (let k in schedulerData) {
+      tempScheduleData.push(schedulerData[k])
     }
-    console.log(tempSchedulerData)
-    findCourseName("")
+    //copy over schedulerData to tempScheduleData with a for loop
+    while (numCourses < 5 && j < response.data.length){
+      getReturnedCourses(response.data[j]);
+      addCourses(currentCourses => currentCourses.concat(returnedCourses));
+      // console.log(tempScheduleData)
+      const meetings = createEventObjs(response.data[j], tempScheduleData, true);
+      if(meetings.length !== 0){
+        numCourses++;
+      }
+      for (let i = 0; i < meetings.length; i++) {
+        tempScheduleData.push({ startDate: meetings[i].startDate, endDate: meetings[i].endDate, title: meetings[i].title,  backgroundColor: meetings[i].backgroundColor});
+        addSchedule(schedulerData => schedulerData.concat({ startDate: meetings[i].startDate, endDate: meetings[i].endDate, title: meetings[i].title,  backgroundColor: meetings[i].backgroundColor}))
+      }
+      console.log(tempScheduleData)
+      j++;
+    }
   }
 
   const clearSuggested = async () => {
