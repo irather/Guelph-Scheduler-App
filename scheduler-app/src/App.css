@@ -8,7 +8,7 @@
   display: flex;
   flex-flow: row wrap;
   text-align: center; 
-  background-color: #CEAD74;
+  background-color: #cea174;
   min-height: 100vh;
   font-size: calc(10px + 2vmin);
   color: white;
@@ -182,3 +182,8 @@
   .footer  { order: 4; }
 }
 
+/*semester choice CSS*/
+.semester-choice {
+  color: black;
+  font-size: 14px;
+}
