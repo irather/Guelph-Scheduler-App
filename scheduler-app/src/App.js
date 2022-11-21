@@ -21,13 +21,13 @@ function App() {
   const [isOpen, setIsOpen] = useState(false);
   const [errorCourse, setErrorCourse] = useState([]);
 
-  //set F22 to be default
+  //set W23 to be default
   window.onload = () => {
     document.getElementById("W23").checked = true;
   }
 
-  async function semesterButtonClicked (semester) {
-    findSemester(semester);
+  async function semesterButtonClicked (e) {
+    findSemester(e.target.value);
   }
 
   /*
@@ -157,8 +157,8 @@ function App() {
               isConflict = true;
             }
 
-            if(throwAlert(data, tempScheduleObj, strict) === true) {
-              setErrorCourse(tempScheduleObj.title);
+            if(throwAlert(data, tempScheduleObj, strict) === true && !strict) {
+              setErrorCourse(course.name);
               setIsOpen(!isOpen);
             }
           }
@@ -175,8 +175,8 @@ function App() {
             isConflict = true;
           }
 
-          if(throwAlert(data, tempScheduleObj, strict) === true) {
-            setErrorCourse(tempScheduleObj.title);
+          if(throwAlert(data, tempScheduleObj, strict) === true && !strict) {
+            setErrorCourse(course.name);
             setIsOpen(!isOpen);
           }
         }
@@ -213,7 +213,7 @@ function App() {
         const newDiv = document.createElement("div")
         newDiv.innerText = response.data[i].name
         newDiv.onclick = () => {
-          dropDownElementClicked (response.data[i].name)
+          dropDownElementClicked(response.data[i].name)
         }
         document.getElementById("searchDropdown").appendChild(newDiv)
       }
@@ -275,7 +275,7 @@ function App() {
 
   return (
     <div>
-      <div class="row">
+      <div className="row">
           {/* Popup */}
           <div>
             {isOpen && <Popup 
@@ -287,14 +287,14 @@ function App() {
             />} 
           </div>  
       </div>
-      <div class="center-box" className="home-page">
+      <div className="home-page">
         <header>Schedule</header>
         <aside className="aside search">
           <form className="form-inline" onSubmit={addSearchedCourses}>
 
-              <div class="row form-box">
+              <div className="row form-box">
                 
-                <div class="col form-col">
+                <div className="col form-col">
                   {/* Days Off */}
                   <fieldset className="suggestions">
                     <aside>
@@ -323,7 +323,7 @@ function App() {
                   </fieldset>
                 </div>
 
-                <div class="col form-col">
+                <div className="col form-col">
                   {/* Time Preference */}
                   <fieldset className="suggestions">
                     <aside>
@@ -341,7 +341,7 @@ function App() {
                   </fieldset>
                 </div>
 
-                <div class="col form-col">
+                <div className="col form-col">
                   {/* Suggested button */}
                   <div className="suggestedButtons">
                     <button type="button" className="button" onClick={suggestCourses}>Suggest Courses</button>
@@ -351,16 +351,16 @@ function App() {
 
               </div>
             
-            <div class="form-box">
+            <div className="form-box">
               {/* Semester preference */}
-              <label className="form-inline label">
+              <div className="form-inline label">
                 <div className="semester-choice">
                   <fieldset className="fieldset">
                   <legend>Semester choice:</legend>
-                    <input type="radio" id="F22" name="fav_language" value="F22" onClick={(e) => semesterButtonClicked(e.target.value)}></input>
-                        <label for="F22">F22</label>
-                    <input type="radio" id="W23" name="fav_language" value="W23" onClick={(e) => semesterButtonClicked(e.target.value)}></input>
-                        <label for="W23">W23</label>
+                    <input type="radio" id="F22" name="fav_language" value="F22" onClick={(e) => semesterButtonClicked(e)}></input>
+                        <label htmlFor="F22">F22</label>
+                    <input type="radio" id="W23" name="fav_language" value="W23" onClick={(e) => semesterButtonClicked(e)}></input>
+                        <label htmlFor="W23">W23</label>
                   </fieldset>
                 </div>
                 <p>Course Name:</p>
@@ -374,7 +374,7 @@ function App() {
                 </div>
                 <button type="submit" className="button">Find</button>
                 <button type="button" className="button" onClick={removeCourses}>Clear</button>
-              </label>
+              </div>
             </div>
           </form>
         </aside>

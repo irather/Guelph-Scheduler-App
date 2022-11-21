@@ -8,7 +8,7 @@
   display: flex;
   flex-flow: row wrap;
   text-align: center; 
-  background-color: #cea174;
+  background-color: #bbffff;
   min-height: 100vh;
   font-size: calc(10px + 2vmin);
   color: white;
