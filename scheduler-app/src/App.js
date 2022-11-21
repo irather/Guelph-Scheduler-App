@@ -21,6 +21,10 @@ function App() {
   const [isOpen, setIsOpen] = useState(false);
   const [errorCourse, setErrorCourse] = useState([]);
 
+  //set F22 to be default
+  window.onload = () => {
+    document.getElementById("W23").checked = true;
+  }
 
   async function semesterButtonClicked (semester) {
     findSemester(semester);
@@ -353,9 +357,9 @@ function App() {
                 <div className="semester-choice">
                   <fieldset className="fieldset">
                   <legend>Semester choice:</legend>
-                    <input type="radio" id="html" name="fav_language" value="F22" checked="checked" onClick={(e) => semesterButtonClicked(e.target.value)}></input>
+                    <input type="radio" id="F22" name="fav_language" value="F22" onClick={(e) => semesterButtonClicked(e.target.value)}></input>
                         <label for="F22">F22</label>
-                    <input type="radio" id="css" name="fav_language" value="W23" onClick={(e) => semesterButtonClicked(e.target.value)}></input>
+                    <input type="radio" id="W23" name="fav_language" value="W23" onClick={(e) => semesterButtonClicked(e.target.value)}></input>
                         <label for="W23">W23</label>
                   </fieldset>
                 </div>
