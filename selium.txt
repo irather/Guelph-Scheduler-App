@@ -1,0 +1,8 @@
+﻿* I think we could use selenium for front end testing
+* Some useful docs
+   * https://www.browserstack.com/guide/selenium-react-tutorial
+   * https://medium.com/eoraa-co/end-to-end-testing-of-react-apps-using-selenium-ebc57e4e134a
+* For browser testing automation, Selenium contains a server that opens a browser and establishes a communication with it. Selenium Webdriver operates by accepting the commands and sending the received commands to a browser and then interacting with the applications. The WebDriver acts as a client for the server.
+*  Can be installed via node or pip
+* Can be used for end to end testing
+* we need Selenium WebDriver for the specific web browser to automate (IE/Firefox/Chrome/Edge)

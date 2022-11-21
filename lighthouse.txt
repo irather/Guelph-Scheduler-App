@@ -1,0 +1,6 @@
+*I found lighthouse to be one of the most simple front end testing tool
+*The great thing about lighthouse is that it is built directly into google chrome so there is no need to install any additional libraries or 
+dependencies
+*It can help cath things like missing descriptor tags, Accessibility checks and much more
+*Altough I did not encounter any method in my research to implement it into our CI/CD I do believe given its simplicity and 
+ease of use it is a viable option to look into

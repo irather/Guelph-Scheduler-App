@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import './App.css';
 import axios from 'axios';
 import Calendar from './components/Calendar';
+import Popup from './components/Popup';
 
 const functions = require("./functions")
 const convertTime = functions.convertTime
@@ -16,10 +17,19 @@ function App() {
   const [returnedCourses, getReturnedCourses] = useState({});
   const [currentCourses, addCourses] = useState([]);
   const [schedulerData, addSchedule] = useState([]);
-  const [semester, findSemester] = useState({value: 'F22'});
+  const [semester, findSemester] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  const [errorCourse, setErrorCourse] = useState([]);
 
-  async function semesterButtonClicked (semester) {
-    findSemester(semester);
+  //set W23 to be default
+  function defaultSem() {
+    document.getElementById("W23").checked = true;
+  }
+
+  window.onload = defaultSem
+
+  async function semesterButtonClicked (e) {
+    findSemester(e.target.value);
   }
 
   /*
@@ -148,6 +158,11 @@ function App() {
             else {
               isConflict = true;
             }
+
+            if(throwAlert(data, tempScheduleObj, strict) === true && !strict) {
+              setErrorCourse(course.name);
+              setIsOpen(!isOpen);
+            }
           }
         }
         else {
@@ -160,6 +175,11 @@ function App() {
           }
           else {
             isConflict = true;
+          }
+
+          if(throwAlert(data, tempScheduleObj, strict) === true && !strict) {
+            setErrorCourse(course.name);
+            setIsOpen(!isOpen);
           }
         }
       }
@@ -195,7 +215,7 @@ function App() {
         const newDiv = document.createElement("div")
         newDiv.innerText = response.data[i].name
         newDiv.onclick = () => {
-          dropDownElementClicked (response.data[i].name)
+          dropDownElementClicked(response.data[i].name)
         }
         document.getElementById("searchDropdown").appendChild(newDiv)
       }
@@ -257,81 +277,107 @@ function App() {
 
   return (
     <div>
+      <div className="row">
+          {/* Popup */}
+          <div>
+            {isOpen && <Popup 
+              handleClose={() => { setIsOpen(!isOpen) }}
+              content={<div>
+                  <h3>ERROR - Course Conflict</h3>
+                  <p>There is a conflict with {errorCourse}</p>
+                </div>}
+            />} 
+          </div>  
+      </div>
       <div className="home-page">
         <header>Schedule</header>
-          
-        
-
         <aside className="aside search">
           <form className="form-inline" onSubmit={addSearchedCourses}>
-              <fieldset className="suggestions">
-                <aside>
-                  <legend>Choose the day off:</legend>
-                  <input type="checkbox" id="monday" name="monday"></input>
-                  <label htmlFor="monday"> monday</label>
-                  <br></br>
-                  <input type="checkbox" id="tuesday" name="tuesday"></input>
-                  <label htmlFor="tuesday"> tuesday</label>
-                  <br></br>              
-                  <input type="checkbox" id="wednesday" name="wednesday"></input>
-                  <label htmlFor="wednesday"> wednesday</label>
-                  <br></br>              
-                  <input type="checkbox" id="thursday" name="thursday"></input>
-                  <label htmlFor="thursday"> thursday</label>
-                  <br></br>            
-                  <input type="checkbox" id="friday" name="friday"></input>
-                  <label htmlFor="friday"> friday</label>
-                  <br></br>            
-                  <input type="checkbox" id="saturday" name="saturday"></input>
-                  <label htmlFor="saturday"> saturday</label>
-                  <br></br>            
-                  <input type="checkbox" id="sunday" name="sunday"></input>
-                  <label htmlFor="sunday"> sunday</label>
-                </aside>
+
+              <div className="row form-box">
                 
-            </fieldset>
-            <fieldset className="suggestions">
-              <aside>
-                <legend>Time of Day Preference</legend>
-                <input type="checkbox" id="morning" name="morning"></input>
-                <label htmlFor="morning"> morning</label>
-                <br></br>
-                <input type="checkbox" id="afternoon" name="afternoon"></input>
-                <label htmlFor="afternoon"> afternoon</label>
-                <br></br> 
-                <input type="checkbox" id="evening" name="evening"></input>
-                <label htmlFor="evening"> evening</label>
-                <br></br> 
-              </aside>
-            </fieldset>
-            <div className="suggestedButtons">
-              <button type="button" className="button" onClick={suggestCourses}>Suggest Courses</button>
-              <button type="button" className="button" onClick={clearSuggested}>Clear Suggested Courses</button>
-            </div>
-            
-            <label className="form-inline label">
-              <div className="semester-choice">
-                <fieldset className="fieldset">
-                <legend>Semester choice:</legend>
-                  <input type="radio" id="html" name="fav_language" value="F22" checked="checked" onClick={(e) => semesterButtonClicked(e.target.value)}></input>
-                      <label for="F22">F22</label>
-                  <input type="radio" id="css" name="fav_language" value="W23" onClick={(e) => semesterButtonClicked(e.target.value)}></input>
-                      <label for="W23">W23</label>
-                </fieldset>
-              </div>
-              <p>Course Name:</p>
-              <div tabIndex={"100"}
-                  onFocus={(e) => dropdownVisibility("block")} onBlur={(e) => dropdownVisibility("none")}>
-                <input id="searchBar" className="searchBar" type="text" name="couresName" placeholder="ex. CIS*1300" value={courseName} 
-                  onChange={(e) => findCourseName(e.target.value)} onKeyUp={(e) => {populateList()}}
-                />
-                <div id="searchDropdown" className="dropdown-content">
+                <div className="col form-col">
+                  {/* Days Off */}
+                  <fieldset className="suggestions">
+                    <aside>
+                      <legend>Choose the day off:</legend>
+                      <input type="checkbox" id="monday" name="monday"></input>
+                      <label htmlFor="monday"> Monday</label>
+                      <br></br>
+                      <input type="checkbox" id="tuesday" name="tuesday"></input>
+                      <label htmlFor="tuesday"> Tuesday</label>
+                      <br></br>              
+                      <input type="checkbox" id="wednesday" name="wednesday"></input>
+                      <label htmlFor="wednesday"> Wednesday</label>
+                      <br></br>              
+                      <input type="checkbox" id="thursday" name="thursday"></input>
+                      <label htmlFor="thursday"> Thursday</label>
+                      <br></br>            
+                      <input type="checkbox" id="friday" name="friday"></input>
+                      <label htmlFor="friday"> Friday</label>
+                      <br></br>            
+                      <input type="checkbox" id="saturday" name="saturday"></input>
+                      <label htmlFor="saturday"> Saturday</label>
+                      <br></br>            
+                      <input type="checkbox" id="sunday" name="sunday"></input>
+                      <label htmlFor="sunday"> Sunday</label>
+                    </aside>
+                  </fieldset>
                 </div>
+
+                <div className="col form-col">
+                  {/* Time Preference */}
+                  <fieldset className="suggestions">
+                    <aside>
+                      <legend>Time of Day Preference</legend>
+                      <input type="checkbox" id="morning" name="morning"></input>
+                      <label htmlFor="morning"> morning</label>
+                      <br></br>
+                      <input type="checkbox" id="afternoon" name="afternoon"></input>
+                      <label htmlFor="afternoon"> afternoon</label>
+                      <br></br> 
+                      <input type="checkbox" id="evening" name="evening"></input>
+                      <label htmlFor="evening"> evening</label>
+                      <br></br> 
+                    </aside>
+                  </fieldset>
+                </div>
+
+                <div className="col form-col">
+                  {/* Suggested button */}
+                  <div className="suggestedButtons">
+                    <button type="button" className="button" onClick={suggestCourses}>Suggest Courses</button>
+                    <button type="button" className="button" onClick={clearSuggested}>Clear Suggested Courses</button>
+                  </div>
+                </div>
+
               </div>
-              
-            </label>
-            <button type="submit" className="button">Find</button>
-            <button type="button" className="button" onClick={removeCourses}>Clear</button>
+            
+            <div className="form-box">
+              {/* Semester preference */}
+              <div className="form-inline label">
+                <div className="semester-choice">
+                  <fieldset className="fieldset">
+                  <legend>Semester choice:</legend>
+                    <input type="radio" id="F22" name="fav_language" value="F22" onClick={(e) => semesterButtonClicked(e)}></input>
+                        <label htmlFor="F22">F22</label>
+                    <input type="radio" id="W23" name="fav_language" value="W23" onClick={(e) => semesterButtonClicked(e)}></input>
+                        <label htmlFor="W23">W23</label>
+                  </fieldset>
+                </div>
+                <p>Course Name:</p>
+                <div tabIndex={"100"}
+                    onFocus={(e) => dropdownVisibility("block")} onBlur={(e) => dropdownVisibility("none")}>
+                  <input id="searchBar" className="searchBar" type="text" name="couresName" placeholder="ex. CIS*1300" value={courseName} 
+                    onChange={(e) => findCourseName(e.target.value)} onKeyUp={(e) => {populateList()}}
+                  />
+                  <div id="searchDropdown" className="dropdown-content">
+                  </div>
+                </div>
+                <button type="submit" className="button">Find</button>
+                <button type="button" className="button" onClick={removeCourses}>Clear</button>
+              </div>
+            </div>
           </form>
         </aside>
         <Calendar data={schedulerData} date={currentDate} schedule={currentSchedule} />
