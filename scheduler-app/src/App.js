@@ -22,9 +22,11 @@ function App() {
   const [errorCourse, setErrorCourse] = useState([]);
 
   //set W23 to be default
-  window.onload = () => {
+  function defaultSem() {
     document.getElementById("W23").checked = true;
   }
+
+  window.onload = defaultSem
 
   async function semesterButtonClicked (e) {
     findSemester(e.target.value);
