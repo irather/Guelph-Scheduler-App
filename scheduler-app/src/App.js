@@ -64,7 +64,7 @@ function App() {
 
         const meetings = createEventObjs(response.data, schedulerData);
         for (let i = 0; i < meetings.length; i++) {
-          await addSchedule(schedulerData => schedulerData.concat({ startDate: meetings[i].startDate, endDate: meetings[i].endDate, title: meetings[i].title,  backgroundColor: meetings[i].backgroundColor}))
+          await addSchedule(schedulerData => schedulerData.concat({ startDate: meetings[i].startDate, endDate: meetings[i].endDate, title: meetings[i].title,  backgroundColor: meetings[i].backgroundColor, name: meetings[i].name}))
         }
         console.log("CURRENT SCHEDULE IS");
         console.log(schedulerData);
@@ -118,6 +118,7 @@ function App() {
     let days = [];
     let tempScheduleObj = {};
     let tempName = course.name.split(" ")[0];
+    let tempBaseName = "https://calendar.uoguelph.ca/search/?P=" + tempName.split("*")[0].concat("*" +tempName.split("*")[1])
     let isConflict = false;
     let suggestTag = "";
 
@@ -150,6 +151,7 @@ function App() {
             tempMeetingInfo = course.meeting_info[keys[i]];
             tempScheduleObj = {};
             tempScheduleObj.title = tempName.concat(" " + keys[i] + suggestTag);
+            tempScheduleObj.name = tempBaseName;
             setScheduleTime(tempMeetingInfo, tempScheduleObj, days[j].trim());
             tempScheduleObj.backgroundColor = colours[keys[i]];
             if(!throwAlert(data, tempScheduleObj, strict) ||!strict) {
@@ -168,6 +170,7 @@ function App() {
         else {
           tempMeetingInfo = course.meeting_info.LEC;
           tempScheduleObj.title = tempName.concat(" " + keys[i] + suggestTag);
+          tempScheduleObj.name = tempBaseName;
           setScheduleTime(tempMeetingInfo, tempScheduleObj, days);
           tempScheduleObj.backgroundColor = colours[keys[i]];
           if(!throwAlert(data, tempScheduleObj, strict) ||!strict) {
