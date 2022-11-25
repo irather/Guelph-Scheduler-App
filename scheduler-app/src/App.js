@@ -20,6 +20,7 @@ function App() {
   const [semester, findSemester] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [errorCourse, setErrorCourse] = useState([]);
+  const [enteredCourses,setEntered] = useState(0);
 
   //set W23 to be default
   function defaultSem() {
@@ -51,6 +52,8 @@ function App() {
   //function to send course name to the backend might not async can be changed to be so
   const addSearchedCourses = async (event) => {
     event.preventDefault();
+    console.log("LEGNTH IS");
+    console.log(currentCourses.length);
     if (currentCourses.length < 5) {
       const response = await axios.post('/api/searchCourse', { name: courseName, sem: semester});
 
@@ -60,11 +63,12 @@ function App() {
       else {
         getReturnedCourses(response.data);
         addCourses(currentCourses => currentCourses.concat(returnedCourses));
+        setEntered(enteredCourses => enteredCourses + 1);
         console.log(response.data);
 
         const meetings = createEventObjs(response.data, schedulerData);
         for (let i = 0; i < meetings.length; i++) {
-          await addSchedule(schedulerData => schedulerData.concat({ startDate: meetings[i].startDate, endDate: meetings[i].endDate, title: meetings[i].title,  backgroundColor: meetings[i].backgroundColor, name: meetings[i].name}))
+          await addSchedule(schedulerData => schedulerData.concat({ startDate: meetings[i].startDate, endDate: meetings[i].endDate, title: meetings[i].title,  backgroundColor: meetings[i].backgroundColor, suggested: false,name: meetings[i].name}))
         }
         console.log("CURRENT SCHEDULE IS");
         console.log(schedulerData);
@@ -74,6 +78,9 @@ function App() {
     else {
       alert("There are 5 courses already. You cannot add any more courses.");
     }
+
+    console.log("CURRENT COURSES");
+    console.log(currentCourses);
   }
 
   //sets the schedule time
@@ -245,6 +252,7 @@ function App() {
   const removeCourses = async () => {
     addSchedule([]);
     addCourses([]);
+    setEntered(0);
   }
 
   const suggestCourses = async (e) => {
@@ -258,23 +266,34 @@ function App() {
     //copy over schedulerData to tempScheduleData with a for loop
     while (numCourses < 5 && j < response.data.length){
       getReturnedCourses(response.data[j]);
-      addCourses(currentCourses => currentCourses.concat(returnedCourses));
-      // console.log(tempScheduleData)
+      addCourses(current => current.concat(returnedCourses));
       const meetings = createEventObjs(response.data[j], tempScheduleData, true, true);
       if(meetings.length !== 0){
         numCourses++;
       }
       for (let i = 0; i < meetings.length; i++) {
         tempScheduleData.push({ startDate: meetings[i].startDate, endDate: meetings[i].endDate, title: meetings[i].title,  backgroundColor: meetings[i].backgroundColor});
-        addSchedule(schedulerData => schedulerData.concat({ startDate: meetings[i].startDate, endDate: meetings[i].endDate, title: meetings[i].title,  backgroundColor: meetings[i].backgroundColor}))
+        addSchedule(schedulerData => schedulerData.concat({ startDate: meetings[i].startDate, endDate: meetings[i].endDate, title: meetings[i].title,  backgroundColor: meetings[i].backgroundColor, suggested: true}))
       }
-      console.log(tempScheduleData)
+      //console.log(tempScheduleData)
       j++;
     }
+
+
   }
 
-  const clearSuggested = async () => {
-    console.log("clear suggested courses")
+  const clearSuggested =  () => {
+    //filters out courses that have suggested = true
+    addSchedule(current => current.filter(schedulerData =>{
+      return schedulerData.suggested == false;
+    }));
+
+    //clear the add courses array and fills it in with dummy data, we only really use its length to determine how many courses are selected
+    addCourses([]);
+    console.log(enteredCourses);
+    for (let i = 0; i < enteredCourses; i++) {
+      addCourses(current => current.concat({test:"hi"}));
+    }
   }
 
 
