@@ -11,6 +11,8 @@ const throwAlert = functions.throwAlert
 
 const currentDate = '2022-11-06';
 let currentSchedule = [];
+let F22sem = [];
+let W23sem = [];
 
 function App() {
   const [courseName, findCourseName] = useState("");
@@ -23,7 +25,30 @@ function App() {
   const [enteredCourses,setEntered] = useState(0);
 
   async function semesterButtonClicked (e) {
+    //save the data from the current semester
+    if(semester === "F22"){
+      console.log("F22", semester);
+      F22sem = schedulerData;
+    }
+    else {
+      console.log("W23", semester);
+      W23sem = schedulerData;
+    }
+
+    //swap the scheduler data to the appropriate semester
+    if(e.target.value === "F22"){
+      
+      addSchedule(F22sem);
+    }
+    else if(e.target.value === "W23"){
+      
+      addSchedule(W23sem);
+    }
+
+    //update the semester variable to the one that was clicked
     findSemester(e.target.value);
+    
+    
   }
 
   /*
