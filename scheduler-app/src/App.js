@@ -22,13 +22,6 @@ function App() {
   const [errorCourse, setErrorCourse] = useState([]);
   const [enteredCourses,setEntered] = useState(0);
 
-  //set W23 to be default
-  function defaultSem() {
-    document.getElementById("W23").checked = true;
-  }
-
-  window.onload = defaultSem
-
   async function semesterButtonClicked (e) {
     findSemester(e.target.value);
   }
@@ -285,7 +278,7 @@ function App() {
   const clearSuggested =  () => {
     //filters out courses that have suggested = true
     addSchedule(current => current.filter(schedulerData =>{
-      return schedulerData.suggested == false;
+      return schedulerData.suggested === false;
     }));
 
     //clear the add courses array and fills it in with dummy data, we only really use its length to determine how many courses are selected
@@ -383,7 +376,7 @@ function App() {
                   <legend>Semester choice:</legend>
                     <input type="radio" id="F22" name="fav_language" value="F22" onClick={(e) => semesterButtonClicked(e)}></input>
                         <label htmlFor="F22">F22</label>
-                    <input type="radio" id="W23" name="fav_language" value="W23" onClick={(e) => semesterButtonClicked(e)}></input>
+                    <input type="radio" id="W23" name="fav_language" defaultChecked="true" value="W23" onClick={(e) => semesterButtonClicked(e)}></input>
                         <label htmlFor="W23">W23</label>
                   </fieldset>
                 </div>

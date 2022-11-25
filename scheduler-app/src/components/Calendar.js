@@ -31,7 +31,7 @@ const Appointment = ({ children, style, data, ...restProps }) => (
         backgroundColor: data.backgroundColor
       }}
     >
-    <a href={data.name} target="_blank">
+    <a href={data.name} target="_blank" rel="noreferrer">
     {children}
     </a>
     </Appointments.Appointment>
