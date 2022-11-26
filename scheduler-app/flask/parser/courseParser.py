@@ -165,7 +165,13 @@ def parseToJsonTimeFriendly(outfile, infile, existing=[]):
         new["academic_level"] = row[7]
 
         meets = row[-1]
-        meetings = [*meets["sem"], *meets["lec"], *meets["lab"], *meets["exam"], *meets["Other"]]
+        meetings = [
+            meets["sem"][0] if len(meets["sem"]) > 0 else "", 
+            meets["lec"][0] if len(meets["lec"]) > 0 else "", 
+            meets["lab"][0] if len(meets["lab"]) > 0 else "", 
+            meets["exam"][0] if len(meets["exam"]) > 0 else "", 
+            meets["Other"][0] if len(meets["Other"]) > 0 else ""
+        ]
 
         allTBA = lambda x: ":" not in x
         getDays = lambda x: x[:x.index(":")-2]
