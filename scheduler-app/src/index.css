@@ -44,17 +44,23 @@ code {
 }
 
 .form-box{
-  border: 1px solid #000000;
+  /* border-top: 1px solid #fca311; */
   width: 100vw;
 }
 
 .form-col{
   justify-content: center;
-  border-left: 1px solid #000000;
-  border-right: 1px solid #000000;
+  border-left: 1px solid #fca311;
+  border-right: 1px solid #fca311;
 }
 
 .center-box{
   text-align: center;
   justify-content: center;
+}
+
+.yellow-bg {
+  background-color: #fca311;
+  padding: 2%;
+  display: inline;
 }

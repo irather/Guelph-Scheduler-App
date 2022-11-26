@@ -323,6 +323,7 @@ function App() {
 
   return (
     <div>
+
       <div className="row">
           {/* Popup */}
           <div>
@@ -335,12 +336,17 @@ function App() {
             />} 
           </div>  
       </div>
+
       <div className="home-page">
-        <header>Schedule</header>
+
+        <header>
+          <h1>Course Scheduler</h1>
+        </header>
+
         <aside className="aside search">
           <form className="form-inline" onSubmit={addSearchedCourses}>
 
-              <div className="row form-box">
+              <div className="row form-box" class="yellow-bg">
                 
                 <div className="col form-col">
                   {/* Days Off */}
@@ -392,38 +398,49 @@ function App() {
                 <div className="col form-col">
                   {/* Suggested button */}
                   <div className="suggestedButtons">
-                    <button type="button" className="button" onClick={suggestCourses}>Suggest Courses</button>
-                    <button type="button" className="button" onClick={clearSuggested}>Clear Suggested Courses</button>
+                    <div class="row">
+                      <button type="button" className="button" onClick={suggestCourses}>Suggest Courses</button>
+                    </div>
+
+                    <div class="row">
+                      <button type="button" className="button" onClick={clearSuggested}>Clear Suggested Courses</button>
+                    </div>
                   </div>
                 </div>
 
               </div>
-            
+
             <div className="form-box">
               {/* Semester preference */}
-              <div className="form-inline label">
-                <div className="semester-choice">
-                  <fieldset className="fieldset">
-                  <legend>Semester choice:</legend>
-                    <input type="radio" id="F22" name="fav_language" value="F22" onClick={(e) => semesterButtonClicked(e)}></input>
-                        <label htmlFor="F22">F22</label>
-                    <input type="radio" id="W23" name="fav_language" defaultChecked="true" value="W23" onClick={(e) => semesterButtonClicked(e)}></input>
-                        <label htmlFor="W23">W23</label>
-                  </fieldset>
-                </div>
-                <p>Course Name:</p>
-                <div tabIndex={"100"}
-                    onFocus={(e) => dropdownVisibility("block")} onBlur={(e) => dropdownVisibility("none")}>
-                  <input id="searchBar" className="searchBar" type="text" name="couresName" placeholder="ex. CIS*1300" value={courseName} 
-                    onChange={(e) => findCourseName(e.target.value)} onKeyUp={(e) => {populateList()}}
-                  />
-                  <div id="searchDropdown" className="dropdown-content">
+              <div className="form-inline label row">
+                <div class="col">
+                  <div className="semester-choice">
+                    <fieldset className="fieldset">
+                    <legend>Semester choice:</legend>
+                      <input type="radio" id="F22" name="fav_language" value="F22" onClick={(e) => semesterButtonClicked(e)}></input>
+                          <label htmlFor="F22">F22</label>
+                      <input type="radio" id="W23" name="fav_language" defaultChecked="true" value="W23" onClick={(e) => semesterButtonClicked(e)}></input>
+                          <label htmlFor="W23">W23</label>
+                    </fieldset>
                   </div>
                 </div>
-                <button type="submit" className="button">Find</button>
-                <button type="button" className="button" onClick={removeCourses}>Clear</button>
+                  
+                <div class="col">
+                  <p>Course Name:</p>
+                  <div tabIndex={"100"}
+                      onFocus={(e) => dropdownVisibility("block")} onBlur={(e) => dropdownVisibility("none")}>
+                    <input id="searchBar" className="searchBar" type="text" name="couresName" placeholder="ex. CIS*1300" value={courseName} 
+                      onChange={(e) => findCourseName(e.target.value)} onKeyUp={(e) => {populateList()}}
+                    />
+                    <div id="searchDropdown" className="dropdown-content">
+                    </div>
+                  </div>
+                  <button type="submit" className="button">Find</button>
+                  <button type="button" className="button" onClick={removeCourses}>Clear</button>
+                </div>
               </div>
             </div>
+
           </form>
         </aside>
         <Calendar data={schedulerData} date={currentDate} schedule={currentSchedule} />
