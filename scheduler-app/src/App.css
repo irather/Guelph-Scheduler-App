@@ -8,7 +8,7 @@
   display: flex;
   flex-flow: row wrap;
   text-align: center; 
-  background-color: #bbffff;
+  background-image: linear-gradient(to bottom right, #1186a2, #1f4f67);
   min-height: 100vh;
   font-size: calc(10px + 2vmin);
   color: white;
@@ -26,21 +26,21 @@
 .home-page header {
   font-size: 40px;
   font-weight: 700;
-  color: #000000;
+  color: #ffffff;
   margin-left: 30px;
 }
 
 .home-page h2 {
   font-size: 40px;
   font-weight: 700;
-  color: #000000;
+  color: #ffffff;
   margin-left: 30px;
 }
 
 .home-page p {
   font-size: 20px;
   font-weight: 400;
-  color: #000000;
+  color: #ffffff;
   margin-left: 30px;
 }
 
@@ -88,6 +88,44 @@
   background-color: black;
   border-radius: 4em;
   font-size: 17px;
+  color: white;
+  padding: 0.8em 1.8em;
+  cursor:pointer;
+  user-select:none;
+  text-align: center;
+  text-decoration: none;
+  margin: 1rem;
+  cursor: pointer;
+  transition-duration: 0.4s;
+  -webkit-transition-duration: 0.4s; /* Safari */
+}
+
+.button-red {
+  font-family: Inconsolata, monospace;
+  position: relative;
+  background-color: red;
+  border-radius: 4em;
+  font-size: 17px;
+  font-weight: 800;
+  color: white;
+  padding: 0.8em 1.8em;
+  cursor:pointer;
+  user-select:none;
+  text-align: center;
+  text-decoration: none;
+  margin: 1rem;
+  cursor: pointer;
+  transition-duration: 0.4s;
+  -webkit-transition-duration: 0.4s; /* Safari */
+}
+
+.button-green {
+  font-family: Inconsolata, monospace;
+  position: relative;
+  background-color: green;
+  border-radius: 4em;
+  font-size: 17px;
+  font-weight: 800;
   color: white;
   padding: 0.8em 1.8em;
   cursor:pointer;
@@ -184,6 +222,6 @@
 
 /*semester choice CSS*/
 .semester-choice {
-  color: black;
+  color: #ffffff;
   font-size: 14px;
 }
