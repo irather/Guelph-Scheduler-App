@@ -356,24 +356,62 @@ function App() {
 
   const clearSuggested =  () => {
     //filters out courses that have suggested = true
-    addSchedule(current => current.filter(schedulerData =>{
+    let tempScheduleData = schedulerData.filter(schedulerData =>{
+      return schedulerData.suggested === false;
+    });
+    addSchedule(schedulerData => schedulerData.filter(schedulerData =>{
       return schedulerData.suggested === false;
     }));
 
+    //update entered courses
+    let tempCourses = []
+    for (let i = 0; i < tempScheduleData.length; i++){
+      let newCourse = true;
+      for (let j = 0; j < tempCourses.length; j++){
+        if(tempScheduleData[i].title.split(" ")[0] === tempCourses[j]){
+          newCourse = false;
+        }
+      }
+      if(newCourse){
+        tempCourses.push(tempScheduleData[i].title.split(" ")[0]);
+      }
+    }
+    setEntered(tempCourses.length);
+
     //clear the add courses array and fills it in with dummy data, we only really use its length to determine how many courses are selected
     addCourses([]);
-    for (let i = 0; i < enteredCourses; i++) {
+    for (let i = 0; i < tempCourses.length; i++) {
       addCourses(current => current.concat({test:"hi"}));
     }
   }
 
   const clearHighlighted = async () => {
     //filters out the highlighted courses
-    await addSchedule(clearSelected);
+    let tempScheduleData = clearSelected()
+    await addSchedule(tempScheduleData);
+
+    console.log(tempScheduleData);
+
+    //update entered courses
+    let tempCourses = []
+    for (let i = 0; i < tempScheduleData.length; i++){
+      let newCourse = true;
+      for (let j = 0; j < tempCourses.length; j++){
+        if(tempScheduleData[i].title.split(" ")[0] === tempCourses[j]){
+          newCourse = false;
+        }
+      }
+      if(newCourse){
+        tempCourses.push(tempScheduleData[i].title.split(" ")[0]);
+      }
+    }
+
+    console.log(tempCourses);
+    setEntered(tempCourses.length);
 
     //clear the add courses array and fills it in with dummy data, we only really use its length to determine how many courses are selected
     addCourses([]);
-    for (let i = 0; i < enteredCourses; i++) {
+    for (let i = 0; i < tempCourses.length; i++) {
       addCourses(current => current.concat({test:"hi"}));
     }
   }
