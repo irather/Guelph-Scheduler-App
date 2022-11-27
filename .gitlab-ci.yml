@@ -78,5 +78,5 @@ test-autodeploy:
   - ssh-keyscan $VM_IPADDRESS >> ~/.ssh/known_hosts
   - chmod 644 ~/.ssh/known_hosts
   script:
-  - ssh $SSH_USER@$VM_IPADDRESS "hostname && echo "HELLO FROM GITLAB CI RUNNER"
+  - ssh $SSH_USER@$VM_IPADDRESS "hostname && echo 'HELLO FROM GITLAB CI RUNNER'"
 
