@@ -76,9 +76,9 @@ function App() {
   }*/
 
 
-  const saveCourses = async () => {
-    //call this function first to save any of the currently entered courses to the F22current and W23current object this will cause errors and complain b/c e isnt being sent as a param but should work as intended
-    semesterButtonClicked();
+  const saveCourses = async (e) => {
+    //call this function first to save any of the currently entered courses to the F22current and W23current object
+    semesterButtonClicked(e);
 
     let f22Courses = JSON.stringify(F22sem);
     let f22Cur =  JSON.stringify(F22current);
@@ -134,8 +134,6 @@ function App() {
   //function to send course name to the backend might not async can be changed to be so
   const addSearchedCourses = async (event) => {
     event.preventDefault();
-    console.log("LEGNTH IS");
-    console.log(currentCourses.length);
     if (currentCourses.length < 5) {
       const response = await axios.post('/api/searchCourse', { name: courseName, sem: semester});
 
@@ -146,23 +144,17 @@ function App() {
         getReturnedCourses(response.data);
         addCourses(currentCourses => currentCourses.concat(returnedCourses));
         setEntered(enteredCourses => enteredCourses + 1);
-        console.log(response.data);
 
         const meetings = createEventObjs(response.data, schedulerData);
         for (let i = 0; i < meetings.length; i++) {
           await addSchedule(schedulerData => schedulerData.concat({ startDate: meetings[i].startDate, endDate: meetings[i].endDate, title: meetings[i].title,  backgroundColor: meetings[i].backgroundColor, suggested: false,name: meetings[i].name}))
         }
-        console.log("CURRENT SCHEDULE IS");
-        console.log(schedulerData);
       }
       findCourseName("")
     }
     else {
       alert("There are 5 courses already. You cannot add any more courses.");
     }
-
-    console.log("CURRENT COURSES");
-    console.log(currentCourses);
   }
 
   //sets the schedule time
@@ -192,9 +184,6 @@ function App() {
       tempStartTime = time.concat("11T" + convertTime(tempMeetingInfo.start_time, tempMeetingInfo.start_type));
       tempEndTime = time.concat("11T" + convertTime(tempMeetingInfo.end_time, tempMeetingInfo.end_type));
     }
-
-    console.log("TEMP START TIME IS " + tempStartTime);
-    console.log("TEMP START TIME IS " + tempEndTime);
 
     tempScheduleObj.startDate = new Date(tempStartTime);
     tempScheduleObj.endDate = new Date(tempEndTime);
@@ -357,7 +346,6 @@ function App() {
         tempScheduleData.push({ startDate: meetings[i].startDate, endDate: meetings[i].endDate, title: meetings[i].title,  backgroundColor: meetings[i].backgroundColor});
         addSchedule(schedulerData => schedulerData.concat({ startDate: meetings[i].startDate, endDate: meetings[i].endDate, title: meetings[i].title,  backgroundColor: meetings[i].backgroundColor, suggested: true}))
       }
-      //console.log(tempScheduleData)
       j++;
     }
     setEntered(numCourses);
@@ -372,7 +360,6 @@ function App() {
 
     //clear the add courses array and fills it in with dummy data, we only really use its length to determine how many courses are selected
     addCourses([]);
-    console.log(enteredCourses);
     for (let i = 0; i < enteredCourses; i++) {
       addCourses(current => current.concat({test:"hi"}));
     }
@@ -404,7 +391,7 @@ function App() {
         <aside className="aside search">
           <form className="form-inline" onSubmit={addSearchedCourses}>
 
-              <div className="row form-box" class="yellow-bg">
+              <div className="yellow-bg">
                 
                 <div className="col form-col">
                   {/* Days Off */}
@@ -456,11 +443,11 @@ function App() {
                 <div className="col form-col">
                   {/* Suggested button */}
                   <div className="suggestedButtons">
-                    <div class="row">
+                    <div className="row">
                       <button type="button" className="button" onClick={suggestCourses}>Suggest Courses</button>
                     </div>
 
-                    <div class="row">
+                    <div className="row">
                       <button type="button" className="button" onClick={clearSuggested}>Clear Suggested Courses</button>
                     </div>
                   </div>
@@ -496,7 +483,7 @@ function App() {
                   <button type="submit" className="button">Find</button>
                   <button type="button" className="button" onClick={removeCourses}>Clear</button>
 
-                  <button type="button" className="button" onClick={saveCourses}>Save</button>
+                  <button type="button" className="button" onClick={(e) => {saveCourses(e)}}>Save</button>
                   <button type="button" className="button" onClick={loadCourses}>Load</button>
                 </div>
               </div>
