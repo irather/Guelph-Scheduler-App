@@ -5,9 +5,10 @@ import axios from 'axios';
 import {Calendar, clearSelected} from './components/Calendar';
 import Popup from './components/Popup';
 
-const functions = require("./functions")
-const convertTime = functions.convertTime
-const throwAlert = functions.throwAlert
+const functions = require("./functions");
+const convertTime = functions.convertTime;
+const throwAlert = functions.throwAlert;
+const checkPreferences = functions.checkPreferences;
 
 const currentDate = '2022-11-06';
 let currentSchedule = [];
@@ -186,9 +187,21 @@ function App() {
       tempStartTime = time.concat("11T" + convertTime(tempMeetingInfo.start_time, tempMeetingInfo.start_type));
       tempEndTime = time.concat("11T" + convertTime(tempMeetingInfo.end_time, tempMeetingInfo.end_type));
     }
+    else if (day === "Sat") {
+      tempStartTime = time.concat("12T" + convertTime(tempMeetingInfo.start_time, tempMeetingInfo.start_type));
+      tempEndTime = time.concat("12T" + convertTime(tempMeetingInfo.end_time, tempMeetingInfo.end_type));
+    }
 
     tempScheduleObj.startDate = new Date(tempStartTime);
     tempScheduleObj.endDate = new Date(tempEndTime);
+  }
+
+  function getPreferences(){
+    let preferences = {
+      weekDays: document.querySelectorAll(".day:checked"), 
+      timeOfDay: document.querySelectorAll(".time:checked")
+    };
+    return(preferences)
   }
 
 
@@ -201,6 +214,7 @@ function App() {
     let tempBaseName = "https://calendar.uoguelph.ca/search/?P=" + tempName.split("*")[0].concat("*" +tempName.split("*")[1])
     let isConflict = false;
     let suggestTag = "";
+    let preferences = getPreferences();
 
     let colours = {};
     if (suggested){
@@ -234,14 +248,14 @@ function App() {
             tempScheduleObj.name = tempBaseName;
             setScheduleTime(tempMeetingInfo, tempScheduleObj, days[j].trim());
             tempScheduleObj.backgroundColor = colours[keys[i]];
-            if(!throwAlert(data, tempScheduleObj, strict) ||!strict) {
+            if((!throwAlert(data, tempScheduleObj) && !checkPreferences(preferences, tempScheduleObj)) ||!strict) {
               meeting.push(tempScheduleObj);
             }
             else {
               isConflict = true;
             }
 
-            if(throwAlert(data, tempScheduleObj, strict) === true && !strict) {
+            if(throwAlert(data, tempScheduleObj) === true && !strict) {
               setErrorCourse(course.name);
               setIsOpen(!isOpen);
             }
@@ -253,14 +267,14 @@ function App() {
           tempScheduleObj.name = tempBaseName;
           setScheduleTime(tempMeetingInfo, tempScheduleObj, days);
           tempScheduleObj.backgroundColor = colours[keys[i]];
-          if(!throwAlert(data, tempScheduleObj, strict) ||!strict) {
+          if((!throwAlert(data, tempScheduleObj) && !checkPreferences(preferences, tempScheduleObj)) ||!strict) {
             meeting.push(tempScheduleObj);
           }
           else {
             isConflict = true;
           }
 
-          if(throwAlert(data, tempScheduleObj, strict) === true && !strict) {
+          if(throwAlert(data, tempScheduleObj) === true && !strict) {
             setErrorCourse(course.name);
             setIsOpen(!isOpen);
           }
@@ -350,6 +364,7 @@ function App() {
       }
       j++;
     }
+    alert("finished suggesting courses")
     setEntered(numCourses);
 
   }
@@ -419,7 +434,6 @@ function App() {
 
   return (
     <div>
-
       <div className="row">
           {/* Popup */}
           <div>
@@ -449,25 +463,25 @@ function App() {
                   <fieldset className="suggestions">
                     <aside>
                       <legend>Choose the day off:</legend>
-                      <input type="checkbox" id="monday" name="monday"></input>
+                      <input type="checkbox" id="monday" name="monday" className="day"></input>
                       <label htmlFor="monday"> Monday</label>
                       <br></br>
-                      <input type="checkbox" id="tuesday" name="tuesday"></input>
+                      <input type="checkbox" id="tuesday" name="tuesday" className="day"></input>
                       <label htmlFor="tuesday"> Tuesday</label>
                       <br></br>              
-                      <input type="checkbox" id="wednesday" name="wednesday"></input>
+                      <input type="checkbox" id="wednesday" name="wednesday" className="day"></input>
                       <label htmlFor="wednesday"> Wednesday</label>
                       <br></br>              
-                      <input type="checkbox" id="thursday" name="thursday"></input>
+                      <input type="checkbox" id="thursday" name="thursday" className="day"></input>
                       <label htmlFor="thursday"> Thursday</label>
                       <br></br>            
-                      <input type="checkbox" id="friday" name="friday"></input>
+                      <input type="checkbox" id="friday" name="friday" className="day"></input>
                       <label htmlFor="friday"> Friday</label>
                       <br></br>            
-                      <input type="checkbox" id="saturday" name="saturday"></input>
+                      <input type="checkbox" id="saturday" name="saturday" className="day"></input>
                       <label htmlFor="saturday"> Saturday</label>
                       <br></br>            
-                      <input type="checkbox" id="sunday" name="sunday"></input>
+                      <input type="checkbox" id="sunday" name="sunday" className="day"></input>
                       <label htmlFor="sunday"> Sunday</label>
                     </aside>
                   </fieldset>
@@ -477,14 +491,14 @@ function App() {
                   {/* Time Preference */}
                   <fieldset className="suggestions">
                     <aside>
-                      <legend>Time of Day Preference</legend>
-                      <input type="checkbox" id="morning" name="morning"></input>
+                      <legend>Time of Day to Avoid</legend>
+                      <input type="checkbox" id="morning" name="morning" className="time"></input>
                       <label htmlFor="morning"> morning</label>
                       <br></br>
-                      <input type="checkbox" id="afternoon" name="afternoon"></input>
+                      <input type="checkbox" id="afternoon" name="afternoon" className="time"></input>
                       <label htmlFor="afternoon"> afternoon</label>
                       <br></br> 
-                      <input type="checkbox" id="evening" name="evening"></input>
+                      <input type="checkbox" id="evening" name="evening" className="time"></input>
                       <label htmlFor="evening"> evening</label>
                       <br></br> 
                     </aside>
