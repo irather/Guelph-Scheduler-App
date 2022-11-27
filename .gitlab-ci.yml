@@ -17,7 +17,7 @@ stages:          # List of stages for jobs, and their order of execution
   - build
   - test
   - lint
-  - deploy
+  - test-deploy
 
 build-eslint:
   image: node:14
@@ -65,4 +65,18 @@ jest:
     - npm run test
 
 
+test-autodeploy:
+  image: alpine:latest
+  stage: test-deploy
+  # From tutorial: https://filip5114.github.io/GitLab-CI-Pipeline-SSH/
+  before_script:
+  - 'command -v ssh-agent >/dev/null || ( apk add --update openssh )' 
+  - eval $(ssh-agent -s)
+  - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+  - mkdir -p ~/.ssh
+  - chmod 700 ~/.ssh
+  - ssh-keyscan $VM_IPADDRESS >> ~/.ssh/known_hosts
+  - chmod 644 ~/.ssh/known_hosts
+  script:
+  - ssh $SSH_USER@$VM_IPADDRESS "hostname && echo "HELLO FROM GITLAB CI RUNNER"
 
