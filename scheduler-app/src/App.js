@@ -17,7 +17,7 @@ let F22entered = 0;
 let W23entered = 0;
 let F22current = [];
 let W23current = [];
-
+let currentSemester = 1;
 function App() {
   const [courseName, findCourseName] = useState("");
   const [returnedCourses, getReturnedCourses] = useState({});
@@ -28,17 +28,20 @@ function App() {
   const [errorCourse, setErrorCourse] = useState([]);
   const [enteredCourses,setEntered] = useState(0);
 
+  
   async function semesterButtonClicked (e) {
     //save the data from the current semester
     if(semester === "F22"){
       F22current = currentCourses;
       F22sem = schedulerData;
       F22entered = enteredCourses;
+      currentSemester = 0;
     }
     else {
       W23current = currentCourses;
       W23sem = schedulerData;
       W23entered = enteredCourses;
+      currentSemester = 1;
     }
 
     //swap the scheduler data to the clicked semester
@@ -72,6 +75,61 @@ function App() {
     setCourseDetails(JSON.stringify(response.data.meetings));
   }*/
 
+
+  const saveCourses = async () => {
+    //call this function first to save any of the currently entered courses to the F22current and W23current object this will cause errors and complain b/c e isnt being sent as a param but should work as intended
+    semesterButtonClicked();
+
+    let f22Courses = JSON.stringify(F22sem);
+    let f22Cur =  JSON.stringify(F22current);
+    let f22Enter = F22entered;
+    let w23Courses = JSON.stringify(W23sem);
+    let w23Cur =  JSON.stringify(W23current);
+    let w23Enter = W23entered;
+
+    //stores the variables into local storage
+    localStorage.setItem("F22",f22Courses);
+    localStorage.setItem("f22Cur",f22Cur);
+    localStorage.setItem("f22Enter",f22Enter);
+    localStorage.setItem("W23",w23Courses);
+    localStorage.setItem("w23Cur",w23Cur);
+    localStorage.setItem("w23Enter",w23Enter);
+
+    //this can use the in house component later
+    alert("Courses have been saved!");
+  }
+
+  const loadCourses = async () => {
+    //pulls the info from local storage
+    let f22Courses = JSON.parse(localStorage.getItem("F22"));
+    let f22Cur =  JSON.parse(localStorage.getItem("f22Cur"));
+    let f22Enter = parseInt(localStorage.getItem("f22Enter"));
+    let w23Courses = JSON.parse(localStorage.getItem("W23"));
+    let w23Cur =  JSON.parse(localStorage.getItem("w23Cur"));
+    let w23Enter = parseInt(localStorage.getItem("w23Enter"));
+
+    //replace the current value with the stored one
+    F22current = f22Cur;
+    F22sem = f22Courses;
+    F22entered = f22Enter;
+    W23current = w23Cur;
+    W23sem = w23Courses;
+    W23entered = w23Enter;
+
+    //sets the currently viewed schedule accordingly
+    //W23
+    if(currentSemester === 1) {
+      setEntered(W23entered);
+      addSchedule(W23sem);
+      addCourses(W23current);
+    } else {
+      setEntered(F22entered);
+      addSchedule(F22sem);
+      addCourses(F22current);
+    }
+
+    alert("Courses have been loaded!");
+  }
 
   //function to send course name to the backend might not async can be changed to be so
   const addSearchedCourses = async (event) => {
@@ -413,7 +471,7 @@ function App() {
             <div className="form-box">
               {/* Semester preference */}
               <div className="form-inline label row">
-                <div class="col">
+                <div className="col">
                   <div className="semester-choice">
                     <fieldset className="fieldset">
                     <legend>Semester choice:</legend>
@@ -425,7 +483,7 @@ function App() {
                   </div>
                 </div>
                   
-                <div class="col">
+                <div className="col">
                   <p>Course Name:</p>
                   <div tabIndex={"100"}
                       onFocus={(e) => dropdownVisibility("block")} onBlur={(e) => dropdownVisibility("none")}>
@@ -437,6 +495,9 @@ function App() {
                   </div>
                   <button type="submit" className="button">Find</button>
                   <button type="button" className="button" onClick={removeCourses}>Clear</button>
+
+                  <button type="button" className="button" onClick={saveCourses}>Save</button>
+                  <button type="button" className="button" onClick={loadCourses}>Load</button>
                 </div>
               </div>
             </div>
