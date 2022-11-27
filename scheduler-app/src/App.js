@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import './App.css';
 import axios from 'axios';
-import Calendar from './components/Calendar';
+import {Calendar, clearSelected} from './components/Calendar';
 import Popup from './components/Popup';
 
 const functions = require("./functions")
@@ -18,7 +18,9 @@ let W23entered = 0;
 let F22current = [];
 let W23current = [];
 let currentSemester = 1;
+
 function App() {
+
   const [courseName, findCourseName] = useState("");
   const [returnedCourses, getReturnedCourses] = useState({});
   const [currentCourses, addCourses] = useState([]);
@@ -27,7 +29,7 @@ function App() {
   const [isOpen, setIsOpen] = useState(false);
   const [errorCourse, setErrorCourse] = useState([]);
   const [enteredCourses,setEntered] = useState(0);
-
+  
   
   async function semesterButtonClicked (e) {
     //save the data from the current semester
@@ -365,6 +367,18 @@ function App() {
     }
   }
 
+  const clearHighlighted = async () => {
+    //filters out the highlighted courses
+    await addSchedule(clearSelected);
+    console.log(enteredCourses);
+
+    //clear the add courses array and fills it in with dummy data, we only really use its length to determine how many courses are selected
+    addCourses([]);
+    for (let i = 0; i < enteredCourses; i++) {
+      addCourses(current => current.concat({test:"hi"}));
+    }
+  }
+
 
   return (
     <div>
@@ -485,6 +499,7 @@ function App() {
 
                   <button type="button" className="button" onClick={(e) => {saveCourses(e)}}>Save</button>
                   <button type="button" className="button" onClick={loadCourses}>Load</button>
+                  <button type="button" className="button" onClick={clearHighlighted}>Clear Highlighted Courses</button>
                 </div>
               </div>
             </div>
