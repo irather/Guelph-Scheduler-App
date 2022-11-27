@@ -370,7 +370,6 @@ function App() {
   const clearHighlighted = async () => {
     //filters out the highlighted courses
     await addSchedule(clearSelected);
-    console.log(enteredCourses);
 
     //clear the add courses array and fills it in with dummy data, we only really use its length to determine how many courses are selected
     addCourses([]);

@@ -9,16 +9,14 @@ import {
 let schedulerData = [];
 
 export function clearSelected() {
-  console.log("clearSelected", schedulerData);
-
   let newData = [];
 
   for (let i = 0; i < schedulerData.length; i++){
     if (schedulerData[i].selected === false){
       newData.push(schedulerData[i]);
-      let el = document.getElementById(schedulerData[i].title + schedulerData[i].startDate);
-      el.style.border="none";
     }
+    let el = document.getElementById(schedulerData[i].title + schedulerData[i].startDate);
+    el.style.border="none";
   }
   return(newData)
 }
