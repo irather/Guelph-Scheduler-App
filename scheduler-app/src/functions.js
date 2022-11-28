@@ -49,7 +49,6 @@ function throwAlert(schedulerData, courseAdded) {
 
 //returning true if the course is outside of preferences
 function checkPreferences(preferences, courseAdded) {
-  // console.log(preferences)
   let textDays = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"]
   let dateDays = ["06T", "07T", "08T", "09T", "10T", "11T", "12T"]
   //check that the course added doesn't occur on the preferences.weekDays
@@ -91,7 +90,6 @@ function checkPreferences(preferences, courseAdded) {
       timePreferences.push(evening);
     }
   }
-  console.log(timePreferences, throwAlert(timePreferences, courseAdded), courseAdded );
   return(throwAlert(timePreferences, courseAdded))
 }
 

@@ -406,7 +406,10 @@ function App() {
       }
       j++;
     }
-    alert("finished suggesting courses")
+    if(numCourses === 0){
+      alert("There are no courses that fit the criteria")
+    }
+    
     setEntered(numCourses);
 
   }
@@ -447,8 +450,6 @@ function App() {
     let tempScheduleData = clearSelected()
     await addSchedule(tempScheduleData);
 
-    console.log(tempScheduleData);
-
     //update entered courses
     let tempCourses = []
     for (let i = 0; i < tempScheduleData.length; i++){
@@ -462,8 +463,6 @@ function App() {
         tempCourses.push(tempScheduleData[i].title.split(" ")[0]);
       }
     }
-
-    console.log(tempCourses);
     setEntered(tempCourses.length);
 
     //clear the add courses array and fills it in with dummy data, we only really use its length to determine how many courses are selected
@@ -501,9 +500,9 @@ function App() {
           {/* Filter options */}
           <div className="row form-box yellow-bg">
 
-            <div class="col">
-              <div class="row">
-                <div class="col">
+            <div className="col">
+              <div className="row">
+                <div className="col">
                   {/* Days Off */}
                   <fieldset className="suggestions">
                     <aside>
@@ -532,7 +531,7 @@ function App() {
                   </fieldset>
                 </div>
 
-                <div class="col">
+                <div className="col">
                   {/* Time Preference */}
                   <fieldset className="suggestions">
                   <aside>
@@ -565,32 +564,39 @@ function App() {
               </div>
             </div>
 
-            <div class="col">
+            <div className="col">
               {/* Legend */}
-              <div class="col-center yellow-bg col">
+              <div className="col-center yellow-bg col">
                 <h2>Legend</h2>
-                <div class="form-col">
+                <div className="form-col">
                   <table>
-                    <tr>
-                      <th>Colour</th>
-                      <th>Description</th>
-                    </tr>
-                    <tr>
-                      <td>Lecture</td>
-                      <td class="td-lecture"></td>
-                    </tr>
-                    <tr>
-                      <td>Lab</td>
-                      <td class="td-lab"></td>
-                    </tr>
-                    <tr>
-                      <td>Seminar</td>
-                      <td class="td-seminar"></td>
-                    </tr>
-                    <tr>
-                      <td>Exam</td>
-                      <td class="td-exam"></td>
-                    </tr>
+                    <tbody>
+                      <tr>
+                        <th>Meeting Type</th>
+                        <th>Registered</th>
+                        <th>Suggested</th>
+                      </tr>
+                      <tr>
+                        <td>Lecture</td>
+                        <td className="td-lecture"></td>
+                        <td style={{backgroundColor: "#FFED96"}}></td>
+                      </tr>
+                      <tr>
+                        <td>Lab</td>
+                        <td className="td-lab"></td>
+                        <td style={{backgroundColor: "#D4FF68"}}></td>
+                      </tr>
+                      <tr>
+                        <td>Seminar</td>
+                        <td className="td-seminar"></td>
+                        <td style={{backgroundColor: "#FFA366"}}></td>
+                      </tr>
+                      <tr>
+                        <td>Exam</td>
+                        <td className="td-exam"></td>
+                        <td style={{backgroundColor: "#56FF6A"}}></td>
+                      </tr>
+                    </tbody>
                   </table>
                 </div>
               </div>
