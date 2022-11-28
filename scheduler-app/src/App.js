@@ -456,9 +456,12 @@ function App() {
         <aside className="aside search">
           <form className="form-inline" onSubmit={addSearchedCourses}>
 
-              <div className="yellow-bg">
-                
-                <div className="col form-col">
+          {/* Filter options */}
+          <div className="row form-box yellow-bg">
+
+            <div class="col">
+              <div class="row">
+                <div class="col">
                   {/* Days Off */}
                   <fieldset className="suggestions">
                     <aside>
@@ -487,40 +490,74 @@ function App() {
                   </fieldset>
                 </div>
 
-                <div className="col form-col">
+                <div class="col">
                   {/* Time Preference */}
                   <fieldset className="suggestions">
-                    <aside>
-                      <legend>Time of Day to Avoid</legend>
-                      <input type="checkbox" id="morning" name="morning" className="time"></input>
-                      <label htmlFor="morning"> morning</label>
-                      <br></br>
-                      <input type="checkbox" id="afternoon" name="afternoon" className="time"></input>
-                      <label htmlFor="afternoon"> afternoon</label>
-                      <br></br> 
-                      <input type="checkbox" id="evening" name="evening" className="time"></input>
-                      <label htmlFor="evening"> evening</label>
-                      <br></br> 
+                  <aside>
+                    <legend>Time of Day to Avoid</legend>
+                    <input type="checkbox" id="morning" name="morning" className="time"></input>
+                    <label htmlFor="morning"> Morning</label>
+                    <br></br>
+                    <input type="checkbox" id="afternoon" name="afternoon" className="time"></input>
+                    <label htmlFor="afternoon"> Afternoon</label>
+                    <br></br> 
+                    <input type="checkbox" id="evening" name="evening" className="time"></input>
+                    <label htmlFor="evening"> Evening</label>
+                    <br></br> 
                     </aside>
-                  </fieldset>
+                    </fieldset>
                 </div>
-
-                <div className="col form-col">
-                  {/* Suggested button */}
-                  <div className="suggestedButtons">
-                    <div className="row">
-                      <button type="button" className="button" onClick={suggestCourses}>Suggest Courses</button>
-                    </div>
-
-                    <div className="row">
-                      <button type="button" className="button" onClick={clearSuggested}>Clear Suggested Courses</button>
-                    </div>
-                  </div>
-                </div>
-
               </div>
 
-            <div className="form-box">
+              <div className="col form-col">
+                {/* Suggested button */}
+                <div className="suggestedButtons">
+                  <div className="row">
+                    <button type="button" className="button" onClick={suggestCourses}>Suggest Courses</button>
+                  </div>
+
+                  <div className="row">
+                    <button type="button" className="button" onClick={clearSuggested}>Clear Suggested Courses</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col">
+              {/* Legend */}
+              <div class="col-center yellow-bg col">
+                <h2>Legend</h2>
+                <div class="form-col">
+                  <table>
+                    <tr>
+                      <th>Colour</th>
+                      <th>Description</th>
+                    </tr>
+                    <tr>
+                      <td>Lecture</td>
+                      <td class="td-lecture"></td>
+                    </tr>
+                    <tr>
+                      <td>Lab</td>
+                      <td class="td-lab"></td>
+                    </tr>
+                    <tr>
+                      <td>Seminar</td>
+                      <td class="td-seminar"></td>
+                    </tr>
+                    <tr>
+                      <td>Exam</td>
+                      <td class="td-exam"></td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Search box and sem preference */}
+          <div className="form-box">
+
               {/* Semester preference */}
               <div className="form-inline label row">
                 <div className="col">
@@ -537,6 +574,7 @@ function App() {
                   
                 <div className="col">
                   <p>Course Name:</p>
+
                   <div tabIndex={"100"}
                       onFocus={(e) => dropdownVisibility("block")} onBlur={(e) => dropdownVisibility("none")}>
                     <input id="searchBar" className="searchBar" type="text" name="couresName" placeholder="ex. CIS*1300" value={courseName} 
@@ -545,6 +583,7 @@ function App() {
                     <div id="searchDropdown" className="dropdown-content">
                     </div>
                   </div>
+
                   <button type="submit" className="button">Find</button>
                   <button type="button" className="button" onClick={removeCourses}>Clear</button>
 
@@ -553,11 +592,13 @@ function App() {
                   <button type="button" className="button" onClick={clearHighlighted}>Clear Highlighted Courses</button>
                 </div>
               </div>
-            </div>
+          </div>
 
           </form>
         </aside>
+
         <Calendar data={schedulerData} date={currentDate} schedule={currentSchedule} />
+
         <div className="footer">
           <p>Made with pain, sweat, tear and the screams of damned</p>
         </div>
