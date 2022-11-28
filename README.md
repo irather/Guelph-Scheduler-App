@@ -37,15 +37,18 @@ Stop the server with 'sudo nginx -s quit'.
 
 # Files Included #
 '/BeforeSprint-4' is a folder that contains work from previous sprints that is unrealated to work for sprint-4 or later.  
-'/MeetingNotes' is a folder that contains notes from our startup sprint meetings.  
+'/MeetingNotes' is a folder that contains notes from our startup sprint meetings.
+'/research' holds research notes on tools and programs we wanted/started using.  
 '/scheduler-app' holds the backend flask and js files.  
-'/static' holds some dummy css and js files.  
-'/templates' holds a copy of our basic webpage.
+<space><space>*<space>'/flask' holds all of our backend python code, and the parsed course data  
+<space><space>*<space>'/src' holds the frontend code  
+'.gitlab-ci.yml' is what controls gitlabs CI  
+'CIS3760_Retro.pptx' is the presentation for the past sprint's retro  
+'copyDefault.sh' will copy the file 'default' from our repository directory to the correct directory on the VM.  
 'default' is a configuration file that is copied to /etc/nginx/sites-available during the installation of nginx.  
 'index.html' is the basic webpage displayed on our site.  
 'install.sh' will install nginx, copy over configuration files, and start the server.  
 'uninstall.sh' will stop the server and uninstall nginx.  
-'copyDefault.sh' will copy the file 'default' from our repository directory to the correct directory on the VM. 
 
 # Our Site #
 Our site can be accessed at: http://cis3760f22-04.socs.uoguelph.ca
