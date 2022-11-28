@@ -9,7 +9,6 @@ const functions = require("./functions");
 const convertTime = functions.convertTime;
 const throwAlert = functions.throwAlert;
 const checkPreferences = functions.checkPreferences;
-
 const currentDate = '2022-11-06';
 let currentSchedule = [];
 let F22sem = [];
@@ -29,6 +28,7 @@ function App() {
   const [semester, findSemester] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [errorCourse, setErrorCourse] = useState([]);
+  const [conflictingCourse, setConflictingCourse] = useState([]);
   const [enteredCourses,setEntered] = useState(0);
   
   
@@ -258,6 +258,27 @@ function App() {
             if(throwAlert(data, tempScheduleObj) === true && !strict) {
               setErrorCourse(course.name);
               setIsOpen(!isOpen);
+
+              for(let i = 0; i<data.length; i++) {
+
+                let checkCourse = data[i];
+                let courseAdded = tempScheduleObj;
+            
+                if(courseAdded.startDate >= checkCourse.startDate && courseAdded.startDate <= checkCourse.endDate) {
+                  setConflictingCourse(checkCourse.title);
+                } 
+                else if(courseAdded.endDate >= checkCourse.startDate && courseAdded.endDate <= checkCourse.endDate) {
+                  setConflictingCourse(checkCourse.title);
+                } 
+                else if (courseAdded.startDate < checkCourse.startDate && courseAdded.endDate > checkCourse.endDate) {
+                  setConflictingCourse(checkCourse.title);
+                }
+                else if (checkCourse.startDate < courseAdded.startDate && checkCourse.endDate > courseAdded.endDate) {
+                  setConflictingCourse(checkCourse.title);
+                }
+            
+              }
+
             }
           }
         }
@@ -277,6 +298,27 @@ function App() {
           if(throwAlert(data, tempScheduleObj) === true && !strict) {
             setErrorCourse(course.name);
             setIsOpen(!isOpen);
+
+            for(let i = 0; i<data.length; i++) {
+
+              let checkCourse = data[i];
+              let courseAdded = tempScheduleObj;
+          
+              if(courseAdded.startDate >= checkCourse.startDate && courseAdded.startDate <= checkCourse.endDate) {
+                setConflictingCourse(checkCourse.title);
+              } 
+              else if(courseAdded.endDate >= checkCourse.startDate && courseAdded.endDate <= checkCourse.endDate) {
+                setConflictingCourse(checkCourse.title);
+              } 
+              else if (courseAdded.startDate < checkCourse.startDate && courseAdded.endDate > checkCourse.endDate) {
+                setConflictingCourse(checkCourse.title);
+              }
+              else if (checkCourse.startDate < courseAdded.startDate && checkCourse.endDate > courseAdded.endDate) {
+                setConflictingCourse(checkCourse.title);
+              }
+          
+            }
+
           }
         }
       }
@@ -441,7 +483,7 @@ function App() {
               handleClose={() => { setIsOpen(!isOpen) }}
               content={<div>
                   <h3>ERROR - Course Conflict</h3>
-                  <p>There is a conflict with {errorCourse}</p>
+                  <p>There is a conflict with {errorCourse} and {conflictingCourse}</p>
                 </div>}
             />} 
           </div>  
