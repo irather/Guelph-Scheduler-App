@@ -12,6 +12,18 @@ code {
     monospace;
 }
 
+.white-font-heading {
+  color: white;
+  font-weight: 500;
+  font-size: larger;
+}
+
+.white-font-content {
+  color: white;
+  font-weight: 200;
+  font-size: medium;
+}
+
 .popup-box{
   color: white;
   position: fixed;
@@ -62,5 +74,29 @@ code {
 .yellow-bg {
   background-color: #fca311;
   padding: 2%;
-  display: inline;
+}
+
+th, td {
+  padding: 10px;
+}
+
+.td-lecture {
+  background-color: rgb(198, 226, 255);
+}
+
+.td-lab {
+  background-color: rgb(56, 209, 226); 
+}
+
+.td-seminar {
+  background-color: rgb(255, 115, 115);
+}
+
+.td-exam {
+  background-color: rgb(0, 128, 128);
+}
+
+.col-center {
+  text-align: center; 
+  margin-left: 25vw;
 }
