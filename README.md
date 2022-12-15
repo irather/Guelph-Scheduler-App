@@ -62,7 +62,7 @@ Our wiki can be found here: https://gitlab.socs.uoguelph.ca/cis3760-team-302/cis
 # For Developers
 
 This app works with an end user talking to the url, Nginx lives on the Socs VM where it redirects traffic to Flask. Below is brief diagram of how things work.
-![Screen_Shot_2022-10-22_at_6.30.03_PM](/diagram.png)
+![Screen_Shot_2022-10-22_at_6.30.03_PM](./diagram.png)
 
 - When developing locally, the main functionality of the app relies on Flask which runs via python. These instructions work best on a \*nix system (e.g. WSL for windows, macOS).
 
